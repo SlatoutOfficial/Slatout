@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import { ArrowRight, Send, HelpCircle, Phone, Mail, MapPin } from "lucide-react";
 import { WordRevealHeading, FadeUp } from "../../components/Motion";
+import SiteEnd from "../../components/SiteEnd";
 
 export default function ContactPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
@@ -35,7 +36,7 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#F5F5F5]">
+    <main className="min-h-screen bg-[#FAF8F5]">
       <Navbar />
 
       {/* Hero Section */}
@@ -52,7 +53,7 @@ export default function ContactPage() {
         <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none relative z-10">
           <div className="flex flex-col items-start gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-[#F26522] shadow-sm shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-[#F97432] shadow-sm shrink-0">
                 <Send size={18} className="stroke-[1.5]" />
               </div>
               <span className="type-label text-[12px] border border-white/20 rounded-full px-3.5 py-1 text-white/90">
@@ -83,12 +84,12 @@ export default function ContactPage() {
                 <div className="flex flex-col gap-6">
                   {/* Email */}
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F26522] shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F97432] shrink-0">
                       <Mail size={16} className="stroke-[1.5]" />
                     </div>
                     <div>
                       <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider block">Email us</span>
-                      <a href="mailto:hello@slatout.com" className="font-bold text-gray-900 hover:text-[#F26522] transition-colors duration-300">
+                      <a href="mailto:hello@slatout.com" className="font-bold text-gray-900 hover:text-[#F97432] transition-colors duration-300">
                         hello@slatout.com
                       </a>
                     </div>
@@ -96,12 +97,12 @@ export default function ContactPage() {
 
                   {/* Phone */}
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F26522] shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F97432] shrink-0">
                       <Phone size={16} className="stroke-[1.5]" />
                     </div>
                     <div>
                       <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider block">Call our studio</span>
-                      <a href="tel:+442079460958" className="font-bold text-gray-900 hover:text-[#F26522] transition-colors duration-300">
+                      <a href="tel:+442079460958" className="font-bold text-gray-900 hover:text-[#F97432] transition-colors duration-300">
                         +44 (0) 20 7946 0958
                       </a>
                     </div>
@@ -109,7 +110,7 @@ export default function ContactPage() {
 
                   {/* Location */}
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F26522] shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F97432] shrink-0">
                       <MapPin size={16} className="stroke-[1.5]" />
                     </div>
                     <div>
@@ -130,7 +131,7 @@ export default function ContactPage() {
                     <a
                       key={soc}
                       href="#"
-                      className="hover:text-[#F26522] transition-colors duration-300"
+                      className="hover:text-[#F97432] transition-colors duration-300"
                     >
                       {soc}
                     </a>
@@ -164,7 +165,7 @@ export default function ContactPage() {
                       placeholder="John Doe"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="bg-transparent border-b border-gray-200 py-3 text-gray-900 placeholder-gray-400 focus:border-[#F26522] focus:outline-none transition-colors duration-300 text-sm"
+                      className="bg-transparent border-b border-gray-200 py-3 text-gray-900 placeholder-gray-400 focus:border-[#F97432] focus:outline-none transition-colors duration-300 text-sm"
                     />
                   </div>
 
@@ -176,7 +177,7 @@ export default function ContactPage() {
                       placeholder="john@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="bg-transparent border-b border-gray-200 py-3 text-gray-900 placeholder-gray-400 focus:border-[#F26522] focus:outline-none transition-colors duration-300 text-sm"
+                      className="bg-transparent border-b border-gray-200 py-3 text-gray-900 placeholder-gray-400 focus:border-[#F97432] focus:outline-none transition-colors duration-300 text-sm"
                     />
                   </div>
                 </div>
@@ -194,7 +195,7 @@ export default function ContactPage() {
                           onClick={() => toggleService(service)}
                           className={`px-4 py-2 rounded-full text-xs font-semibold border transition-all duration-300 ${
                             isSelected
-                              ? "bg-[#F26522] text-white border-[#F26522]"
+                              ? "bg-[#F97432] text-white border-[#F97432]"
                               : "bg-white text-gray-500 border-gray-250/70 hover:border-gray-300 hover:text-gray-900"
                           }`}
                         >
@@ -214,14 +215,14 @@ export default function ContactPage() {
                     placeholder="Brief scope details, timeline goals, etc..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="bg-transparent border-b border-gray-200 py-3 text-gray-900 placeholder-gray-400 focus:border-[#F26522] focus:outline-none transition-colors duration-300 resize-none text-sm"
+                    className="bg-transparent border-b border-gray-200 py-3 text-gray-900 placeholder-gray-400 focus:border-[#F97432] focus:outline-none transition-colors duration-300 resize-none text-sm"
                   />
                 </div>
 
                 {/* Submit button */}
                 <button
                   type="submit"
-                  className="group flex items-center justify-between bg-[#F26522] hover:bg-[#FE7004] text-white type-button text-[13px] sm:text-[14px] rounded-full pl-6 pr-2 py-2 mt-4 transition-all duration-300 w-full sm:w-[220px] active:scale-95"
+                  className="group flex items-center justify-between bg-[#F97432] hover:bg-[#F97432] text-white type-button text-[13px] sm:text-[14px] rounded-full pl-6 pr-2 py-2 mt-4 transition-all duration-300 w-full sm:w-[220px] active:scale-95"
                 >
                   <span className="overflow-hidden h-[20px] relative block">
                     <span className="flex flex-col transition-transform duration-500 ease-custom group-hover:-translate-y-1/2">
@@ -229,7 +230,7 @@ export default function ContactPage() {
                       <span className="h-[20px] flex items-center leading-none">Submit inquiry</span>
                     </span>
                   </span>
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center text-[#F26522] transition-transform duration-500 ease-custom group-hover:-rotate-45">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center text-[#F97432] transition-transform duration-500 ease-custom group-hover:-rotate-45">
                     <ArrowRight size={14} className="stroke-[2.5]" />
                   </div>
                 </button>
@@ -238,6 +239,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <SiteEnd />
     </main>
   );
 }

@@ -4,13 +4,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 
 // 1. Simple fade-up heading (Apple/Stripe style)
-export function WordRevealHeading({ 
-  text, 
-  className = "", 
-  as: Tag = "h2" 
-}: { 
-  text: string; 
-  className?: string; 
+export function WordRevealHeading({
+  text,
+  className = "",
+  as: Tag = "h2"
+}: {
+  text: string;
+  className?: string;
   as?: "h1" | "h2" | "h3" | "h4";
 }) {
   const shouldReduceMotion = useReducedMotion();
@@ -18,13 +18,13 @@ export function WordRevealHeading({
 
   return (
     <MotionTag
-      initial={{ 
-        opacity: 0, 
-        y: shouldReduceMotion ? 0 : 8 
+      initial={{
+        opacity: 0,
+        y: shouldReduceMotion ? 0 : 8
       }}
-      whileInView={{ 
-        opacity: 1, 
-        y: 0 
+      whileInView={{
+        opacity: 1,
+        y: 0
       }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{
@@ -39,14 +39,14 @@ export function WordRevealHeading({
 }
 
 // 2. Soft upward fade for paragraphs or blocks
-export function FadeUp({ 
-  children, 
-  className = "", 
+export function FadeUp({
+  children,
+  className = "",
   delay = 0,
   duration = 0.5
-}: { 
-  children: React.ReactNode; 
-  className?: string; 
+}: {
+  children: React.ReactNode;
+  className?: string;
   delay?: number;
   duration?: number;
 }) {
@@ -54,17 +54,17 @@ export function FadeUp({
 
   return (
     <motion.div
-      initial={{ 
-        opacity: 0, 
-        y: shouldReduceMotion ? 0 : 8 
+      initial={{
+        opacity: 0,
+        y: shouldReduceMotion ? 0 : 8
       }}
-      whileInView={{ 
-        opacity: 1, 
-        y: 0 
+      whileInView={{
+        opacity: 1,
+        y: 0
       }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ 
-        duration: duration, 
+      transition={{
+        duration: duration,
         delay: delay,
         ease: [0.16, 1, 0.3, 1] // easeOutExpo
       }}
@@ -110,22 +110,22 @@ export function StaggerContainer({
 }
 
 // 4. Stagger Child item (e.g. for card fade-ups)
-export function StaggerChild({ 
+export function StaggerChild({
   children,
   className = ""
-}: { 
+}: {
   children: React.ReactNode;
   className?: string;
 }) {
   const shouldReduceMotion = useReducedMotion();
 
   const childVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: shouldReduceMotion ? 0 : 8 
+    hidden: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : 8
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.45,
@@ -142,12 +142,12 @@ export function StaggerChild({
 }
 
 // 5. Scale In animation (for badges, icons)
-export function ScaleIn({ 
-  children, 
+export function ScaleIn({
+  children,
   className = "",
-  delay = 0 
-}: { 
-  children: React.ReactNode; 
+  delay = 0
+}: {
+  children: React.ReactNode;
   className?: string;
   delay?: number;
 }) {
@@ -155,19 +155,19 @@ export function ScaleIn({
 
   return (
     <motion.div
-      initial={{ 
-        opacity: 0, 
-        scale: shouldReduceMotion ? 1 : 0.98 
+      initial={{
+        opacity: 0,
+        scale: shouldReduceMotion ? 1 : 0.98
       }}
-      whileInView={{ 
-        opacity: 1, 
-        scale: 1 
+      whileInView={{
+        opacity: 1,
+        scale: 1
       }}
       viewport={{ once: true }}
-      transition={{ 
-        duration: 0.4, 
+      transition={{
+        duration: 0.4,
         delay: delay,
-        ease: [0.16, 1, 0.3, 1] 
+        ease: [0.16, 1, 0.3, 1]
       }}
       className={className}
     >
@@ -180,7 +180,7 @@ export function ScaleIn({
 export function CountUp({ value }: { value: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
-  
+
   const numericString = value.replace(/[^0-9.]/g, "");
   const targetNumber = parseFloat(numericString);
   const suffix = value.replace(/[0-9.,]/g, "");
@@ -214,4 +214,22 @@ export function CountUp({ value }: { value: string }) {
   }, [springValue, decimalPlaces, hasComma, suffix]);
 
   return <span ref={ref} className="tabular-nums">{currentDisplay}</span>;
+}
+
+// 8. Slide In (Left/Right)
+export function SlideIn({ children, direction = "left", delay = 0, className = "" }: { children: React.ReactNode, direction?: "left" | "right", delay?: number, className?: string }) {
+  const shouldReduceMotion = useReducedMotion();
+  const xOffset = direction === "left" ? -60 : 60;
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: shouldReduceMotion ? 0 : xOffset }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
 }

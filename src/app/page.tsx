@@ -1,30 +1,26 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import Trust from "../components/Trust";
-import Services from "../components/Services";
-import Industries from "../components/Industries";
-import WhyChooseUs from "../components/WhyChooseUs";
-import Process from "../components/Process";
-import ProductShowcase from "../components/ProductShowcase";
+import Hero from "@/components/Hero";
+import Clients from "../components/Clients";
+import BuildSection from "../components/3d/BuildSection";
+import PlanBuilder from "../components/3d/PlanBuilder";
 import Journal from "../components/Journal";
-import Testimonials from "../components/Testimonials";
-import FAQ from "../components/FAQ";
+import SiteEnd from "../components/SiteEnd";
+import SmoothScroll from "../components/SmoothScroll";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#EFEFEF]">
+    <main className="min-h-screen bg-[#FAF8F5] relative">
       <Navbar />
-      <Hero />
-      <Trust />
-      <Services />
-      <Industries />
-      <WhyChooseUs />
-      <Process />
-      <ProductShowcase />
-      <Journal />
-      <Testimonials />
-      <FAQ />
+      <SmoothScroll>
+        <Hero />
+        <Clients />
+        <BuildSection />
+        {/* <PlanBuilder /> */}
+        <Journal />
+        <SiteEnd />
+      </SmoothScroll>
     </main>
   );
 }
+

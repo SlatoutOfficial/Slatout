@@ -30,7 +30,7 @@ export const blogPosts: Record<string, BlogPost> = {
     author: {
       name: "Marc Henderson",
       role: "Lead Interactive Designer",
-      avatar: "/images/ceo.png"
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"
     },
     tags: ["WebGL", "GPU Shaders", "3D Web", "UX Design"],
     content: [
@@ -52,14 +52,14 @@ export const blogPosts: Record<string, BlogPost> = {
     slug: "strategy-led-design",
     title: "Maximizing acquisition channels through strategy-led design",
     desc: "How Slatout aligns design fidelity with technical growth frameworks to double landing page performance and organic conversions.",
-    category: "Marketing",
+    category: "Growth",
     date: "July 2026",
     readTime: "5 min read",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80",
     author: {
       name: "Elena Rostova",
       role: "Director of Growth",
-      avatar: "/images/director.png"
+      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200"
     },
     tags: ["CRO", "User Acquisition", "Funnels", "Growth"],
     content: [
@@ -88,7 +88,7 @@ export const blogPosts: Record<string, BlogPost> = {
     author: {
       name: "Dr. Aris Vance",
       role: "VP of Engineering",
-      avatar: "/images/founder.png"
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200"
     },
     tags: ["Next.js", "Serverless", "Caching", "Performance"],
     content: [
@@ -103,6 +103,27 @@ export const blogPosts: Record<string, BlogPost> = {
       {
         heading: "3. Optimizing Core Web Vitals",
         text: "Search algorithms prioritize fast-loading pages. To stay on top, developers must focus on three core metrics: Largest Contentful Paint (LCP), First Input Delay (FID), and Cumulative Layout Shift (CLS). By optimizing image formats, deferring non-critical scripts, and pre-fetching critical links, we secure perfect performance metrics."
+      }
+    ]
+  },
+  "ai-agents-workflow-2026": {
+    slug: "ai-agents-workflow-2026",
+    title: "Autonomous AI agents and the future of enterprise automation",
+    desc: "Analyzing how orchestrating intelligent LLM workflows can eliminate administrative overhead, optimize databases, and accelerate productivity.",
+    category: "AI Systems",
+    date: "May 2026",
+    readTime: "7 min read",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1200&q=80",
+    author: {
+      name: "Dr. Sarah Chen",
+      role: "Principal AI Architect",
+      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"
+    },
+    tags: ["AI Agents", "Automation", "LLMs", "Workflows"],
+    content: [
+      {
+        heading: "1. The Autonomous Enterprise",
+        text: "In 2026, enterprise software is transforming from tool-based dashboards to autonomous agent-based systems. These agents perform actions on behalf of employees, managing database entries, replying to alerts, and processing data pipelines without direct intervention."
       }
     ]
   }

@@ -35,7 +35,7 @@ export default function About() {
             {/* Orange Button */}
             <a
               href="#about"
-              className="group flex items-center gap-2 bg-[#F26522] hover:bg-[#FE7004] text-white type-button text-[13px] sm:text-[14px] rounded-full pl-5 pr-2 py-2 transition-colors duration-300"
+              className="group flex items-center gap-2 bg-[#F97432] hover:bg-[#F97432] text-white type-button text-[13px] sm:text-[14px] rounded-full pl-5 pr-2 py-2 transition-colors duration-300"
             >
               <span className="overflow-hidden h-[20px] relative block">
                 <span className="flex flex-col transition-transform duration-500 ease-custom group-hover:-translate-y-1/2">
@@ -43,7 +43,7 @@ export default function About() {
                   <span className="h-[20px] flex items-center leading-none">About our studio</span>
                 </span>
               </span>
-              <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center text-[#F26522] transition-transform duration-500 ease-custom group-hover:-rotate-45">
+              <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center text-[#F97432] transition-transform duration-500 ease-custom group-hover:-rotate-45">
                 <ArrowRight size={13} className="stroke-[2.5]" />
               </div>
             </a>
@@ -89,7 +89,7 @@ export default function About() {
             {/* Orange Button */}
             <a
               href="#about"
-              className="group flex items-center gap-2 bg-[#F26522] hover:bg-[#FE7004] text-white text-[13px] xl:text-[14px] font-medium rounded-full pl-5 pr-2 py-2 mt-8 transition-colors duration-300"
+              className="group flex items-center gap-2 bg-[#F97432] hover:bg-[#F97432] text-white text-[13px] xl:text-[14px] font-medium rounded-full pl-5 pr-2 py-2 mt-8 transition-colors duration-300"
             >
               <span className="overflow-hidden h-[20px] relative block">
                 <span className="flex flex-col transition-transform duration-500 ease-custom group-hover:-translate-y-1/2">
@@ -97,7 +97,7 @@ export default function About() {
                   <span className="h-[20px] flex items-center leading-none">About our studio</span>
                 </span>
               </span>
-              <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center text-[#F26522] transition-transform duration-500 ease-custom group-hover:-rotate-45">
+              <div className="w-7 h-7 bg-white rounded-full flex items-center justify-center text-[#F97432] transition-transform duration-500 ease-custom group-hover:-rotate-45">
                 <ArrowRight size={13} className="stroke-[2.5]" />
               </div>
             </a>

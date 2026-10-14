@@ -1,12 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Plus, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Plus, X } from "lucide-react";
 import { WordRevealHeading, FadeUp } from "./Motion";
-import { TextCta } from "./CtaSystem";
 
 const faqItems = [
+  {
+    question: "What services does your agency specialize in?",
+    answer: "We specialize in company setup, legal incorporation, bookkeeping, statutory compliance (GST/TDS), high-performance tech development (Next.js, custom software), and conversion-focused performance marketing."
+  },
   {
     question: "How fast can you set up and register a new company?",
     answer: "We complete company incorporation (Pvt Ltd, LLP, OPC, etc.) in 3 to 5 business days, including GST registrations, PAN/TAN allocations, and Startup India recognition management, handling all government filings end-to-end."
@@ -29,70 +32,107 @@ export default function FAQ() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-[#FFFFFF] py-12 sm:py-16 border-b border-gray-200 overflow-hidden">
-      <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none">
+    <section id="faq" className="bg-[#FAF8F5] py-12 sm:py-16 border-b border-gray-200 overflow-hidden relative">
+      {/* Background glow blob */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F97432]/5 rounded-full blur-[130px] pointer-events-none" />
+
+      <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none relative z-10">
         
-        {/* Layout Grid: Left (Title), Right (Accordion) */}
-        <div className="grid grid-cols-1 lg:grid-cols-[35%_65%] gap-12 lg:gap-8">
+        {/* Layout Grid: Left (Title & Call Card), Right (Accordion Cards) */}
+        <div className="grid grid-cols-1 lg:grid-cols-[33%_67%] gap-8 lg:gap-12 items-stretch">
           
           {/* Left Column */}
-          <div className="flex flex-col items-start gap-4">
-            <FadeUp delay={0.05}>
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-6 rounded-full bg-gray-900 text-white text-[11px] font-semibold flex items-center justify-center">
-                  9
-                </div>
-                <span className="type-label text-[12px] border border-gray-300 rounded-full px-3.5 py-1 text-gray-800">
-                  FAQ
+          <div className="flex flex-col items-start gap-6 h-full">
+            <FadeUp delay={0.05} className="flex flex-col gap-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#F97432] animate-pulse" />
+                <span className="text-[11px] font-bold uppercase tracking-widest text-gray-500 font-mono">
+                  FAQs
                 </span>
               </div>
+              <WordRevealHeading
+                text="Frequently Asked Questions"
+                className="text-[clamp(2rem,5vw,3rem)] type-section text-gray-900 font-bold leading-tight"
+              />
             </FadeUp>
-            <WordRevealHeading
-              text="Frequently asked questions."
-              className="text-[clamp(1.8rem,5vw,3.5rem)] type-section text-gray-900 max-w-[340px]"
-            />
-            <FadeUp delay={0.15}>
-              <p className="type-body text-gray-500 text-[14px] max-w-[280px] mt-2 mb-5">
-                Still weighing options? We typically reply within one business day.
-              </p>
-              <TextCta href="#contact" tone="brand">
-                Still have questions?
-              </TextCta>
+
+            {/* Book a Call Card (Stretched to match right accordion height) */}
+            <FadeUp delay={0.15} className="w-full flex-1 h-full flex flex-col">
+              <div 
+                style={{
+                  backgroundImage: `linear-gradient(to bottom, rgba(15, 15, 20, 0.85), rgba(15, 15, 20, 0.95)), url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=600&auto=format&fit=crop')`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}
+                className="bg-zinc-950 rounded-[2rem] p-6 sm:p-8 shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-zinc-800 flex flex-col items-start justify-between w-full flex-1 h-full min-h-[300px]"
+              >
+                {/* Top content group */}
+                <div className="flex flex-col gap-6 items-start w-full">
+                  {/* Avatar with soft orange glow */}
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-[#F97432]/30 rounded-full blur-md" />
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-zinc-800 relative z-10 shadow-sm">
+                      <img 
+                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" 
+                        alt="Expert Consultant" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <h4 className="text-white font-semibold text-lg sm:text-xl leading-tight">
+                      Book a 15 min call
+                    </h4>
+                    <p className="text-zinc-400 text-xs sm:text-[13.5px] leading-relaxed">
+                      If you have any questions, just book a 15-minute call with us to discuss your project.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom CTA Button */}
+                <a 
+                  href="#contact" 
+                  className="w-full py-3.5 mt-6 bg-[#F97432] hover:bg-[#F97432] text-white rounded-full text-xs font-bold uppercase tracking-wider text-center transition-all duration-300 shadow-md shadow-orange-500/10 active:scale-95"
+                >
+                  Book a Free Call!
+                </a>
+              </div>
             </FadeUp>
           </div>
 
-          {/* Right Column Accordion */}
-          <div className="flex flex-col border-t border-gray-200">
+          {/* Right Column: Accordion of cards */}
+          <div className="flex flex-col gap-4">
             {faqItems.map((item, idx) => {
               const isOpen = openIdx === idx;
               
               return (
                 <div
                   key={idx}
-                  className="border-b border-gray-200 py-6 transition-all duration-300"
+                  className={`bg-white rounded-2xl p-5 sm:p-6 transition-all duration-500 border ${
+                    isOpen 
+                      ? "border-gray-300 shadow-[0_12px_36px_rgba(0,0,0,0.03)]" 
+                      : "border-gray-200/75 shadow-sm hover:border-gray-300"
+                  }`}
                 >
                   <button
                     onClick={() => setOpenIdx(isOpen ? null : idx)}
                     className="w-full flex items-center justify-between text-left group"
                   >
-                    <h3 className="type-card-title text-lg sm:text-xl text-gray-900 group-hover:text-[#F26522] transition-colors duration-300 pr-4">
+                    <h3 className={`text-base sm:text-[17px] leading-snug transition-colors duration-300 pr-4 ${
+                      isOpen ? "text-gray-900 font-semibold" : "text-gray-800 font-medium group-hover:text-[#F97432]"
+                    }`}>
                       {item.question}
                     </h3>
-                    <div className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 group-hover:text-white group-hover:bg-[#F26522] group-hover:border-transparent transition-all duration-500 shrink-0">
-                      <motion.div
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                      >
-                        {isOpen ? (
-                          <Minus size={14} className="stroke-[2.5]" />
-                        ) : (
-                          <Plus size={14} className="stroke-[2.5]" />
-                        )}
-                      </motion.div>
+                    <div className="text-gray-400 group-hover:text-gray-700 transition-colors shrink-0">
+                      {isOpen ? (
+                        <X size={16} strokeWidth={2.5} />
+                      ) : (
+                        <Plus size={16} strokeWidth={2.5} />
+                      )}
                     </div>
                   </button>
 
-                  {/* Expandable answers block */}
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
@@ -102,7 +142,7 @@ export default function FAQ() {
                         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <p className="type-body text-gray-600 text-[14px] sm:text-[15px] max-w-[680px] pt-4">
+                        <p className="text-gray-500 text-xs sm:text-[13.5px] leading-relaxed pt-3 border-t border-gray-100 mt-3.5">
                           {item.answer}
                         </p>
                       </motion.div>

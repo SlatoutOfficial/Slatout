@@ -5,6 +5,7 @@ import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import { ArrowRight, ArrowUpRight, BookOpen, Clock } from "lucide-react";
 import { blogPosts } from "../../data/blogs";
+import SiteEnd from "../../components/SiteEnd";
 
 const categories = ["All", "Design", "Marketing", "Engineering"];
 const articles = Object.values(blogPosts);
@@ -20,17 +21,17 @@ export default function BlogsPage() {
   const featured = articles[0];
 
   return (
-    <main className="min-h-screen bg-[#F5F5F5]">
+    <main className="min-h-screen bg-[#FAF8F5]">
       <Navbar />
 
       {/* Hero Header */}
-      <section className="relative pt-24 pb-12 bg-[#EFEFEF] border-b border-gray-200 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#F26522]/5 rounded-full blur-[100px] pointer-events-none" />
+      <section className="relative pt-24 pb-12 bg-[#FAF8F5] border-b border-gray-200 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#F97432]/5 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none relative z-10">
           <div className="flex flex-col items-start gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-[#F26522] shadow-sm shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-[#F97432] shadow-sm shrink-0">
                 <BookOpen size={16} />
               </div>
               <span className="type-label text-[12px] border border-gray-300 rounded-full px-3.5 py-1 text-gray-800">
@@ -71,12 +72,12 @@ export default function BlogsPage() {
           {/* Render Spotlight Card only when "All" category is selected */}
           {activeCategory === "All" && featured && (
             <div className="mb-14">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#F26522] block mb-4">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#F97432] block mb-4">
                 Featured Spotlight
               </span>
               <Link
                 href={`/blogs/${featured.slug}`}
-                className="group grid grid-cols-1 lg:grid-cols-[55%_45%] gap-8 bg-gray-50 border border-gray-150 rounded-3xl overflow-hidden hover:border-[#F26522]/30 hover:shadow-[0_12px_40px_rgba(242,101,34,0.02)] transition-all duration-500"
+                className="group grid grid-cols-1 lg:grid-cols-[55%_45%] gap-8 bg-gray-50 border border-gray-150 rounded-3xl overflow-hidden hover:border-[#F97432]/30 hover:shadow-[0_12px_40px_rgba(249,116,50,0.02)] transition-all duration-500"
               >
                 {/* Image */}
                 <div className="relative aspect-video lg:aspect-auto min-h-[260px] lg:h-full overflow-hidden bg-gray-200">
@@ -96,7 +97,7 @@ export default function BlogsPage() {
                       <span>{featured.date}</span>
                     </div>
                     
-                    <h2 className="text-xl sm:text-2xl type-card-title text-gray-900 mb-3 group-hover:text-[#F26522] transition-colors">
+                    <h2 className="text-xl sm:text-2xl type-card-title text-gray-900 mb-3 group-hover:text-[#F97432] transition-colors">
                       {featured.title}
                     </h2>
                     
@@ -137,7 +138,7 @@ export default function BlogsPage() {
                 <Link
                   href={`/blogs/${article.slug}`}
                   key={idx}
-                  className="group flex flex-col justify-between bg-white border border-gray-150 rounded-3xl p-5 hover:border-[#F26522]/30 hover:shadow-[0_12px_40px_rgba(242,101,34,0.02)] transition-all duration-500 cursor-pointer"
+                  className="group flex flex-col justify-between bg-white border border-gray-150 rounded-3xl p-5 hover:border-[#F97432]/30 hover:shadow-[0_12px_40px_rgba(249,116,50,0.02)] transition-all duration-500 cursor-pointer"
                 >
                   <div>
                     {/* Image */}
@@ -156,9 +157,9 @@ export default function BlogsPage() {
                       <span>{article.date}</span>
                     </div>
 
-                    <h4 className="text-base sm:text-lg font-bold text-gray-900 leading-snug mb-2 group-hover:text-[#F26522] transition-colors flex items-start justify-between gap-2">
+                    <h4 className="text-base sm:text-lg font-bold text-gray-900 leading-snug mb-2 group-hover:text-[#F97432] transition-colors flex items-start justify-between gap-2">
                       <span>{article.title}</span>
-                      <ArrowUpRight size={15} className="text-gray-300 group-hover:text-[#F26522] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0 mt-0.5" />
+                      <ArrowUpRight size={15} className="text-gray-300 group-hover:text-[#F97432] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0 mt-0.5" />
                     </h4>
 
                     <p className="text-gray-500 text-xs sm:text-[13px] leading-relaxed mb-6">
@@ -186,6 +187,7 @@ export default function BlogsPage() {
 
         </div>
       </section>
+      <SiteEnd />
     </main>
   );
 }

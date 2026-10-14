@@ -5,6 +5,7 @@ import Link from "next/link";
 import Navbar from "../../../components/Navbar";
 import { ArrowLeft, BookOpen, Clock, HelpCircle, Send, Share2 } from "lucide-react";
 import { blogPosts } from "../../../data/blogs";
+import SiteEnd from "../../../components/SiteEnd";
 
 export default function SingleBlogPost({ params }: { params: { slug: string } }) {
   const post = blogPosts[params.slug];
@@ -15,7 +16,7 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
   // If blog slug is invalid, redirect or show safe fallback
   if (!post) {
     return (
-      <main className="min-h-screen bg-[#F5F5F5] flex flex-col justify-between">
+      <main className="min-h-screen bg-[#FAF8F5] flex flex-col justify-between">
         <Navbar />
         <div className="flex-1 flex flex-col items-center justify-center p-8 select-none">
           <HelpCircle size={48} className="text-gray-400 mb-4" />
@@ -25,6 +26,7 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
             Back to Journal
           </Link>
         </div>
+        <SiteEnd />
       </main>
     );
   }
@@ -45,12 +47,12 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
   };
 
   return (
-    <main className="min-h-screen bg-[#F5F5F5]">
+    <main className="min-h-screen bg-[#FAF8F5]">
       <Navbar />
 
       {/* Header Info Block */}
-      <section className="relative pt-24 pb-10 bg-[#EFEFEF] border-b border-gray-200 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#F26522]/5 rounded-full blur-[100px] pointer-events-none" />
+      <section className="relative pt-24 pb-10 bg-[#FAF8F5] border-b border-gray-200 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#F97432]/5 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 relative z-10 select-none">
           
@@ -66,7 +68,7 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
 
             <button
               onClick={handleShare}
-              className="flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-[#F26522] transition-colors"
+              className="flex items-center gap-1.5 text-xs font-bold text-gray-500 hover:text-[#F97432] transition-colors"
             >
               <Share2 size={13} />
               <span>{copied ? "Link Copied!" : "Copy Link"}</span>
@@ -75,7 +77,7 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
 
           <div className="max-w-[800px]">
             {/* Metadata Tags */}
-            <div className="flex items-center gap-2 text-[10px] font-bold text-[#F26522] uppercase tracking-widest mb-3">
+            <div className="flex items-center gap-2 text-[10px] font-bold text-[#F97432] uppercase tracking-widest mb-3">
               <span>{post.category}</span>
               <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
               <span className="text-gray-400">{post.date}</span>
@@ -155,7 +157,7 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
 
             {/* Right Sidebar: Quick newsletter or contact widget */}
             <aside className="flex flex-col gap-6 lg:max-w-[340px] w-full">
-              <div className="bg-[#F5F5F5] border border-gray-200/80 rounded-3xl p-6 flex flex-col justify-between">
+              <div className="bg-[#FAF8F5] border border-gray-200/80 rounded-3xl p-6 flex flex-col justify-between">
                 <div>
                   <span className="text-[9px] font-bold uppercase tracking-wider text-gray-400 block border-b border-gray-200/60 pb-2 mb-4">
                     Subscribe to Insights
@@ -171,7 +173,7 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
                       placeholder="name@domain.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-900 focus:border-[#F26522] focus:outline-none transition-colors"
+                      className="bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-xs text-gray-900 focus:border-[#F97432] focus:outline-none transition-colors"
                     />
                     <button
                       type="submit"
@@ -194,7 +196,7 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
 
               {/* CTA card to main contact */}
               <div className="bg-[#111111] text-white rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between min-h-[180px]">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-[#F26522]/10 rounded-full blur-xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#F97432]/10 rounded-full blur-xl pointer-events-none" />
                 
                 <div>
                   <h4 className="text-sm font-bold text-white mb-2">Have a scaling hurdle?</h4>
@@ -205,17 +207,17 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
                 
                 <Link
                   href="/#contact"
-                  className="group flex items-center gap-1.5 text-xs font-bold text-[#F26522] mt-4"
+                  className="group flex items-center gap-1.5 text-xs font-bold text-[#F97432] mt-4"
                 >
                   Inquire Now
                   <ArrowLeft size={14} className="rotate-180 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
             </aside>
-
           </div>
         </div>
       </section>
+      <SiteEnd />
     </main>
   );
 }

@@ -27,7 +27,7 @@ const processSteps = [
           </div>
           <div className="flex justify-between text-slate-400">
             <span>Database Latency</span>
-            <span className="text-[#F26522] font-bold">14ms</span>
+            <span className="text-[#F97432] font-bold">14ms</span>
           </div>
           <div className="flex justify-between text-slate-400">
             <span>SEO Index Gaps</span>
@@ -53,7 +53,7 @@ const processSteps = [
             <span className="text-orange-400 text-[8px] font-bold">Active</span>
           </div>
           <div className="bg-slate-950/40 border border-slate-800 rounded p-2">
-            <span className="text-[#F26522] font-bold block">UserTable</span>
+            <span className="text-[#F97432] font-bold block">UserTable</span>
             <span className="text-slate-500 block mt-0.5">- id: UUID (PK)</span>
             <span className="text-slate-500 block">- active_setup: boolean</span>
             <span className="text-slate-500 block">- compliance_score: int</span>
@@ -86,12 +86,12 @@ const processSteps = [
               <span className="w-12 h-2 bg-slate-800 rounded" />
               <span className="w-18 h-1.5 bg-slate-850 rounded" />
             </div>
-            <div className="w-6 h-3 bg-[#F26522]/20 border border-[#F26522]/30 rounded flex items-center justify-center text-[7px] text-[#F26522] font-bold">
+            <div className="w-6 h-3 bg-[#F97432]/20 border border-[#F97432]/30 rounded flex items-center justify-center text-[7px] text-[#F97432] font-bold">
               Tab
             </div>
           </div>
           <div className="flex justify-between items-center text-[8px] text-slate-500 font-mono mt-0.5">
-            <span>Primary: #F26522</span>
+            <span>Primary: #F97432</span>
             <span>Radius: 12px</span>
           </div>
         </div>
@@ -176,7 +176,7 @@ export default function Process() {
   const [activeStep, setActiveStep] = useState(processSteps[0]);
 
   return (
-    <section id="process" className="bg-[#F5F5F5] py-12 sm:py-16 border-b border-gray-200 overflow-hidden">
+    <section id="process" className="bg-[#FAF8F5] py-12 sm:py-16 border-b border-gray-200 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none">
         
         {/* Header Block */}
@@ -234,7 +234,7 @@ export default function Process() {
                       <motion.path
                         d={pathData}
                         animate={{
-                          stroke: isActive ? "#F26522" : "#E2E8F0",
+                          stroke: isActive ? "#F97432" : "#E2E8F0",
                           strokeWidth: isActive ? 2.5 : 1.5
                         }}
                         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -246,7 +246,7 @@ export default function Process() {
                         cy="70"
                         animate={{
                           r: isActive ? 8 : 5,
-                          fill: isActive ? "#F26522" : "#E2E8F0"
+                          fill: isActive ? "#F97432" : "#E2E8F0"
                         }}
                         transition={{ type: "spring", stiffness: 300, damping: 25 }}
                       />
@@ -257,7 +257,7 @@ export default function Process() {
                         y="15"
                         textAnchor="middle"
                         className={`font-mono text-[9px] font-bold uppercase tracking-wider transition-colors duration-300 ${
-                          isActive ? "fill-[#F26522]" : "fill-gray-400"
+                          isActive ? "fill-[#F97432]" : "fill-gray-400"
                         }`}
                       >
                         {step.phase}
@@ -301,7 +301,7 @@ export default function Process() {
                       <svg className="w-3.5 h-3.5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 12a9 9 0 0 0 9 9" /></svg>
                       <span>{activeStep.branchName}</span>
                     </div>
-                    <span className="bg-orange-50 border border-orange-100 text-[#F26522] text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+                    <span className="bg-orange-50 border border-orange-100 text-[#F97432] text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
                       {activeStep.timeline}
                     </span>
                   </div>
@@ -327,7 +327,7 @@ export default function Process() {
 
                 {/* Right Column: Console Visual Graphic Container */}
                 <div className="bg-[#0E131F] border border-slate-800 rounded-2xl h-[170px] w-full flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-[#F26522]/5 rounded-full blur-2xl pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-[#F97432]/5 rounded-full blur-2xl pointer-events-none" />
                   {activeStep.visual}
                 </div>
               </motion.div>

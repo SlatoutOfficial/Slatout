@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "../../../components/Navbar";
 import { ArrowLeft, ArrowRight, CheckCircle2, Scale, CreditCard, Landmark, Code, ShoppingBag, Palette, Megaphone, ShieldCheck, HelpCircle, FileText, Settings, Compass, Send } from "lucide-react";
+import SiteEnd from "../../../components/SiteEnd";
 
 // Full services data mapping for dynamic page rendering
 const servicesData: Record<string, {
@@ -318,7 +319,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
   // If service slug is invalid, redirect or show safe fallback
   if (!service) {
     return (
-      <main className="min-h-screen bg-[#F5F5F5] flex flex-col justify-between">
+      <main className="min-h-screen bg-[#FAF8F5] flex flex-col justify-between">
         <Navbar />
         <div className="flex-1 flex flex-col items-center justify-center p-8 select-none">
           <HelpCircle size={48} className="text-gray-400 mb-4" />
@@ -328,6 +329,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             Back to Home
           </a>
         </div>
+        <SiteEnd />
       </main>
     );
   }
@@ -342,11 +344,11 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <main className="min-h-screen bg-[#F5F5F5]">
+    <main className="min-h-screen bg-[#FAF8F5]">
       <Navbar />
 
       {/* Hero Section */}
-      <section 
+      <section
         className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 min-h-[450px] sm:min-h-[500px] flex items-center bg-[#111] border-b border-white/10 overflow-hidden"
         style={{
           backgroundImage: `linear-gradient(to right, rgba(17,17,17,0.92) 35%, rgba(17,17,17,0.65) 100%), url(${service.image})`,
@@ -355,7 +357,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
         }}
       >
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-500/5 rounded-full blur-[100px] pointer-events-none" />
-        
+
         <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none relative z-10">
           {/* Back button */}
           <Link
@@ -369,7 +371,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
           <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-8 items-end">
             <div className="flex flex-col items-start gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-[#F26522] shadow-sm shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-[#F97432] shadow-sm shrink-0">
                   <Icon size={18} className="stroke-[1.5]" />
                 </div>
                 <span className="type-label text-[12px] border border-white/20 rounded-full px-3.5 py-1 text-white/90">
@@ -402,7 +404,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       <section className="py-12 sm:py-16 bg-white border-b border-gray-200">
         <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none">
           <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-12 lg:gap-16">
-            
+
             {/* Left side: Long description and key benefits */}
             <div className="flex flex-col items-start gap-6">
               <h2 className="text-[20px] sm:text-2xl type-card-title text-gray-900">
@@ -411,14 +413,14 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               <p className="text-gray-500 text-sm sm:text-[15px] leading-relaxed">
                 {service.longDesc}
               </p>
-              
+
               <div className="flex flex-col gap-4 mt-4 w-full">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block border-b border-gray-100 pb-2">
                   Key Benefits & Outcomes
                 </span>
                 {service.benefits.map((benefit, idx) => (
                   <div key={idx} className="flex gap-3 items-start">
-                    <CheckCircle2 size={15} className="text-[#F26522] shrink-0 mt-0.5" />
+                    <CheckCircle2 size={15} className="text-[#F97432] shrink-0 mt-0.5" />
                     <span className="text-gray-700 text-xs sm:text-sm font-medium">{benefit}</span>
                   </div>
                 ))}
@@ -426,7 +428,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             </div>
 
             {/* Right side: Complete Sub-Services Grid */}
-            <div className="bg-[#F5F5F5] border border-gray-200/60 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+            <div className="bg-[#FAF8F5] border border-gray-200/60 rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 block mb-5 border-b border-gray-200/60 pb-2">
                   Complete Scope of Services ({service.subServices.length})
@@ -434,8 +436,8 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
                   {service.subServices.map((sub, idx) => (
                     <div key={idx} className="flex items-center gap-3 py-0.5 hover:translate-x-0.5 transition-transform duration-200">
-                      <div className="w-4 h-4 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#F26522] shrink-0">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#F26522]" />
+                      <div className="w-4 h-4 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#F97432] shrink-0">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#F97432]" />
                       </div>
                       <span className="text-gray-800 type-nav text-[13px]">{sub}</span>
                     </div>
@@ -453,7 +455,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       </section>
 
       {/* Dynamic Process Timeline */}
-      <section className="py-12 sm:py-16 bg-[#F5F5F5] border-b border-gray-200 overflow-hidden">
+      <section className="py-12 sm:py-16 bg-[#FAF8F5] border-b border-gray-200 overflow-hidden">
         <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none">
           <div className="flex flex-col items-start gap-3 mb-10 sm:mb-12">
             <span className="text-[11px] font-bold border border-gray-300 rounded-full px-3.5 py-1 text-gray-500 uppercase tracking-wide">
@@ -469,7 +471,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               <div key={idx} className="bg-white border border-gray-200/80 rounded-2xl p-5 flex flex-col justify-between min-h-[160px] shadow-[0_2px_10px_rgba(0,0,0,0.01)] hover:border-gray-300 transition-colors">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-gray-400 font-mono">PHASE</span>
-                  <span className="text-[13px] font-mono font-bold text-[#F26522]">{step.step}</span>
+                  <span className="text-[13px] font-mono font-bold text-[#F97432]">{step.step}</span>
                 </div>
                 <div className="mt-4">
                   <h4 className="type-card-title text-sm text-gray-900">{step.title}</h4>
@@ -485,15 +487,15 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       <section className="py-12 sm:py-16 bg-white">
         <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none">
           <div className="bg-[#111111] text-white rounded-3xl p-6 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-[45%_55%] gap-8 items-center overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#F26522]/10 rounded-full blur-[80px] pointer-events-none" />
-            
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#F97432]/10 rounded-full blur-[80px] pointer-events-none" />
+
             <div className="flex flex-col items-start gap-4">
               <span className="bg-white/10 text-white text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
                 Direct Contact
               </span>
               <h2 className="type-section text-2xl sm:text-3xl text-white">
                 Request a quote for <br />
-                <span className="text-[#F26522] font-semibold">{service.title}</span>.
+                <span className="text-[#F97432] font-semibold">{service.title}</span>.
               </h2>
               <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-[420px]">
                 Submit your project inquiries and compliance targets. A specialist will follow up within 2 business hours.
@@ -509,12 +511,12 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
                 onChange={(e) => setInquiryText(e.target.value)}
                 className="bg-white/5 border border-white/10 rounded-xl p-4 text-sm text-white placeholder-white/30 focus:border-white focus:outline-none transition-colors resize-none"
               />
-              
+
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <span className="text-[10px] text-gray-500 font-mono">Direct secure transmission</span>
                 <button
                   type="submit"
-                  className="group flex items-center justify-between bg-[#F26522] hover:bg-[#FE7004] text-white text-[12px] font-semibold rounded-full pl-5 pr-1.5 py-1.5 transition-colors duration-300 w-full sm:w-[190px] shrink-0"
+                  className="group flex items-center justify-between bg-[#F97432] hover:bg-[#F97432] text-white text-[12px] font-semibold rounded-full pl-5 pr-1.5 py-1.5 transition-colors duration-300 w-full sm:w-[190px] shrink-0"
                 >
                   <span>Submit Inquiry</span>
                   <div className="w-5 h-5 bg-white text-gray-900 rounded-full flex items-center justify-center transition-transform group-hover:translate-x-0.5 duration-300">
@@ -532,6 +534,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </section>
+      <SiteEnd />
     </main>
   );
 }

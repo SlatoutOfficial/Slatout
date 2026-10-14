@@ -69,7 +69,7 @@ export default function Connect() {
                   <span className="type-label text-[11px] text-gray-500">Email us</span>
                   <a
                     href="mailto:hello@slatout.com"
-                    className="text-2xl sm:text-3xl font-medium text-white hover:text-[#F26522] transition-colors duration-300 w-fit"
+                    className="text-2xl sm:text-3xl font-medium text-white hover:text-[#F97432] transition-colors duration-300 w-fit"
                   >
                     hello@slatout.com
                   </a>
@@ -182,7 +182,7 @@ export default function Connect() {
               {/* Orange Submit Button */}
               <button
                 type="submit"
-                className="group flex items-center justify-between bg-[#F26522] hover:bg-[#FE7004] text-white type-button text-[13px] sm:text-[14px] rounded-full pl-6 pr-2 py-2 mt-4 transition-colors duration-300 w-full sm:w-[220px]"
+                className="group flex items-center justify-between bg-[#F97432] hover:bg-[#F97432] text-white type-button text-[13px] sm:text-[14px] rounded-full pl-6 pr-2 py-2 mt-4 transition-colors duration-300 w-full sm:w-[220px]"
               >
                 <span className="overflow-hidden h-[20px] relative block">
                   <span className="flex flex-col transition-transform duration-500 ease-custom group-hover:-translate-y-1/2">
@@ -190,7 +190,7 @@ export default function Connect() {
                     <span className="h-[20px] flex items-center leading-none">Submit inquiry</span>
                   </span>
                 </span>
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center text-[#F26522] transition-transform duration-500 ease-custom group-hover:-rotate-45">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center text-[#F97432] transition-transform duration-500 ease-custom group-hover:-rotate-45">
                   <ArrowRight size={14} className="stroke-[2.5]" />
                 </div>
               </button>

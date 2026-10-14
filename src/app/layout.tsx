@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import SiteEnd from "../components/SiteEnd";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,9 +13,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased bg-[#EFEFEF]">
+      <body className="antialiased bg-[#FAF8F5]">
         {children}
-        <SiteEnd />
       </body>
     </html>
   );

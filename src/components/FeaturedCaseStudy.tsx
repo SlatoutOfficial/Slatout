@@ -7,7 +7,7 @@ export default function FeaturedCaseStudy() {
   const [activeTab, setActiveTab] = useState<"challenge" | "solution" | "results">("challenge");
 
   return (
-    <section id="case-study" className="relative bg-[#F5F5F5] py-14 sm:py-20 border-b border-gray-200 overflow-hidden">
+    <section id="case-study" className="relative bg-[#FAF8F5] py-14 sm:py-20 border-b border-gray-200 overflow-hidden">
       
       {/* Self-contained animations for graphs and line flow */}
       <style dangerouslySetInnerHTML={{__html: `
@@ -56,7 +56,7 @@ export default function FeaturedCaseStudy() {
               <span className="text-[11px] font-bold uppercase tracking-wider bg-white border border-gray-200 text-gray-800 px-3 py-1 rounded-full">
                 SaaS & Generative AI
               </span>
-              <span className="text-[11px] font-bold uppercase tracking-wider bg-[#F26522]/10 text-[#F26522] px-3 py-1 rounded-full">
+              <span className="text-[11px] font-bold uppercase tracking-wider bg-[#F97432]/10 text-[#F97432] px-3 py-1 rounded-full">
                 Enterprise Scale
               </span>
             </div>
@@ -69,7 +69,7 @@ export default function FeaturedCaseStudy() {
                   onClick={() => setActiveTab(tab)}
                   className={`py-3 px-4 text-xs font-bold uppercase tracking-widest border-b-2 transition-all duration-300 -mb-[2px] ${
                     activeTab === tab
-                      ? "border-[#F26522] text-[#F26522]"
+                      ? "border-[#F97432] text-[#F97432]"
                       : "border-transparent text-gray-400 hover:text-gray-900"
                   }`}
                 >
@@ -143,7 +143,7 @@ export default function FeaturedCaseStudy() {
                         "Reduced aggregate database write costs by 62%"
                       ].map((item, idx) => (
                         <li key={idx} className="flex items-center gap-2 text-xs text-gray-700 font-medium">
-                          <CheckCircle2 size={14} className="text-[#F26522] shrink-0" />
+                          <CheckCircle2 size={14} className="text-[#F97432] shrink-0" />
                           {item}
                         </li>
                       ))}
@@ -195,19 +195,19 @@ export default function FeaturedCaseStudy() {
             <div className="w-full bg-[#0E131F] rounded-3xl border border-slate-800 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)] text-slate-300 font-sans relative overflow-hidden">
               
               {/* Background accent ambient light */}
-              <div className="absolute top-0 right-0 w-44 h-44 bg-[#F26522]/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-44 h-44 bg-[#F97432]/10 rounded-full blur-3xl pointer-events-none" />
 
               {/* Mockup Header */}
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-4 mb-5">
                 <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-[#F26522] flex items-center justify-center text-[8px] text-white font-bold">N</div>
+                  <div className="w-3 h-3 rounded-full bg-[#F97432] flex items-center justify-center text-[8px] text-white font-bold">N</div>
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-white leading-none">Narrativ Ingestion Control</span>
                     <span className="text-[9px] text-slate-500 mt-1">Live worker nodes status</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#F26522] animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-[#F97432] animate-pulse" />
                   <span className="text-[10px] text-slate-400 font-mono">532 req/sec</span>
                 </div>
               </div>
@@ -217,7 +217,7 @@ export default function FeaturedCaseStudy() {
                 <span className="text-[9px] uppercase font-bold text-slate-500 tracking-wider">Real-time Stream Logs</span>
                 <div className="flex flex-col gap-2 font-mono text-[10px] text-slate-400">
                   <div className="flex items-center gap-2 border-b border-slate-800/40 pb-1.5">
-                    <span className="text-[#F26522] font-semibold">[09:42:15]</span>
+                    <span className="text-[#F97432] font-semibold">[09:42:15]</span>
                     <span className="text-slate-300">File "doc_contract_92.pdf" received (14.2 MB)</span>
                   </div>
                   <div className="flex items-center gap-2 border-b border-slate-800/40 pb-1.5">
@@ -243,9 +243,9 @@ export default function FeaturedCaseStudy() {
 
                   <div className="h-16 w-full mt-3 relative">
                     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                      <path d="M 0,90 Q 20,40 40,85 T 80,20 L 100,20 L 100,100 L 0,100 Z" fill="#F26522" fillOpacity="0.1" />
-                      <path d="M 0,90 Q 20,40 40,85 T 80,20 L 100,20" fill="none" stroke="#F26522" strokeWidth="2.5" />
-                      <circle cx="80" cy="20" r="3" className="fill-[#F26522]" />
+                      <path d="M 0,90 Q 20,40 40,85 T 80,20 L 100,20 L 100,100 L 0,100 Z" fill="#F97432" fillOpacity="0.1" />
+                      <path d="M 0,90 Q 20,40 40,85 T 80,20 L 100,20" fill="none" stroke="#F97432" strokeWidth="2.5" />
+                      <circle cx="80" cy="20" r="3" className="fill-[#F97432]" />
                     </svg>
                   </div>
                 </div>
@@ -255,12 +255,12 @@ export default function FeaturedCaseStudy() {
                   <div className="flex flex-col">
                     <span className="text-[9px] uppercase font-bold text-slate-500 tracking-wider">Engine Speed</span>
                     <span className="text-base font-bold text-white mt-1">4.2x faster</span>
-                    <span className="text-[9px] text-[#F26522] font-semibold mt-1">Pipeline optimization</span>
+                    <span className="text-[9px] text-[#F97432] font-semibold mt-1">Pipeline optimization</span>
                   </div>
                   <div className="relative w-12 h-12 flex items-center justify-center shrink-0">
                     <svg className="w-full h-full transform -rotate-90">
                       <circle cx="24" cy="24" r="20" stroke="#1e293b" strokeWidth="2.5" fill="transparent" />
-                      <circle cx="24" cy="24" r="20" stroke="#F26522" strokeWidth="3" fill="transparent" strokeDasharray="125" strokeDashoffset="31" />
+                      <circle cx="24" cy="24" r="20" stroke="#F97432" strokeWidth="3" fill="transparent" strokeDasharray="125" strokeDashoffset="31" />
                     </svg>
                     <span className="absolute text-[8px] font-mono font-bold text-white">80%</span>
                   </div>

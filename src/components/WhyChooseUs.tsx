@@ -22,9 +22,9 @@ const methods = [
       <div className="relative w-full h-full flex flex-col justify-center items-center">
         <div className="relative h-28 w-full max-w-[200px] border-l border-b border-gray-300">
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path d="M 0,90 Q 20,40 45,65 T 90,20 L 100,20 L 100,100 L 0,100 Z" fill="#F26522" fillOpacity="0.06" />
-            <path d="M 0,90 Q 20,40 45,65 T 90,20" fill="none" stroke="#F26522" strokeWidth="2.5" />
-            <circle cx="90" cy="20" r="3" className="fill-[#F26522]" />
+            <path d="M 0,90 Q 20,40 45,65 T 90,20 L 100,20 L 100,100 L 0,100 Z" fill="#F97432" fillOpacity="0.06" />
+            <path d="M 0,90 Q 20,40 45,65 T 90,20" fill="none" stroke="#F97432" strokeWidth="2.5" />
+            <circle cx="90" cy="20" r="3" className="fill-[#F97432]" />
           </svg>
           <div className="absolute top-2 right-2 flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -75,7 +75,7 @@ const methods = [
         <div className="relative w-24 h-24 flex items-center justify-center">
           <svg className="w-full h-full transform -rotate-90">
             <circle cx="48" cy="48" r="40" stroke="#f1f5f9" strokeWidth="3" fill="transparent" />
-            <circle cx="48" cy="48" r="40" stroke="#F26522" strokeWidth="4.5" fill="transparent" strokeDasharray="250" strokeDashoffset="75" className="transition-all duration-1000" />
+            <circle cx="48" cy="48" r="40" stroke="#F97432" strokeWidth="4.5" fill="transparent" strokeDasharray="250" strokeDashoffset="75" className="transition-all duration-1000" />
           </svg>
           <div className="absolute flex flex-col items-center justify-center">
             <span className="text-lg font-bold text-gray-900 leading-none">4x</span>
@@ -99,7 +99,7 @@ const methods = [
     visual: (
       <div className="relative w-full h-full flex flex-col justify-center items-center gap-3">
         <div className="flex gap-4">
-          <div className="w-10 h-10 rounded-full border border-dashed border-gray-300 flex items-center justify-center text-[#F26522]">
+          <div className="w-10 h-10 rounded-full border border-dashed border-gray-300 flex items-center justify-center text-[#F97432]">
             <HeartHandshake size={16} />
           </div>
           <div className="w-10 h-10 rounded-full border border-dashed border-gray-300 flex items-center justify-center text-gray-400">
@@ -119,7 +119,7 @@ export default function WhyChooseUs() {
   const [activeTab, setActiveTab] = useState(methods[0]);
 
   return (
-    <section id="why-choose-us" className="bg-[#FFFFFF] py-12 sm:py-16 border-b border-gray-200 overflow-hidden">
+    <section id="why-choose-us" className="bg-[#FAF8F5] py-12 sm:py-16 border-b border-gray-200 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none">
         
         {/* Header Block */}
@@ -153,22 +153,22 @@ export default function WhyChooseUs() {
                   onClick={() => setActiveTab(method)}
                   className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 flex items-center justify-between ${
                     isActive
-                      ? "bg-gray-50/80 border-[#F26522]/30 shadow-[0_4px_16px_rgba(242,101,34,0.01)]"
+                      ? "bg-gray-50/80 border-[#F97432]/30 shadow-[0_4px_16px_rgba(249,116,50,0.01)]"
                       : "bg-transparent border-transparent hover:bg-gray-50/50"
                   }`}
                 >
                   <div className="flex flex-col items-start">
-                    <span className={`text-[10px] font-bold font-mono tracking-wider ${isActive ? "text-[#F26522]" : "text-gray-400"}`}>
+                    <span className={`text-[10px] font-bold font-mono tracking-wider ${isActive ? "text-[#F97432]" : "text-gray-400"}`}>
                       PHASE 0{method.id}
                     </span>
                     <h3 className={`type-card-title text-base mt-1 transition-colors ${
-                      isActive ? "text-[#F26522]" : "text-gray-900"
+                      isActive ? "text-[#F97432]" : "text-gray-900"
                     }`}>
                       {method.title}
                     </h3>
                   </div>
                   <ChevronRight size={16} className={`text-gray-400 transition-transform duration-300 ${
-                    isActive ? "translate-x-1 text-[#F26522]" : "group-hover:translate-x-0.5"
+                    isActive ? "translate-x-1 text-[#F97432]" : "group-hover:translate-x-0.5"
                   }`} />
                 </button>
               );
@@ -208,7 +208,7 @@ export default function WhyChooseUs() {
               >
                 {/* Left text column */}
                 <div className="flex flex-col items-start text-left">
-                  <span className="bg-orange-50 border border-orange-100 text-[#F26522] text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+                  <span className="bg-orange-50 border border-orange-100 text-[#F97432] text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
                     {activeTab.metric}
                   </span>
                   
@@ -223,7 +223,7 @@ export default function WhyChooseUs() {
                   <div className="flex flex-col gap-2.5 w-full">
                     {activeTab.bullets.map((bullet, idx) => (
                       <div key={idx} className="flex gap-2.5 items-start">
-                        <CheckCircle2 size={14} className="text-[#F26522] shrink-0 mt-0.5" />
+                        <CheckCircle2 size={14} className="text-[#F97432] shrink-0 mt-0.5" />
                         <span className="text-gray-800 text-[12px] font-medium leading-tight">{bullet}</span>
                       </div>
                     ))}
@@ -231,7 +231,7 @@ export default function WhyChooseUs() {
                 </div>
 
                 {/* Right illustration column (reduced height & premium visual) */}
-                <div className="bg-[#F5F5F5] border border-gray-200/50 rounded-2xl p-5 h-[160px] sm:h-[180px] w-full flex items-center justify-center relative overflow-hidden transition-all duration-300">
+                <div className="bg-[#FAF8F5] border border-gray-200/50 rounded-2xl p-5 h-[160px] sm:h-[180px] w-full flex items-center justify-center relative overflow-hidden transition-all duration-300">
                   {activeTab.visual}
                 </div>
               </motion.div>

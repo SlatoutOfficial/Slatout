@@ -49,9 +49,9 @@ export function PrimaryCta({
       href={href}
       onClick={onClick}
       className={clsx(
-        "group inline-flex items-center gap-2 bg-[#F26522] text-white type-button text-[13px] sm:text-[14px] rounded-full pl-5 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2",
-        "shadow-[0_1px_0_rgba(0,0,0,0.04)] hover:shadow-[0_10px_28px_rgba(242,101,34,0.28)]",
-        "hover:bg-[#FE7004] hover:-translate-y-0.5 active:translate-y-0",
+        "group inline-flex items-center gap-2 bg-[#F97432] text-white type-button text-[13px] sm:text-[14px] rounded-full pl-5 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2",
+        "shadow-[0_1px_0_rgba(0,0,0,0.04)] hover:shadow-[0_10px_28px_rgba(249,116,50,0.28)]",
+        "hover:bg-[#F97432] hover:-translate-y-0.5 active:translate-y-0",
         "transition-all duration-500 ease-out-expo",
         fullWidth && "w-full justify-between sm:w-auto sm:justify-start",
         className
@@ -63,7 +63,7 @@ export function PrimaryCta({
           <span className="h-[20px] flex items-center leading-none">{children}</span>
         </span>
       </span>
-      <span className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center text-[#F26522] transition-transform duration-500 ease-custom group-hover:-rotate-45 group-hover:scale-105">
+      <span className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center text-[#F97432] transition-transform duration-500 ease-custom group-hover:-rotate-45 group-hover:scale-105">
         <ArrowRight size={14} className="stroke-[2.5]" />
       </span>
     </CtaAnchor>
@@ -111,17 +111,17 @@ export function TextCta({
   tone = "dark",
 }: CtaCommon & { tone?: "dark" | "muted" | "light" | "brand" }) {
   const tones = {
-    dark: "text-gray-900 hover:text-[#F26522]",
-    muted: "text-gray-600 hover:text-[#F26522]",
+    dark: "text-gray-900 hover:text-[#F97432]",
+    muted: "text-gray-600 hover:text-[#F97432]",
     light: "text-white/90 hover:text-white",
-    brand: "text-[#F26522] hover:text-[#FE7004]",
+    brand: "text-[#F97432] hover:text-[#F97432]",
   };
 
   const underline = {
-    dark: "bg-gray-900 group-hover:bg-[#F26522]",
-    muted: "bg-gray-400 group-hover:bg-[#F26522]",
+    dark: "bg-gray-900 group-hover:bg-[#F97432]",
+    muted: "bg-gray-400 group-hover:bg-[#F97432]",
     light: "bg-white/50 group-hover:bg-white",
-    brand: "bg-[#F26522]",
+    brand: "bg-[#F97432]",
   };
 
   return (
@@ -157,18 +157,20 @@ export function CardCta({
   href,
   children,
   className,
-}: CtaCommon) {
+  dark,
+}: CtaCommon & { dark?: boolean }) {
   return (
     <CtaAnchor
       href={href}
       className={clsx(
-        "group/link inline-flex items-center gap-1.5 type-nav text-[11px] text-gray-900 hover:text-[#F26522] transition-colors duration-300",
+        "group/link inline-flex items-center gap-1.5 type-nav text-[11px] transition-colors duration-300",
+        dark ? "text-white hover:text-[#F97432]" : "text-gray-900 hover:text-[#F97432]",
         className
       )}
     >
       <span className="relative">
         {children}
-        <span className="absolute left-0 -bottom-px h-[1px] w-full origin-left scale-x-0 bg-[#F26522] transition-transform duration-400 ease-out-expo group-hover/link:scale-x-100" />
+        <span className="absolute left-0 -bottom-px h-[1px] w-full origin-left scale-x-0 bg-[#F97432] transition-transform duration-400 ease-out-expo group-hover/link:scale-x-100" />
       </span>
       <ArrowRight
         size={13}

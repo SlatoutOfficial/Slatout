@@ -4,13 +4,14 @@ import React from "react";
 import Navbar from "../../components/Navbar";
 import { ArrowRight, CheckCircle2, ShieldCheck, Heart, Sparkles, Trophy } from "lucide-react";
 import { WordRevealHeading, FadeUp } from "../../components/Motion";
+import SiteEnd from "../../components/SiteEnd";
 
 export default function AboutPage() {
   const smallImg = "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260516_090123_74be96d4-9c1b-40cf-932a-96f4f4babed3.png&w=1280&q=85";
   const largeImg = "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260516_090133_c157d30b-a99a-4477-bec1-a446149ec3f2.png&w=1280&q=85";
 
   return (
-    <main className="min-h-screen bg-[#F5F5F5]">
+    <main className="min-h-screen bg-[#FAF8F5]">
       <Navbar />
 
       {/* Hero Section */}
@@ -27,7 +28,7 @@ export default function AboutPage() {
         <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none relative z-10">
           <div className="flex flex-col items-start gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-[#F26522] shadow-sm shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-[#F97432] shadow-sm shrink-0">
                 <Sparkles size={18} className="stroke-[1.5]" />
               </div>
               <span className="type-label text-[12px] border border-white/20 rounded-full px-3.5 py-1 text-white/90">
@@ -66,7 +67,7 @@ export default function AboutPage() {
                   />
                 </div>
                 <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-gray-50 border border-gray-100 shadow-[0_4px_16px_rgba(0,0,0,0.02)] p-6 flex flex-col justify-between">
-                  <Trophy size={24} className="text-[#F26522] stroke-[1.5]" />
+                  <Trophy size={24} className="text-[#F97432] stroke-[1.5]" />
                   <div>
                     <span className="text-3xl font-bold text-gray-900 block tracking-tight">99+</span>
                     <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider block mt-1">Lighthouse Speed</span>
@@ -108,7 +109,7 @@ export default function AboutPage() {
                   const Icon = item.icon;
                   return (
                     <div key={idx} className="flex gap-4 p-5 rounded-2xl border border-gray-100 hover:border-gray-200/80 transition-colors duration-300">
-                      <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F26522] shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-[#F97432] shrink-0">
                         <Icon size={18} className="stroke-[1.5]" />
                       </div>
                       <div className="flex flex-col gap-1">
@@ -123,6 +124,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <SiteEnd />
     </main>
   );
 }

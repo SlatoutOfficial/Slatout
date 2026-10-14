@@ -1,11 +1,12 @@
-import GlobalCTA from "./GlobalCTA";
+import React from "react";
+import CTA from "./CTA";
 import Footer from "./Footer";
 
-/** Global end-of-page stack: Start building CTA → Footer */
+/** Global end-of-page stack: Standalone CTA and Footer modules */
 export default function SiteEnd() {
   return (
     <>
-      <GlobalCTA />
+      <CTA />
       <Footer />
     </>
   );

@@ -1,290 +1,317 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { Terminal, TrendingUp, Layers, Cpu, Compass, BarChart3 } from "lucide-react";
-import { TextCta } from "./CtaSystem";
+import { useEffect, useRef, useState } from "react";
+import {
+  Code2,
+  TrendingUp,
+  PenTool,
+  Cloud,
+  ShieldCheck,
+  Database,
+  Bot,
+  LineChart,
+  type LucideIcon,
+} from "lucide-react";
 
-// Service list matching the 6 sides, branded with Slatout's Charcoal-Black and Orange theme
-const cubeServices = [
-  {
-    title: "Development",
-    sub: "Web & Mobile Apps",
-    gradient: "from-gray-950 via-gray-900 to-black",
-    icon: Terminal,
-    accentColor: "text-[#F26522]",
-    borderColor: "border-white/10"
-  },
-  {
-    title: "Growth Marketing",
-    sub: "Acquisition & SEO",
-    gradient: "from-[#111111] via-[#1a1a1a] to-black",
-    icon: TrendingUp,
-    accentColor: "text-[#F26522]",
-    borderColor: "border-[#F26522]/30"
-  },
-  {
-    title: "UI/UX Design",
-    sub: "Product Interfaces",
-    gradient: "from-gray-950 via-[#181818] to-black",
-    icon: Layers,
-    accentColor: "text-[#F26522]",
-    borderColor: "border-white/10"
-  },
-  {
-    title: "AI & Automation",
-    sub: "Workflows & Agents",
-    gradient: "from-[#0d0d0d] via-gray-900 to-black",
-    icon: Cpu,
-    accentColor: "text-[#F26522]",
-    borderColor: "border-[#F26522]/30"
-  },
-  {
-    title: "Brand Strategy",
-    sub: "Identity Systems",
-    gradient: "from-gray-950 via-[#1c1c1c] to-black",
-    icon: Compass,
-    accentColor: "text-[#F26522]",
-    borderColor: "border-white/10"
-  },
-  {
-    title: "Data & Analytics",
-    sub: "Conversion Metrics",
-    gradient: "from-[#121212] via-gray-900 to-black",
-    icon: BarChart3,
-    accentColor: "text-[#F26522]",
-    borderColor: "border-[#F26522]/30"
-  }
+type Face = { title: string; desc: string; Icon: LucideIcon };
+
+const FACES: Face[] = [
+  { title: "Development", desc: "Custom web, mobile & cloud software.", Icon: Code2 },
+  { title: "Growth Marketing", desc: "Performance ads & brand scaling.", Icon: TrendingUp },
+  { title: "UI/UX Design", desc: "Stunning, high-conversion design.", Icon: PenTool },
+  { title: "Cloud Native", desc: "Secure hosting & devops setup.", Icon: Cloud },
+  { title: "Cybersecurity", desc: "Systems shielding & code audits.", Icon: ShieldCheck },
+  { title: "Data Platform", desc: "Modern analytics pipelines.", Icon: Database },
+  { title: "AI Automation", desc: "Intelligent chatbot & workflow bots.", Icon: Bot },
+  { title: "Analytics", desc: "BI & growth funnel tracking.", Icon: LineChart },
 ];
 
+const W = 165;           // Width of carousel cards
+const H = 245;           // Height of carousel cards
+const R = 210;           // Radius of the carousel circle
+
+function FaceContent({ face, isActive }: { face: Face; isActive: boolean }) {
+  const { Icon } = face;
+  return (
+    <div
+      className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4"
+      style={{ backfaceVisibility: "hidden" }}
+    >
+      <div className={`flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-300 ${
+        isActive 
+          ? "bg-[#F97432] text-white shadow-[0_4px_12px_rgba(249,116,50,0.2)]" 
+          : "bg-[#F97432]/10 text-[#F97432] border border-[#F97432]/15 shadow-[0_4px_12px_rgba(249,116,50,0.08)]"
+      }`}>
+        <Icon className="h-5.5 w-5.5" strokeWidth={2} />
+      </div>
+      
+      <div className="flex flex-col items-center gap-1.5 mt-1">
+        <span className="text-[12px] font-extrabold uppercase tracking-wider text-gray-800 text-center select-none max-w-[145px] leading-snug">
+          {face.title}
+        </span>
+        <span className={`text-[10px] text-gray-500 text-center select-none max-w-[140px] leading-tight transition-all duration-300 ${
+          isActive ? "opacity-100 max-h-[50px] scale-100" : "opacity-0 max-h-0 scale-95 overflow-hidden"
+        }`}>
+          {face.desc}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function CarouselCard({
+  face,
+  transform,
+  opacity,
+  scale,
+  isActive,
+}: {
+  face: Face;
+  transform: string;
+  opacity: number;
+  scale: number;
+  isActive: boolean;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      className="absolute left-1/2 top-1/2 cursor-pointer"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        width: W,
+        height: H,
+        marginLeft: -W / 2,
+        marginTop: -H / 2,
+        transformOrigin: "50% 50%",
+        transform: `${transform} scale(${scale * (hovered ? 1.06 : 1)})`,
+        transformStyle: "preserve-3d",
+        opacity: opacity,
+        transition: "opacity 0.25s ease, transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1)",
+        pointerEvents: opacity < 0.3 ? "none" : "auto",
+        backfaceVisibility: "hidden",
+        zIndex: hovered ? 50 : (isActive ? 40 : 10),
+      }}
+    >
+      <div
+        className="relative h-full w-full rounded-2xl border transition-all duration-300 overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.8) 100%)",
+          borderColor: hovered
+            ? "#1A1A24"
+            : (isActive ? "rgba(249, 116, 50, 0.35)" : "rgba(0, 0, 0, 0.05)"),
+          boxShadow: hovered
+            ? "0 20px 40px -8px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9)"
+            : (isActive
+                ? "0 15px 35px -8px rgba(249, 116, 50, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9)"
+                : "0 10px 30px -10px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8)"),
+        }}
+      >
+        <div className={`absolute inset-0 rounded-2xl border transition-colors duration-300 pointer-events-none ${
+          hovered ? "border-black/[0.03]" : "border-white/40"
+        }`} />
+        <FaceContent face={face} isActive={isActive || hovered} />
+      </div>
+    </div>
+  );
+}
+
 export default function ServiceCube() {
-  const [rotation, setRotation] = useState({ x: -20, y: 35 });
-  const [translateZ, setTranslateZ] = useState(140); // responsive translateZ distance
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const startY = useRef(0);
-  const startRotX = useRef(-20);
-  const startRotY = useRef(35);
-  const animationFrameId = useRef<number | null>(null);
-  const lastActivityTime = useRef<number>(Date.now());
+  const [rot, setRot] = useState({ x: -10, y: 0 });
+  const [activeFace, setActiveFace] = useState(0);
 
-  // Handle responsive translation depth
+  const dragging = useRef(false);
+  const last = useRef({ x: 0, y: 0 });
+  const auto = useRef(true);
+  const stepRef = useRef(0);
+  const rotRef = useRef({ x: -10, y: 0 });
+  const autoTimeoutRef = useRef<number | null>(null);
+
+  // Sync ref with state
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setTranslateZ(110); // 220px width cube
-      } else if (window.innerWidth < 1024) {
-        setTranslateZ(130); // 260px width cube
-      } else {
-        setTranslateZ(160); // 320px width cube
+    rotRef.current = rot;
+  }, [rot]);
+
+  useEffect(() => {
+    return () => {
+      if (autoTimeoutRef.current) window.clearTimeout(autoTimeoutRef.current);
+    };
+  }, []);
+
+  // Slide transition interval
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (auto.current && !dragging.current) {
+        stepRef.current += 1;
+        setActiveFace(((stepRef.current % 8) + 8) % 8);
       }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    }, 3800);
+    return () => clearInterval(interval);
   }, []);
 
-  // Global mousemove/mouseup to prevent cursor sticking outside canvas
+  // Interpolation loop
   useEffect(() => {
-    const handleGlobalMouseMove = (e: MouseEvent) => {
-      if (!isDragging.current) return;
-      lastActivityTime.current = Date.now();
-
-      const deltaX = e.clientX - startX.current;
-      const deltaY = e.clientY - startY.current;
-
-      const nextRotY = startRotY.current + deltaX * 0.4;
-      const nextRotX = startRotX.current - deltaY * 0.4;
-
-      setRotation({
-        x: Math.max(-80, Math.min(80, nextRotX)), // Clamp tilt to prevent inversion
-        y: nextRotY
+    let raf = 0;
+    const loop = () => {
+      setRot((r) => {
+        if (auto.current) {
+          const targetY = -stepRef.current * 45; // 45 degrees per step for 8 faces
+          const newY = r.y + (targetY - r.y) * 0.075;
+          return { x: -10, y: newY };
+        }
+        return r;
       });
+      raf = requestAnimationFrame(loop);
     };
-
-    const handleGlobalMouseUp = () => {
-      isDragging.current = false;
-    };
-
-    window.addEventListener("mousemove", handleGlobalMouseMove);
-    window.addEventListener("mouseup", handleGlobalMouseUp);
-    return () => {
-      window.removeEventListener("mousemove", handleGlobalMouseMove);
-      window.removeEventListener("mouseup", handleGlobalMouseUp);
-    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
   }, []);
 
-  // Global touchmove/touchend for mobile
-  useEffect(() => {
-    const handleGlobalTouchMove = (e: TouchEvent) => {
-      if (!isDragging.current) return;
-      lastActivityTime.current = Date.now();
+  const start = (x: number, y: number) => {
+    dragging.current = true;
+    auto.current = false;
+    last.current = { x, y };
+  };
 
-      const deltaX = e.touches[0].clientX - startX.current;
-      const deltaY = e.touches[0].clientY - startY.current;
+  const move = (x: number, y: number) => {
+    if (!dragging.current) return;
+    const dx = x - last.current.x;
+    last.current = { x, y };
+    setRot((r) => ({
+      x: -10,
+      y: r.y + dx * 0.4,
+    }));
+  };
 
-      const nextRotY = startRotY.current + deltaX * 0.4;
-      const nextRotX = startRotX.current - deltaY * 0.4;
+  const end = () => {
+    dragging.current = false;
+    const currentY = rotRef.current.y;
+    // Snap to the closest 45 degree step
+    const closestStep = Math.round(-currentY / 45);
+    stepRef.current = closestStep;
+    setActiveFace(((closestStep % 8) + 8) % 8);
 
-      setRotation({
-        x: Math.max(-80, Math.min(80, nextRotX)),
-        y: nextRotY
-      });
-    };
-
-    const handleGlobalTouchEnd = () => {
-      isDragging.current = false;
-    };
-
-    window.addEventListener("touchmove", handleGlobalTouchMove, { passive: false });
-    window.addEventListener("touchend", handleGlobalTouchEnd);
-    return () => {
-      window.removeEventListener("touchmove", handleGlobalTouchMove);
-      window.removeEventListener("touchend", handleGlobalTouchEnd);
-    };
-  }, []);
-
-  // Slowly auto-rotate the cube when user is inactive
-  useEffect(() => {
-    const autoSpin = () => {
-      const timeSinceActive = Date.now() - lastActivityTime.current;
-      if (!isDragging.current && timeSinceActive > 1500) {
-        setRotation((prev) => ({
-          x: prev.x + Math.sin(Date.now() * 0.001) * 0.05, // Subtle bounce on X
-          y: prev.y + 0.15 // Constant slow spin on Y
-        }));
-      }
-      animationFrameId.current = requestAnimationFrame(autoSpin);
-    };
-
-    animationFrameId.current = requestAnimationFrame(autoSpin);
-    return () => {
-      if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
-    };
-  }, []);
-
-  const startDrag = (clientX: number, clientY: number) => {
-    isDragging.current = true;
-    startX.current = clientX;
-    startY.current = clientY;
-    startRotX.current = rotation.x;
-    startRotY.current = rotation.y;
-    lastActivityTime.current = Date.now();
+    if (autoTimeoutRef.current) window.clearTimeout(autoTimeoutRef.current);
+    autoTimeoutRef.current = window.setTimeout(() => {
+      if (!dragging.current) auto.current = true;
+    }, 2000);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center select-none cursor-grab active:cursor-grabbing w-full h-[320px] sm:h-[380px] lg:h-[480px]">
-      
-      {/* 3D Perspective Wrapper */}
-      <div 
-        className="w-[220px] h-[220px] sm:w-[260px] sm:h-[260px] lg:w-[320px] lg:h-[320px] relative animate-float-gentle"
-        style={{ 
-          perspective: "1000px",
-          WebkitPerspective: "1000px",
-          transformStyle: "preserve-3d",
-          WebkitTransformStyle: "preserve-3d"
+    <>
+      <style>{`
+        @keyframes slat-spin-ring {
+          from { transform: rotateX(75deg) rotateZ(0deg); }
+          to { transform: rotateX(75deg) rotateZ(360deg); }
+        }
+      `}</style>
+      <div
+        className="relative mx-auto flex h-[580px] w-full max-w-[580px] cursor-grab select-none items-center justify-center active:cursor-grabbing"
+        style={{ perspective: "1100px" }}
+        onMouseDown={(e) => start(e.clientX, e.clientY)}
+        onMouseMove={(e) => move(e.clientX, e.clientY)}
+        onMouseUp={end}
+        onMouseLeave={end}
+        onTouchStart={(e) => {
+          const t = e.touches[0];
+          if (t) start(t.clientX, t.clientY);
         }}
-        onMouseDown={(e) => startDrag(e.clientX, e.clientY)}
-        onTouchStart={(e) => startDrag(e.touches[0].clientX, e.touches[0].clientY)}
+        onTouchMove={(e) => {
+          const t = e.touches[0];
+          if (t) move(t.clientX, t.clientY);
+        }}
+        onTouchEnd={end}
       >
-        
-        {/* Cube Assembly */}
-        <div
-          className="w-full h-full absolute transition-transform duration-100 ease-out"
-          style={{
-            transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-            WebkitTransform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-            transformStyle: "preserve-3d",
-            WebkitTransformStyle: "preserve-3d",
-          }}
-        >
-          {cubeServices.map((service, idx) => {
-            // Determine the 3D transform for each of the 6 sides
-            let transformString = "";
-            switch (idx) {
-              case 0: // Front
-                transformString = `rotateY(0deg) translateZ(${translateZ}px)`;
-                break;
-              case 1: // Right
-                transformString = `rotateY(90deg) translateZ(${translateZ}px)`;
-                break;
-              case 2: // Back
-                transformString = `rotateY(180deg) translateZ(${translateZ}px)`;
-                break;
-              case 3: // Left
-                transformString = `rotateY(-90deg) translateZ(${translateZ}px)`;
-                break;
-              case 4: // Top
-                transformString = `rotateX(90deg) translateZ(${translateZ}px)`;
-                break;
-              case 5: // Bottom
-                transformString = `rotateX(-90deg) translateZ(${translateZ}px)`;
-                break;
-            }
+        {/* ambient glow */}
+        <div className="pointer-events-none absolute h-[540px] w-[540px] rounded-full bg-[#F97432]/20 blur-[130px]" />
 
-            const IconComponent = service.icon;
 
+
+        {/* 3D Carousel Container */}
+        <div style={{ transformStyle: "preserve-3d" }}>
+          <div
+            className="relative"
+            style={{
+              width: W,
+              height: H,
+              transformStyle: "preserve-3d",
+              transform: `rotateX(${rot.x}deg) rotateY(${rot.y}deg)`,
+            }}
+          >
+            {FACES.map((face, i) => {
+              // Calculate relative Y rotation angle of card i relative to the camera view (0 deg)
+              let relativeAngle = (rot.y + i * 45) % 360;
+              if (relativeAngle > 180) relativeAngle -= 360;
+              if (relativeAngle < -180) relativeAngle += 360;
+              const absAngle = Math.abs(relativeAngle);
+
+              // Fade out and scale down cards as they rotate away from front stage
+              let opacity = 0;
+              let scale = 0.8;
+
+              if (absAngle < 90) {
+                // Front half of the carousel ring (fully visible in front, fading on sides)
+                const ratio = Math.cos(absAngle * Math.PI / 180);
+                opacity = 0.2 + 0.8 * ratio;
+                scale = 0.8 + 0.2 * ratio;
+              } else {
+                // Back half of the carousel (completely hidden to avoid backward/reversed text showing)
+                opacity = 0;
+                scale = 0.8;
+              }
+
+              return (
+                <CarouselCard
+                  key={face.title}
+                  face={face}
+                  transform={`rotateY(${i * 45}deg) translateZ(${R}px)`}
+                  opacity={opacity}
+                  scale={scale}
+                  isActive={((activeFace % 8) + 8) % 8 === i}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Navigation Dots (8 Services) */}
+        <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-2 z-30">
+          {Array.from({ length: 8 }).map((_, i) => {
+            const isActive = ((activeFace % 8) + 8) % 8 === i;
             return (
-              <div
-                key={idx}
-                className={`absolute inset-0 bg-gradient-to-br ${service.gradient} ${service.borderColor} rounded-none border p-5 sm:p-6 flex flex-col justify-between text-white shadow-2xl overflow-hidden`}
-                style={{
-                  transform: transformString,
-                  WebkitTransform: transformString,
-                  backfaceVisibility: "hidden",
-                  WebkitBackfaceVisibility: "hidden",
+              <button
+                key={i}
+                onClick={() => {
+                  auto.current = false;
+                  const currentActiveIndex = ((stepRef.current % 8) + 8) % 8;
+                  let diff = i - currentActiveIndex;
+                  if (diff > 4) diff -= 8;
+                  if (diff < -4) diff += 8;
+                  
+                  stepRef.current += diff;
+                  setActiveFace(i);
+                  
+                  if (autoTimeoutRef.current) window.clearTimeout(autoTimeoutRef.current);
+                  autoTimeoutRef.current = window.setTimeout(() => {
+                    auto.current = true;
+                  }, 4000);
                 }}
-              >
-                {/* Backface glow */}
-                <div className="absolute top-0 right-0 w-[80px] h-[80px] bg-white/5 rounded-full blur-xl pointer-events-none" />
-
-                {/* Top Row: Subtext */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                  <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-white/60">
-                    {service.sub}
-                  </span>
-                  <span className="text-[10px] font-bold text-white/30">
-                    0{idx + 1}
-                  </span>
-                </div>
-
-                {/* Middle Row: Large Icon with Orange Drop Shadow */}
-                <div className="flex justify-center items-center py-3">
-                  <IconComponent className={`w-12 h-12 sm:w-16 sm:h-16 stroke-[1.2] ${service.accentColor} filter drop-shadow-[0_0_15px_rgba(242,101,34,0.35)]`} />
-                </div>
-
-                {/* Bottom Row: Title */}
-                <div className="flex flex-col gap-0.5">
-                  <h3 className="type-card-title text-[18px] sm:text-[22px] text-white">
-                    {service.title}
-                  </h3>
-                  <span className="text-[9px] sm:text-[10px] text-white/40 font-semibold tracking-widest uppercase">
-                    Slatout Services
-                  </span>
-                </div>
-              </div>
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  isActive 
+                    ? "w-6 bg-[#F97432]" 
+                    : "w-1.5 bg-gray-300 hover:bg-gray-400"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
             );
           })}
         </div>
 
-      </div>
-
-      {/* Redesigned Text Design & Small CTA Row */}
-      <div className="flex items-center gap-3.5 mt-6 text-[11px] sm:text-[12px] font-medium tracking-wide">
-        {/* Drag Indicator Badge */}
-        <span className="text-gray-500 flex items-center gap-1.5 opacity-80">
-          <svg className="w-3 h-3 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 013 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1" />
-          </svg>
-          Drag to Interact
+        <span className="pointer-events-none absolute bottom-8 text-[9px] uppercase tracking-widest text-gray-500 font-bold opacity-60">
+          Drag to explore
         </span>
-        
-        {/* Elegant Minimal Divider */}
-        <div className="w-[1px] h-3 bg-gray-300" />
-        
-        <TextCta href="#services" className="!text-[11px] sm:!text-[12px]">
-          Explore services
-        </TextCta>
       </div>
-    </div>
+    </>
   );
 }

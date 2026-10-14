@@ -24,7 +24,7 @@ export default function AuroraMesh() {
 
     // Rainbow Aurora palette containing premium soft glows
     const colors = [
-      { r: 242, g: 101, b: 34 },  // #F26522 Slatout Orange
+      { r: 242, g: 101, b: 34 },  // #F97432 Slatout Orange
       { r: 138, g: 43, b: 226 },  // BlueViolet
       { r: 0, g: 191, b: 255 },    // DeepSkyBlue
       { r: 50, g: 205, b: 50 },    // LimeGreen
@@ -45,7 +45,7 @@ export default function AuroraMesh() {
       if (!canvas || !ctx) return;
 
       // Draw light gray base color
-      ctx.fillStyle = "#EFEFEF";
+      ctx.fillStyle = "#FAF8F5";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Move points and paint overlapping radial gradients
@@ -61,7 +61,7 @@ export default function AuroraMesh() {
         const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
         gradient.addColorStop(0, p.color);
         gradient.addColorStop(0.5, p.color.replace("0.16", "0.08"));
-        gradient.addColorStop(1, "rgba(239, 239, 239, 0)");
+        gradient.addColorStop(1, "rgba(250, 248, 245, 0)");
 
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
