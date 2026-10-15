@@ -426,6 +426,43 @@
   opacity: calc(var(--land, 1) * 0.45);
 }
 
+/* Service 3D Tower Scene (Matches SLATOUT Redesign Architecture) */
+.sh-scene .floor {
+  background: linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px) 0 0/58px 58px,
+              linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px) 0 0/58px 58px;
+  -webkit-mask-image: radial-gradient(closest-side, #000 8%, transparent 72%);
+  mask-image: radial-gradient(closest-side, #000 8%, transparent 72%);
+}
+
+.sh-scene .fc {
+  background: #f5f3ed;
+  border: 1.5px solid rgba(23, 23, 20, 0.25);
+}
+
+.sh-scene .th {
+  background: #e5e1d7;
+  border: 1px solid rgba(23, 23, 20, 0.12);
+}
+
+.sh-scene .art * {
+  stroke: #171714;
+}
+
+.sh-scene .art .a {
+  stroke: #ff5a1f;
+}
+
+.sh-scene .pl.hot .fc {
+  background: #ffffff;
+  border-color: #ff5a1f;
+  box-shadow: 0 0 70px rgba(255, 90, 31, 0.55), inset 0 0 35px rgba(255, 90, 31, 0.15);
+}
+
+.sh-scene .pl.hot .th {
+  background: #e04e18;
+  border-color: #ff7a00;
+}
+
 /* Hero Logo Slabs */
 .hp .fc {
   background: transparent;

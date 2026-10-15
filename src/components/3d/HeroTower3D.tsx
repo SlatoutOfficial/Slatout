@@ -1,11 +1,49 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { SYSTEM_SERVICES, SystemService } from "@/data/systemsData";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function HeroTower3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const towerRef = useRef<HTMLDivElement>(null);
   const plateRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  // Default to Service 02: Technology & AI Solutions (matching user reference screenshot)
+  const [activeServiceIdx, setActiveServiceIdx] = useState<number>(1);
+  const currentService: SystemService = SYSTEM_SERVICES[activeServiceIdx] || SYSTEM_SERVICES[1];
+
+  // Set pathLength="1" on all SVG children so stroke-dashoffset works identically to the original
+  useEffect(() => {
+    if (svgRef.current) {
+      const elements = svgRef.current.querySelectorAll("path, rect, circle, line, polyline, polygon");
+      elements.forEach((el) => {
+        el.setAttribute("pathLength", "1");
+      });
+    }
+
+    // Trigger stroke draw animation (0 to 1 over 1.2s)
+    const topPlate = plateRefs.current[2];
+    if (topPlate) {
+      topPlate.style.setProperty("--draw", "0");
+      let start: number | null = null;
+      let frameId: number | null = null;
+
+      const step = (now: number) => {
+        if (!start) start = now;
+        const progress = Math.min(1, (now - start) / 1200);
+        topPlate.style.setProperty("--draw", progress.toFixed(3));
+        if (progress < 1) {
+          frameId = requestAnimationFrame(step);
+        }
+      };
+      frameId = requestAnimationFrame(step);
+      return () => {
+        if (frameId) cancelAnimationFrame(frameId);
+      };
+    }
+  }, [activeServiceIdx]);
 
   useEffect(() => {
     const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -14,31 +52,19 @@ export default function HeroTower3D() {
 
     const plates = plateRefs.current.filter(Boolean) as HTMLDivElement[];
 
-    // Initialize plates with --land: 0 and .nt
-    plates.forEach((p, i) => {
-      p.classList.add("nt");
-      p.style.setProperty("--gap", "46px");
-      p.style.setProperty("--land", "0");
-
-      const delay = isReduced ? 0 : 350 + i * 260;
-      setTimeout(() => {
-        p.classList.remove("nt");
-        p.style.transition = "transform 1.2s cubic-bezier(0.2, 0.9, 0.2, 1)";
-        p.style.setProperty("--land", "1");
-        setTimeout(() => {
-          p.style.transition = "";
-        }, 1300);
-      }, delay);
+    // Set initial landing state
+    plates.forEach((p) => {
+      p.style.setProperty("--land", "1");
+      p.style.setProperty("--gap", "58px");
     });
 
     if (isReduced) return;
 
-    // Mouse / Pointer Parallax & Vertical Expansion Loop
-    // Exactly matches SLATOUT — Out of the Box Website Redesign.html lines 448-456:
-    // T.s = max(0.1, min(1, 1.1 - d/520))
-    // gap = 46 + C.s * 70 (resting ~60px, near-hover ~116px)
-    const T = { x: 0, y: 0, s: 0.2 };
-    const C = { x: 0, y: 0, s: 0.2 };
+    // Mouse / Pointer Parallax & Proximity Hover Expansion Loop
+    // Matches original SLATOUT sh-scene:
+    // gap = 58 + C.s * 46px (resting 58px -> close hover 104px)
+    const T = { x: 0, y: 0, s: 0 };
+    const C = { x: 0, y: 0, s: 0 };
     let rafId: number | null = null;
 
     const hero = document.getElementById("hero") || containerRef.current?.closest("section") || document.body;
@@ -52,13 +78,7 @@ export default function HeroTower3D() {
 
       T.x = Math.max(-1, Math.min(1, ((e.clientX - cx) / window.innerWidth) * 2.6));
       T.y = Math.max(-1, Math.min(1, ((e.clientY - cy) / window.innerHeight) * 2.6));
-      T.s = Math.max(0.1, Math.min(1, 1.1 - d / 520));
-
-      if (hero) {
-        const hr = hero.getBoundingClientRect();
-        hero.style.setProperty("--mx", `${e.clientX - hr.left}px`);
-        hero.style.setProperty("--my", `${e.clientY - hr.top}px`);
-      }
+      T.s = Math.max(0, Math.min(1, 1.1 - d / 520));
 
       if (!rafId) rafId = requestAnimationFrame(tk);
     };
@@ -66,7 +86,7 @@ export default function HeroTower3D() {
     const handlePointerLeave = () => {
       T.x = 0;
       T.y = 0;
-      T.s = 0.2;
+      T.s = 0;
       if (!rafId) rafId = requestAnimationFrame(tk);
     };
 
@@ -80,7 +100,7 @@ export default function HeroTower3D() {
         ht.style.setProperty("--py", C.y.toFixed(3));
       }
 
-      const gapStr = `${(46 + C.s * 70).toFixed(1)}px`;
+      const gapStr = `${(58 + C.s * 46).toFixed(1)}px`;
       plates.forEach((p) => {
         p.style.setProperty("--gap", gapStr);
       });
@@ -103,25 +123,36 @@ export default function HeroTower3D() {
     };
   }, []);
 
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveServiceIdx((prev) => (prev - 1 + SYSTEM_SERVICES.length) % SYSTEM_SERVICES.length);
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveServiceIdx((prev) => (prev + 1) % SYSTEM_SERVICES.length);
+  };
+
   return (
     <div
       ref={containerRef}
-      className="scene relative w-full flex items-center justify-center select-none"
+      className="sh-scene relative w-full flex flex-col items-center justify-center select-none"
       style={{
         perspective: "1500px",
-        minHeight: "min(60svh, 560px)",
+        minHeight: "min(62svh, 560px)",
       }}
     >
+      {/* 3D Isometric Service Tower Stage */}
       <div
         ref={towerRef}
-        id="hero-tw"
-        className="tw hp-tw relative aspect-square preserve-3d"
+        id="sh-tw"
+        className="tw relative aspect-square preserve-3d"
         style={{
-          width: "min(36vw, 340px)",
-          transform: `rotateX(calc(58deg + var(--py, 0) * 7deg)) rotateZ(calc(-38deg + var(--px, 0) * 12deg))`,
+          width: "min(34vw, 330px)",
+          transform: `translateY(calc(var(--py, 0) * 12px)) rotateX(calc(60deg + var(--py, 0) * 7deg)) rotateZ(calc(-40deg + var(--px, 0) * 12deg))`,
         }}
       >
-        {/* Isometric Floor Grid inside the 3D tower stage matching the original HTML */}
+        {/* Isometric 3D Floor Grid Plane */}
         <div
           className="floor absolute pointer-events-none"
           style={{
@@ -131,21 +162,14 @@ export default function HeroTower3D() {
             height: "1800px",
             margin: "-900px 0 0 -900px",
             transform: "translateZ(-6px)",
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: "72px 72px",
-            WebkitMaskImage: "radial-gradient(closest-side, #000 8%, transparent 68%)",
-            maskImage: "radial-gradient(closest-side, #000 8%, transparent 68%)",
           }}
         />
 
-        {/* Plate 0: Low Slab */}
+        {/* Plate 0: Base dim foundation slab */}
         <div
           ref={(el) => { plateRefs.current[0] = el; }}
-          className="pl hp low"
-          style={{ "--i": 0, "--gap": "46px", "--land": 0 } as React.CSSProperties}
+          className="pl dim"
+          style={{ "--i": 0, "--gap": "58px", "--land": 1 } as React.CSSProperties}
         >
           <div className="th" style={{ transform: "translateZ(-11.2px)" }} />
           <div className="th" style={{ transform: "translateZ(-9.6px)" }} />
@@ -157,11 +181,11 @@ export default function HeroTower3D() {
           <div className="fc" />
         </div>
 
-        {/* Plate 1: Mid Slab (Solid Vibrant Orange Ember) */}
+        {/* Plate 1: Middle dim layer slab */}
         <div
           ref={(el) => { plateRefs.current[1] = el; }}
-          className="pl hp mid"
-          style={{ "--i": 1, "--gap": "46px", "--land": 0 } as React.CSSProperties}
+          className="pl dim"
+          style={{ "--i": 1, "--gap": "58px", "--land": 1 } as React.CSSProperties}
         >
           <div className="th" style={{ transform: "translateZ(-11.2px)" }} />
           <div className="th" style={{ transform: "translateZ(-9.6px)" }} />
@@ -170,30 +194,60 @@ export default function HeroTower3D() {
           <div className="th" style={{ transform: "translateZ(-4.8px)" }} />
           <div className="th" style={{ transform: "translateZ(-3.2px)" }} />
           <div className="th" style={{ transform: "translateZ(-1.6px)" }} />
-          <div className="fc flex items-center justify-center p-6">
-            <img
-              src="/images/logo.png"
-              alt="Slatout Logo"
-              className="w-full h-full max-w-[150px] max-h-[150px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.35)] filter brightness-0 invert pointer-events-none select-none"
+          <div className="fc" />
+        </div>
+
+        {/* Plate 2: Top HOT Active Service Slab with SVG Artwork */}
+        <div
+          ref={(el) => { plateRefs.current[2] = el; }}
+          className="pl hot"
+          style={{ "--i": 2, "--gap": "58px", "--land": 1, "--draw": 1 } as React.CSSProperties}
+        >
+          <div className="th" style={{ transform: "translateZ(-11.2px)" }} />
+          <div className="th" style={{ transform: "translateZ(-9.6px)" }} />
+          <div className="th" style={{ transform: "translateZ(-8.0px)" }} />
+          <div className="th" style={{ transform: "translateZ(-6.4px)" }} />
+          <div className="th" style={{ transform: "translateZ(-4.8px)" }} />
+          <div className="th" style={{ transform: "translateZ(-3.2px)" }} />
+          <div className="th" style={{ transform: "translateZ(-1.6px)" }} />
+          <div className="fc">
+            <svg
+              ref={svgRef}
+              className="art"
+              viewBox="0 0 200 200"
+              aria-hidden="true"
+              dangerouslySetInnerHTML={{ __html: currentService.artSvg }}
             />
           </div>
         </div>
+      </div>
 
-        {/* Plate 2: Top Slab */}
-        <div
-          ref={(el) => { plateRefs.current[2] = el; }}
-          className="pl hp top"
-          style={{ "--i": 2, "--gap": "46px", "--land": 0 } as React.CSSProperties}
+      {/* Interactive Service Floor Controller Badge */}
+      <div className="relative z-30 mt-8 flex items-center gap-2.5 bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full shadow-lg">
+        <button
+          onClick={handlePrev}
+          aria-label="Previous service"
+          className="p-1 rounded-full text-white/70 hover:text-white hover:bg-white/10 transition-colors"
         >
-          <div className="th" style={{ transform: "translateZ(-11.2px)" }} />
-          <div className="th" style={{ transform: "translateZ(-9.6px)" }} />
-          <div className="th" style={{ transform: "translateZ(-8.0px)" }} />
-          <div className="th" style={{ transform: "translateZ(-6.4px)" }} />
-          <div className="th" style={{ transform: "translateZ(-4.8px)" }} />
-          <div className="th" style={{ transform: "translateZ(-3.2px)" }} />
-          <div className="th" style={{ transform: "translateZ(-1.6px)" }} />
-          <div className="fc" />
+          <ChevronLeft size={16} />
+        </button>
+
+        <div className="flex items-center gap-2 px-1 text-xs font-mono">
+          <span className="w-2 h-2 rounded-full bg-[#FF5A1F] animate-pulse" />
+          <span className="text-[#FF5A1F] font-bold">{currentService.number}</span>
+          <span className="text-white/40">/</span>
+          <span className="text-white/70 uppercase tracking-wider font-medium truncate max-w-[170px] sm:max-w-[220px]">
+            {currentService.name}
+          </span>
         </div>
+
+        <button
+          onClick={handleNext}
+          aria-label="Next service"
+          className="p-1 rounded-full text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+        >
+          <ChevronRight size={16} />
+        </button>
       </div>
     </div>
   );

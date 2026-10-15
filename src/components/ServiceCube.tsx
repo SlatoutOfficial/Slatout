@@ -26,31 +26,31 @@ const FACES: Face[] = [
   { title: "Analytics", desc: "BI & growth funnel tracking.", Icon: LineChart },
 ];
 
-const W = 165;           // Width of carousel cards
-const H = 245;           // Height of carousel cards
-const R = 210;           // Radius of the carousel circle
+const W = 178;           // Width of carousel cards
+const H = 265;           // Height of carousel cards
+const R = 235;           // Radius of the carousel circle
 
 function FaceContent({ face, isActive }: { face: Face; isActive: boolean }) {
   const { Icon } = face;
   return (
     <div
-      className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4"
+      className="absolute inset-0 flex flex-col items-center justify-center gap-3.5 p-5"
       style={{ backfaceVisibility: "hidden" }}
     >
-      <div className={`flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-300 ${
+      <div className={`flex h-14 w-14 items-center justify-center rounded-xl transition-all duration-300 ${
         isActive 
           ? "bg-[#F97432] text-white shadow-[0_4px_12px_rgba(249,116,50,0.2)]" 
           : "bg-[#F97432]/10 text-[#F97432] border border-[#F97432]/15 shadow-[0_4px_12px_rgba(249,116,50,0.08)]"
       }`}>
-        <Icon className="h-5.5 w-5.5" strokeWidth={2} />
+        <Icon className="h-7 w-7" strokeWidth={2} />
       </div>
       
-      <div className="flex flex-col items-center gap-1.5 mt-1">
-        <span className="text-[12px] font-extrabold uppercase tracking-wider text-gray-800 text-center select-none max-w-[145px] leading-snug">
+      <div className="flex flex-col items-center gap-2 mt-1">
+        <span className="text-[13px] font-extrabold uppercase tracking-wider text-gray-800 text-center select-none max-w-[175px] leading-snug">
           {face.title}
         </span>
-        <span className={`text-[10px] text-gray-500 text-center select-none max-w-[140px] leading-tight transition-all duration-300 ${
-          isActive ? "opacity-100 max-h-[50px] scale-100" : "opacity-0 max-h-0 scale-95 overflow-hidden"
+        <span className={`text-[11px] text-gray-500 text-center select-none max-w-[170px] leading-tight transition-all duration-300 ${
+          isActive ? "opacity-100 max-h-[60px] scale-100" : "opacity-0 max-h-0 scale-95 overflow-hidden"
         }`}>
           {face.desc}
         </span>
@@ -207,7 +207,7 @@ export default function ServiceCube() {
         }
       `}</style>
       <div
-        className="relative mx-auto flex h-[580px] w-full max-w-[580px] cursor-grab select-none items-center justify-center active:cursor-grabbing"
+        className="relative mx-auto flex h-[620px] w-full max-w-[620px] cursor-grab select-none items-center justify-center active:cursor-grabbing"
         style={{ perspective: "1100px" }}
         onMouseDown={(e) => start(e.clientX, e.clientY)}
         onMouseMove={(e) => move(e.clientX, e.clientY)}
@@ -224,7 +224,7 @@ export default function ServiceCube() {
         onTouchEnd={end}
       >
         {/* ambient glow */}
-        <div className="pointer-events-none absolute h-[540px] w-[540px] rounded-full bg-[#F97432]/20 blur-[130px]" />
+        <div className="pointer-events-none absolute h-[660px] w-[660px] rounded-full bg-[#F97432]/20 blur-[140px]" />
 
 
 
@@ -300,7 +300,7 @@ export default function ServiceCube() {
                 className={`h-1.5 rounded-full transition-all duration-300 ${
                   isActive 
                     ? "w-6 bg-[#F97432]" 
-                    : "w-1.5 bg-gray-300 hover:bg-gray-400"
+                    : "w-1.5 bg-zinc-600 hover:bg-zinc-400"
                 }`}
                 aria-label={`Go to slide ${i + 1}`}
               />
@@ -308,7 +308,7 @@ export default function ServiceCube() {
           })}
         </div>
 
-        <span className="pointer-events-none absolute bottom-8 text-[9px] uppercase tracking-widest text-gray-500 font-bold opacity-60">
+        <span className="pointer-events-none absolute bottom-8 text-[9px] uppercase tracking-widest text-zinc-400 font-bold opacity-80">
           Drag to explore
         </span>
       </div>

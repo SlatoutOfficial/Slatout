@@ -15,7 +15,7 @@ export default function Home() {
       <SmoothScroll>
         <Hero />
         <Clients />
-        <BuildSection />
+        {/* <BuildSection /> */}
         {/* <PlanBuilder /> */}
         <Journal />
         <SiteEnd />

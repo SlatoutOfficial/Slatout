@@ -7,7 +7,7 @@ import { PrimaryCta, SecondaryCta } from "./CtaSystem";
 import { Rocket, TrendingUp, ShieldCheck, Sparkles, Box, Target, Cloud, Triangle, Hexagon } from "lucide-react";
 
 // Dynamically import client 3D components to prevent SSR hydration mismatches
-const HeroTower3D = dynamic(() => import("./3d/HeroTower3D"), { ssr: false });
+const ServiceCube = dynamic(() => import("./ServiceCube"), { ssr: false });
 
 export default function Hero() {
   return (
@@ -145,9 +145,9 @@ export default function Hero() {
             </FadeUp>
           </div>
 
-          {/* Right Column: Interactive 3D Hero Tower (Logo Slabs) */}
-          <div className="flex items-center justify-center lg:justify-end w-full relative min-h-[420px] lg:min-h-[500px] xl:min-h-[580px] mt-6 lg:mt-0">
-            <HeroTower3D />
+          {/* Right Column: Interactive 3D Octagonal Service Carousel */}
+          <div className="flex items-center justify-center lg:justify-end w-full relative min-h-[460px] lg:min-h-[540px] mt-6 lg:mt-0 lg:-translate-y-16 xl:-translate-y-20">
+            <ServiceCube />
           </div>
         </div>
 
