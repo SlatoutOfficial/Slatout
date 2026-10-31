@@ -1,0 +1,363 @@
+/* ── Route Planner Section Styles (Exact 1:1 from SLATOUT-website (5).html) ── */
+.plan-sec {
+  background: #F1F4EE;
+  padding-block: clamp(64px, 8vw, 112px);
+  position: relative;
+  width: 100%;
+}
+
+.plan-sec .wrap {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@media (min-width: 640px) {
+  .plan-sec .wrap {
+    padding-inline: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .plan-sec .wrap {
+    padding-inline: 48px;
+  }
+}
+
+.plan-sec .hh {
+  margin-bottom: clamp(36px, 5vw, 56px);
+  text-align: left;
+}
+
+.plan-sec .h2 {
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  color: #0E1116;
+  margin: 0;
+}
+
+.plan-sec .h2 em {
+  font-style: italic;
+  font-family: Georgia, serif;
+  color: #FF5500;
+  font-weight: 400;
+}
+
+.plan-sec .lede {
+  margin-top: 18px;
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  color: #434B57;
+  max-width: 64ch;
+  line-height: 1.55;
+}
+
+/* 2-column layout */
+.planb {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: start;
+}
+
+/* Questions on the left */
+.planb .pq {
+  display: flex;
+  flex-direction: column;
+}
+
+.planb .q {
+  margin-bottom: 36px;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+.planb .q h3 {
+  font-weight: 600;
+  font-size: 1.18rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #0E1116;
+}
+
+.planb .q h3 span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #0E1116;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.planb .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.planb .chip {
+  background: #ffffff;
+  border: 1.5px solid rgba(14, 17, 22, 0.12);
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 0.96rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #0E1116;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), color 0.25s;
+  user-select: none;
+}
+
+.planb .chip:hover {
+  border-color: #0E1116;
+  transform: translateY(-2px);
+}
+
+.planb .chip[aria-pressed="true"] {
+  background: #0E1116;
+  color: #ffffff;
+  border-color: #0E1116;
+}
+
+/* Sticky card on the right */
+.planb .pv {
+  position: sticky;
+  top: 100px;
+  background: #ffffff;
+  border-radius: 30px;
+  padding: clamp(20px, 3vw, 34px);
+  box-shadow: 0 1px 2px rgba(14, 17, 22, 0.04), 0 12px 36px -12px rgba(14, 17, 22, 0.1);
+  border: 1px solid rgba(14, 17, 22, 0.06);
+}
+
+/* Route visualization area */
+.planb .route {
+  position: relative;
+  height: 200px;
+  margin-bottom: 12px;
+}
+
+.planb .route-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.planb .route-p {
+  fill: none;
+  stroke: #0E1116;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 6 8;
+  vector-effect: non-scaling-stroke;
+  transition: d 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.planb .route-n {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  inset: 0;
+}
+
+.planb .route-n li {
+  position: absolute;
+  left: calc(5% + var(--x, 0) * 9.9%);
+  top: var(--y, 50%);
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  transition: top 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: default;
+}
+
+.planb .route-n li span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--h);
+  color: var(--hi);
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(29, 26, 38, 0.12);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s;
+}
+
+.planb .route-n li b {
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: #8A94A6;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s, color 0.3s;
+}
+
+.planb .route-n li.on span {
+  transform: scale(1.45);
+  background: var(--hm);
+  color: #0E1116;
+}
+
+.planb .route-n li.on b {
+  opacity: 1;
+  color: #0E1116;
+}
+
+/* Route list items */
+.planb .out ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.planb .out li a {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 14px;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 16px;
+  text-decoration: none;
+  margin-bottom: 6px;
+  background: var(--h);
+  animation: fadeup 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--k, 0) * 70ms);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s;
+}
+
+.planb .out li a:hover {
+  transform: translateX(6px);
+  box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.1);
+}
+
+.planb .out li a b {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--hi);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.planb .out li a span {
+  font-weight: 700;
+  color: #0E1116;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.planb .out li a small {
+  color: #434B57;
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.planb .empty {
+  color: #8A94A6;
+  margin: 0;
+  padding: 16px 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.planb .pl-act {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(14, 17, 22, 0.08);
+}
+
+.planb .btn-plan {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  white-space: nowrap;
+}
+
+.planb .btn-plan-p {
+  background: #FF5500;
+  color: #ffffff;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 8px 20px -8px rgba(255, 85, 0, 0.65);
+}
+
+.planb .btn-plan-p:hover {
+  background: #e04b00;
+  transform: translateY(-2px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 12px 24px -10px rgba(255, 85, 0, 0.75);
+}
+
+.planb .btn-plan-o {
+  background: #ffffff;
+  color: #0E1116;
+  border-color: rgba(14, 17, 22, 0.16);
+}
+
+.planb .btn-plan-o:hover {
+  border-color: #0E1116;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeup {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive grid */
+@media (max-width: 960px) {
+  .planb {
+    grid-template-columns: 1fr;
+  }
+  .planb .pv {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .planb .route {
+    height: 170px;
+  }
+  .planb .route-n li b {
+    display: none;
+  }
+}

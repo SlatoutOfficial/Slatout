@@ -9,6 +9,7 @@ type CtaCommon = {
   href: string;
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   onClick?: () => void;
 };
 
@@ -19,28 +20,30 @@ function isExternal(href: string) {
 function CtaAnchor({
   href,
   className,
+  style,
   onClick,
   children,
 }: CtaCommon) {
   if (href.startsWith("/") && !isExternal(href)) {
     return (
-      <Link href={href} className={className} onClick={onClick}>
+      <Link href={href} className={className} style={style} onClick={onClick}>
         {children}
       </Link>
     );
   }
   return (
-    <a href={href} className={className} onClick={onClick}>
+    <a href={href} className={className} style={style} onClick={onClick}>
       {children}
     </a>
   );
 }
 
-/** Primary — solid brand orange. Major conversion only. */
+/** Primary — solid brand accent. Major conversion only. */
 export function PrimaryCta({
   href,
   children,
   className,
+  style,
   onClick,
   fullWidth,
 }: CtaCommon & { fullWidth?: boolean }) {
@@ -48,11 +51,16 @@ export function PrimaryCta({
     <CtaAnchor
       href={href}
       onClick={onClick}
+      style={{
+        backgroundColor: "var(--theme-accent, #F97432)",
+        color: "var(--theme-accent-text, #ffffff)",
+        ...style,
+      }}
       className={clsx(
-        "group inline-flex items-center gap-2 bg-[#F97432] text-white type-button text-[13px] sm:text-[14px] rounded-full pl-5 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2",
-        "shadow-[0_1px_0_rgba(0,0,0,0.04)] hover:shadow-[0_10px_28px_rgba(249,116,50,0.28)]",
-        "hover:bg-[#F97432] hover:-translate-y-0.5 active:translate-y-0",
-        "transition-all duration-500 ease-out-expo",
+        "group inline-flex items-center gap-2 type-button text-[13px] sm:text-[14px] rounded-full pl-5 sm:pl-6 pr-1.5 sm:pr-2 py-1.5 sm:py-2",
+        "shadow-[0_1px_0_rgba(0,0,0,0.04)] hover:shadow-[0_10px_28px_rgba(0,0,0,0.2)]",
+        "hover:-translate-y-0.5 active:translate-y-0",
+        "transition-all duration-300 ease-out-expo",
         fullWidth && "w-full justify-between sm:w-auto sm:justify-start",
         className
       )}
@@ -63,7 +71,10 @@ export function PrimaryCta({
           <span className="h-[20px] flex items-center leading-none">{children}</span>
         </span>
       </span>
-      <span className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center text-[#F97432] transition-transform duration-500 ease-custom group-hover:-rotate-45 group-hover:scale-105">
+      <span
+        style={{ color: "var(--theme-accent, #F97432)" }}
+        className="w-7 h-7 sm:w-8 sm:h-8 bg-white rounded-full flex items-center justify-center transition-all duration-300 ease-custom group-hover:-rotate-45 group-hover:scale-105"
+      >
         <ArrowRight size={14} className="stroke-[2.5]" />
       </span>
     </CtaAnchor>

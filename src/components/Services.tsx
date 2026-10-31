@@ -4,64 +4,55 @@ import React, { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { SYSTEM_SERVICES } from "@/data/systemsData";
+import ServiceDoors from "./ServiceDoors";
 
 /* ─── Icons ─────────────────────────────────────────────────────────────── */
 const ICONS: Record<string, React.ReactNode> = {
-  "business-setup-registration": (
+  "business-setup-legal": (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="12" y2="16"/>
+      <rect x="4" y="3" width="16" height="18" rx="2" /><line x1="8" y1="8" x2="16" y2="8" /><line x1="8" y1="12" x2="16" y2="12" /><line x1="8" y1="16" x2="12" y2="16" />
     </svg>
   ),
-  "technology-ai-solutions": (
+  "technology-solutions": (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M9 10l2 2 4-4"/>
+      <rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /><path d="M9 10l2 2 4-4" />
     </svg>
   ),
-  "offline-business-launch": (
+  "business-consulting-strategy": (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
     </svg>
   ),
-  "branding-marketing": (
+  "branding-creative": (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72"/><path d="M4.1 8.235c4.01 1.95 8.18 2.41 12.33 1.43"/>
+      <circle cx="12" cy="12" r="10" /><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72" /><path d="M4.1 8.235c4.01 1.95 8.18 2.41 12.33 1.43" />
     </svg>
   ),
-  "content-strategy": (
+  "marketing-growth": (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
     </svg>
   ),
-  "digital-marketing": (
+  "ecommerce-solutions": (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" />
     </svg>
   ),
-  "ecommerce-marketplace-growth": (
+  "legal-regulatory-compliance": (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
-    </svg>
-  ),
-  "programmatic-advertising": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/>
-    </svg>
-  ),
-  "business-development-outsourcing": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
     </svg>
   ),
   "finance-tax-compliance": (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+      <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
     </svg>
   ),
 };
 
 const DEFAULT_ICON = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+    <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" />
   </svg>
 );
 
@@ -101,7 +92,7 @@ function ServiceCard({ svc }: { svc: typeof SYSTEM_SERVICES[0] }) {
         >
           MORE
           <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5">
-            <path d="M2 6h8M6 2l4 4-4 4"/>
+            <path d="M2 6h8M6 2l4 4-4 4" />
           </svg>
         </Link>
       </div>
@@ -116,7 +107,7 @@ export default function Services() {
   const [dragStart, setDragStart] = useState(0);
   const pauseRef = useRef(false);
 
-  const total    = SYSTEM_SERVICES.length;
+  const total = SYSTEM_SERVICES.length;
   const maxIndex = Math.max(0, total - VISIBLE);
 
   const prev = useCallback(() => { pauseRef.current = true; setCurrent((c) => Math.max(0, c - 1)); }, []);
@@ -147,8 +138,29 @@ export default function Services() {
   return (
     <section id="services" className="relative w-full bg-[#FAF8F5] overflow-hidden">
 
-      {/* ── Hero image (shorter) ── */}
-      <div className="relative w-full" style={{ height: "clamp(200px, 26vw, 360px)" }}>
+      {/* ── Section Header ── */}
+      {/* <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-20 pb-8 sm:pb-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 text-left">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 mb-2.5">
+              <span className="w-5 h-[2px] bg-[#FF5500]" />
+              <span className="text-[11px] font-mono font-bold text-[#FF5500] uppercase tracking-[0.25em]">
+                OUR CAPABILITIES
+              </span>
+            </div>
+            <h2 className="text-[clamp(2rem,4.2vw,3.4rem)] font-extrabold text-stone-900 tracking-tight leading-[1.08]">
+              Everything Your Business Needs,{" "}
+              <span className="text-[#FF5500]">Out of the Box.</span>
+            </h2>
+          </div>
+          <p className="text-stone-600 text-[14px] sm:text-base max-w-[460px] leading-relaxed pb-1">
+            Eight connected disciplines spanning corporate setup, custom technology, brand identity, performance marketing, and compliance.
+          </p>
+        </div>
+      </div> */}
+
+      {/* ── Hero image banner ── */}
+      {/* <div className="relative w-full" style={{ height: "clamp(180px, 22vw, 300px)" }}>
         <Image
           src="/services-hero.jpg"
           alt="SLATOUT — professional team"
@@ -156,21 +168,11 @@ export default function Services() {
           className="object-cover object-[center_20%]"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/5 to-black/55" />
-
-        <div className="absolute inset-x-0 top-0 pt-8 sm:pt-12 text-center px-4">
-          <span className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.24em] text-white/55 mb-2">
-            <span className="w-4 h-px bg-white/35" />Our Services<span className="w-4 h-px bg-white/35" />
-          </span>
-          <h2 className="text-[clamp(1.5rem,3.8vw,2.8rem)] font-extrabold text-white tracking-tight leading-tight drop-shadow">
-            Everything Your Business Needs,{" "}
-            <span style={{ color: "#FF5500" }}>Out of the Box.</span>
-          </h2>
-        </div>
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/50" />
+      </div> */}
 
       {/* ── Carousel ── */}
-      <div className="relative -mt-16 sm:-mt-20 pb-14 sm:pb-20 px-4 sm:px-8 lg:px-14 select-none">
+      {/* <div className="relative -mt-16 sm:-mt-20 pb-14 sm:pb-20 px-4 sm:px-8 lg:px-14 select-none">
 
         <div
           className="overflow-hidden"
@@ -199,9 +201,7 @@ export default function Services() {
           </div>
         </div>
 
-        {/* ── Nav ── */}
         <div className="flex items-center justify-between mt-7 px-1">
-          {/* Dots */}
           <div className="flex items-center gap-2">
             {Array.from({ length: maxIndex + 1 }).map((_, i) => (
               <button
@@ -222,7 +222,6 @@ export default function Services() {
             ))}
           </div>
 
-          {/* Arrows */}
           <div className="flex gap-2">
             <button
               onClick={prev}
@@ -231,7 +230,7 @@ export default function Services() {
               className="w-10 h-10 rounded-full border border-stone-200 flex items-center justify-center text-stone-400 transition-all duration-250 hover:bg-[#111] hover:text-white hover:border-[#111] disabled:opacity-30 disabled:pointer-events-none"
             >
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="w-4 h-4">
-                <path d="M13 4l-6 6 6 6"/>
+                <path d="M13 4l-6 6 6 6" />
               </svg>
             </button>
             <button
@@ -241,12 +240,15 @@ export default function Services() {
               className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center text-white transition-all duration-250 hover:bg-[#FF5500] disabled:opacity-30 disabled:pointer-events-none"
             >
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="w-4 h-4">
-                <path d="M7 4l6 6-6 6"/>
+                <path d="M7 4l6 6-6 6" />
               </svg>
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
+
+      {/* ── Ten Worlds / Doors Accordion Section ── */}
+      <ServiceDoors />
     </section>
   );
 }

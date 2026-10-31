@@ -84,7 +84,7 @@ export default function Clients() {
       <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-[#F97432]/3 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 select-none relative z-10">
-        
+
         {/* Header Section */}
         <div className="flex flex-col items-center mb-10 sm:mb-12">
           <FadeUp delay={0.05} className="flex flex-col items-center">
@@ -113,11 +113,10 @@ export default function Clients() {
                 <div
                   key={rev.id}
                   onClick={() => setActiveIdx(idx)}
-                  className={`relative rounded-full overflow-hidden transition-all duration-500 cursor-pointer ${
-                    isActive
+                  className={`relative rounded-full overflow-hidden transition-all duration-500 cursor-pointer ${isActive
                       ? "w-14 h-14 sm:w-16 sm:h-16 ring-[3px] ring-[#F97432] ring-offset-2 ring-offset-[#FAF8F5] opacity-100 scale-105 z-10"
                       : "w-10 h-10 sm:w-11 sm:h-11 border border-gray-200 opacity-40 hover:opacity-85 hover:scale-102 scale-95"
-                  }`}
+                    }`}
                 >
                   <img src={rev.avatar} alt={rev.author} className="w-full h-full object-cover" />
                 </div>
@@ -183,11 +182,10 @@ export default function Clients() {
 function ClientCard({ item, isActive }: { item: typeof reviews[0]; isActive: boolean }) {
   return (
     <div
-      className={`bg-white rounded-[2rem] p-5 sm:p-6 transition-all duration-500 border flex flex-col md:grid md:grid-cols-[38%_62%] gap-4 md:gap-6 min-h-[210px] sm:min-h-[230px] ${
-        isActive
+      className={`bg-white rounded-[2rem] p-5 sm:p-6 transition-all duration-500 border flex flex-col md:grid md:grid-cols-[38%_62%] gap-4 md:gap-6 min-h-[210px] sm:min-h-[230px] ${isActive
           ? "border-[#F97432]/60 shadow-[0_20px_50px_rgba(249,116,50,0.06)]"
           : "border-gray-200/80 shadow-[0_8px_30px_rgba(0,0,0,0.02)]"
-      }`}
+        }`}
     >
       {/* Left Column: Business Types */}
       <div className="flex flex-col justify-between pr-3 md:border-r md:border-gray-200/60">

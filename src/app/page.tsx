@@ -3,8 +3,8 @@ import Navbar from "../components/Navbar";
 import Hero from "@/components/Hero";
 import Clients from "../components/Clients";
 import Services from "../components/Services";
-import BuildSection from "../components/3d/BuildSection";
-import PlanBuilder from "../components/3d/PlanBuilder";
+import TenWorlds from "../components/TenWorlds";
+import RoutePlanner from "../components/RoutePlanner";
 import Journal from "../components/Journal";
 import SiteEnd from "../components/SiteEnd";
 import SmoothScroll from "../components/SmoothScroll";
@@ -17,10 +17,11 @@ export default function Home() {
         <Hero />
         <Clients />
         <Services />
+        <TenWorlds />
+        <RoutePlanner />
         <Journal />
         <SiteEnd />
       </SmoothScroll>
     </main>
   );
 }
-

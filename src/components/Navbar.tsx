@@ -179,8 +179,29 @@ export default function Navbar() {
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [expandedAccordion, setExpandedAccordion] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [themeAccent, setThemeAccent] = useState("#ff6a13");
 
   const closeTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const handleThemeChange = (e: any) => {
+      if (e.detail?.color) {
+        setThemeAccent(e.detail.color);
+      }
+    };
+    window.addEventListener("slatout-theme-change", handleThemeChange);
+    return () => window.removeEventListener("slatout-theme-change", handleThemeChange);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 120);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Set active route depending on path changes
   useEffect(() => {
@@ -265,13 +286,19 @@ export default function Navbar() {
                   <a
                     href={item.href}
                     onClick={() => setActiveRoute(item.label)}
-                    className={`relative px-4 py-2 text-sm font-semibold transition-colors duration-255 flex items-center gap-1 rounded-full ${activeRoute === item.label ? "text-[#F97432]" : "text-gray-600 hover:text-[#1A1A24]"
+                    style={{
+                      color: activeRoute === item.label ? themeAccent : undefined,
+                    }}
+                    className={`relative px-4 py-2 text-sm font-semibold transition-colors duration-200 flex items-center gap-1 rounded-full ${activeRoute === item.label ? "" : "text-gray-600 hover:text-[#1A1A24]"
                       }`}
                   >
                     {activeRoute === item.label && (
                       <motion.div
                         layoutId="active-nav-pill"
-                        className="absolute inset-0 bg-[#F97432]/10 rounded-full -z-10"
+                        style={{
+                          backgroundColor: `${themeAccent}26`,
+                        }}
+                        className="absolute inset-0 rounded-full -z-10 transition-colors duration-300"
                         transition={{ type: "spring", stiffness: 350, damping: 28 }}
                       />
                     )}
@@ -279,20 +306,29 @@ export default function Navbar() {
                   </a>
                 ) : (
                   <button
-                    className={`relative px-4 py-2 text-sm font-semibold transition-colors duration-255 flex items-center gap-1.5 rounded-full ${activeRoute === item.label || hoveredMenu === item.label ? "text-[#F97432]" : "text-gray-600 hover:text-[#1A1A24]"
+                    style={{
+                      color: activeRoute === item.label || hoveredMenu === item.label ? themeAccent : undefined,
+                    }}
+                    className={`relative px-4 py-2 text-sm font-semibold transition-colors duration-200 flex items-center gap-1.5 rounded-full ${activeRoute === item.label || hoveredMenu === item.label ? "" : "text-gray-600 hover:text-[#1A1A24]"
                       }`}
                   >
                     {activeRoute === item.label && (
                       <motion.div
                         layoutId="active-nav-pill"
-                        className="absolute inset-0 bg-[#F97432]/10 rounded-full -z-10"
+                        style={{
+                          backgroundColor: `${themeAccent}26`,
+                        }}
+                        className="absolute inset-0 rounded-full -z-10 transition-colors duration-300"
                         transition={{ type: "spring", stiffness: 350, damping: 28 }}
                       />
                     )}
                     <span>{item.label}</span>
                     <ChevronDown
                       size={14}
-                      className={`transition-transform duration-300 ${activeRoute === item.label || hoveredMenu === item.label ? "rotate-180 text-[#F97432]" : "text-gray-400"
+                      style={{
+                        color: activeRoute === item.label || hoveredMenu === item.label ? themeAccent : undefined,
+                      }}
+                      className={`transition-transform duration-300 ${activeRoute === item.label || hoveredMenu === item.label ? "rotate-180" : "text-gray-400"
                         }`}
                     />
                   </button>
@@ -393,7 +429,15 @@ export default function Navbar() {
 
         {/* Right Side: Primary CTA */}
         <div className="hidden md:flex items-center">
-          <PrimaryCta href="/contact" className="!text-[13px] !py-1.5 !pl-5 !pr-1.5 shadow-sm">
+          <PrimaryCta
+            href="/contact"
+            style={{
+              backgroundColor: themeAccent,
+              color: ["#c9f032", "#ebe4d6"].includes(themeAccent) ? "#0b0b0b" : "#ffffff",
+              transition: "background-color 0.4s ease, color 0.4s ease",
+            }}
+            className="!text-[13px] !py-1.5 !pl-5 !pr-1.5 shadow-sm"
+          >
             Book a strategy call
           </PrimaryCta>
         </div>
@@ -411,8 +455,11 @@ export default function Navbar() {
 
         {/* Thin scroll-progress bar directly under the floating pill wrapper */}
         <motion.div
-          className="absolute bottom-0 left-6 right-6 h-[2.5px] bg-[#F97432] origin-left rounded-full"
-          style={{ scaleX: scrollYProgress }}
+          className="absolute bottom-0 left-6 right-6 h-[2.5px] origin-left rounded-full transition-colors duration-300"
+          style={{
+            scaleX: scrollYProgress,
+            backgroundColor: "var(--theme-accent, #F97432)",
+          }}
         />
       </div>
 
@@ -528,6 +575,11 @@ export default function Navbar() {
               <PrimaryCta
                 href="/contact"
                 fullWidth
+                style={{
+                  backgroundColor: themeAccent,
+                  color: ["#c9f032", "#ebe4d6"].includes(themeAccent) ? "#0b0b0b" : "#ffffff",
+                  transition: "background-color 0.4s ease, color 0.4s ease",
+                }}
                 onClick={() => setIsMobileOpen(false)}
                 className="w-full justify-between"
               >
