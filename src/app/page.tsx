@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Hero from "@/components/Hero";
 import Clients from "../components/Clients";
+import Services from "../components/Services";
 import BuildSection from "../components/3d/BuildSection";
 import PlanBuilder from "../components/3d/PlanBuilder";
 import Journal from "../components/Journal";
@@ -15,8 +16,7 @@ export default function Home() {
       <SmoothScroll>
         <Hero />
         <Clients />
-        {/* <BuildSection /> */}
-        {/* <PlanBuilder /> */}
+        <Services />
         <Journal />
         <SiteEnd />
       </SmoothScroll>
