@@ -1,0 +1,486 @@
+/* ── Ten Vendors vs One Team Section (Exact 1:1 from SLATOUT-website (5).html) ── */
+.vs-sec {
+  background: #EEF0F6;
+  padding-block: clamp(64px, 8vw, 112px);
+  position: relative;
+  width: 100%;
+}
+
+.vs-sec .wrap {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@media (min-width: 640px) {
+  .vs-sec .wrap {
+    padding-inline: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vs-sec .wrap {
+    padding-inline: 48px;
+  }
+}
+
+.vs-sec .hh {
+  margin-bottom: clamp(36px, 5vw, 56px);
+  text-align: left;
+}
+
+.vs-sec .h2 {
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  color: #0E1116;
+  margin: 0;
+}
+
+.vs-sec .h2 em {
+  font-style: italic;
+  font-family: Georgia, serif;
+  color: #FF5500;
+  font-weight: 400;
+}
+
+.vs-sec .lede {
+  margin-top: 18px;
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  color: #434B57;
+  max-width: 64ch;
+  line-height: 1.55;
+}
+
+/* ── Split Drag Comparison ── */
+.vs {
+  --x: 50%;
+  position: relative;
+  margin: clamp(24px, 3vw, 40px) 0;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0d1016;
+  height: clamp(360px, 36vw, 470px);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+  cursor: ew-resize;
+  isolation: isolate;
+  box-shadow: 0 1px 2px rgba(14, 17, 22, 0.04), 0 20px 50px -15px rgba(14, 17, 22, 0.2);
+}
+
+.vs.drag {
+  cursor: grabbing;
+}
+
+.vs-pane {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.vs-a {
+  background: radial-gradient(80% 90% at 30% 50%, #1d1414, #0d1016 70%);
+  clip-path: inset(0 calc(100% - var(--x)) 0 0);
+}
+
+.vs-b {
+  background: radial-gradient(70% 80% at 60% 50%, #2a1608, #0f0b09 70%);
+  clip-path: inset(0 0 0 var(--x));
+}
+
+.vs-svg {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: block;
+}
+
+.vs-cap {
+  margin: 0;
+  padding: 0 clamp(16px, 2.5vw, 28px) clamp(12px, 1.6vw, 18px);
+  color: #B9B0A8;
+  font-size: 0.9rem;
+  max-width: 60ch;
+  line-height: 1.45;
+}
+
+.vs-cap strong {
+  color: #ffffff;
+}
+
+.vs-b .vs-cap {
+  margin-left: auto;
+  text-align: right;
+}
+
+/* Left Pane (Separate Vendors) SVG Elements */
+.ch-l {
+  fill: none;
+  stroke: rgba(255, 120, 120, 0.28);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 7;
+  animation: dash var(--d, 1.6s) linear infinite;
+}
+
+.ch-x {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1.2;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -26;
+  }
+}
+
+.ch-n rect {
+  fill: #1b1f27;
+  stroke: rgba(255, 255, 255, 0.14);
+}
+
+.ch-n text,
+.cm-n text {
+  fill: #D9D2CB;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 15px;
+  text-anchor: middle;
+}
+
+.ch-n {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: jit 2.6s ease-in-out infinite;
+}
+
+.ch-n.j1 {
+  animation-delay: -0.5s;
+  animation-duration: 3.1s;
+}
+
+.ch-n.j2 {
+  animation-delay: -1.1s;
+  animation-duration: 2.2s;
+}
+
+.ch-n.j3 {
+  animation-delay: -1.7s;
+  animation-duration: 3.4s;
+}
+
+.ch-n.j4 {
+  animation-delay: -0.2s;
+  animation-duration: 2.8s;
+}
+
+@keyframes jit {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  25% {
+    transform: translate(3px, -4px) rotate(-2deg);
+  }
+  50% {
+    transform: translate(-4px, 2px) rotate(1.5deg);
+  }
+  75% {
+    transform: translate(2px, 4px) rotate(-1deg);
+  }
+}
+
+.ch-you circle {
+  fill: #2a2f3a;
+  stroke: rgba(255, 120, 120, 0.6);
+  stroke-width: 2;
+  animation: stress 1.1s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.ch-you text {
+  fill: #ffffff;
+  font-weight: 600;
+  font-size: 17px;
+  font-family: inherit;
+  text-anchor: middle;
+}
+
+@keyframes stress {
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.ch-b rect {
+  fill: #3a1f1f;
+  stroke: rgba(255, 120, 120, 0.4);
+}
+
+.ch-b text {
+  fill: #FFC9C2;
+  font-weight: 500;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.ch-b {
+  animation: bub 6s ease-in-out infinite;
+  opacity: 0;
+}
+
+.ch-b.b1 {
+  animation-delay: 2s;
+}
+
+.ch-b.b2 {
+  animation-delay: 4s;
+}
+
+@keyframes bub {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  8%, 30% {
+    opacity: 1;
+    transform: none;
+  }
+  38% {
+    opacity: 0;
+  }
+}
+
+/* Right Pane (One SLATOUT Team) SVG Elements */
+.cm-o {
+  fill: none;
+  stroke: rgba(255, 138, 40, 0.22);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 6;
+  animation: dash 6s linear infinite;
+}
+
+.cm-l {
+  stroke: rgba(255, 138, 40, 0.28);
+  stroke-width: 1.4;
+}
+
+.cm-p {
+  fill: #FFB066;
+  filter: drop-shadow(0 0 6px #FF6A00);
+}
+
+.cm-n rect {
+  fill: #1d1612;
+  stroke: rgba(255, 138, 40, 0.45);
+}
+
+.cm-n text {
+  fill: #FFE6D2;
+}
+
+.cm-hub circle {
+  fill: #22150c;
+  stroke: #FF6A00;
+  stroke-width: 2;
+}
+
+.cm-hub .cm-glow {
+  fill: rgba(255, 106, 0, 0.16);
+  stroke: none;
+  animation: glow 2.8s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes glow {
+  50% {
+    transform: scale(1.25);
+    opacity: 0.4;
+  }
+}
+
+/* Slider Handle */
+.vs-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--x);
+  width: 2px;
+  margin-left: -1px;
+  background: linear-gradient(transparent, #FF8A1F 12%, #FF8A1F 88%, transparent);
+  z-index: 3;
+  outline: none;
+}
+
+.vs-handle span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  border-radius: 50%;
+  background: #FF5500;
+  box-shadow: 0 0 0 8px rgba(255, 85, 0, 0.18), 0 12px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.vs-handle span::before,
+.vs-handle span::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  margin-top: -6px;
+  border: 6px solid transparent;
+}
+
+.vs-handle span::before {
+  left: 10px;
+  border-right: 8px solid #ffffff;
+  border-left: 0;
+}
+
+.vs-handle span::after {
+  right: 10px;
+  border-left: 8px solid #ffffff;
+  border-right: 0;
+}
+
+.vs.drag .vs-handle span,
+.vs-handle:focus-visible span {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 14px rgba(255, 85, 0, 0.22), 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.vs-handle:focus-visible span {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Corner Tags */
+.vs-tag {
+  position: absolute;
+  top: 18px;
+  z-index: 2;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 99px;
+  pointer-events: none;
+}
+
+.vs-tl {
+  left: 18px;
+  color: #FFC9C2;
+  background: rgba(255, 120, 120, 0.12);
+  border: 1px solid rgba(255, 120, 120, 0.25);
+}
+
+.vs-tr {
+  right: 18px;
+  color: #FFD9BC;
+  background: rgba(255, 106, 0, 0.14);
+  border: 1px solid rgba(255, 106, 0, 0.35);
+}
+
+/* 4 Feature Cards Below */
+.why4 {
+  list-style: none;
+  padding: 0;
+  margin: clamp(36px, 5vw, 60px) 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.why4 li {
+  background: #ffffff;
+  padding: 26px 24px;
+  border-radius: 24px;
+  box-shadow: 0 1px 2px rgba(14, 17, 22, 0.04), 0 8px 24px -12px rgba(14, 17, 22, 0.08);
+  border: 1px solid rgba(14, 17, 22, 0.06);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s;
+}
+
+.why4 li:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px -12px rgba(14, 17, 22, 0.18);
+}
+
+.why4 span {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #FFE6D1;
+  color: #A2470F;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.why4 li:nth-child(2) span {
+  background: #E2E6FF;
+  color: #3140A3;
+}
+
+.why4 li:nth-child(3) span {
+  background: #D8F2EA;
+  color: #126B5A;
+}
+
+.why4 li:nth-child(4) span {
+  background: #FBE1E6;
+  color: #A1324C;
+}
+
+.why4 h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0E1116;
+  margin: 16px 0 8px;
+}
+
+.why4 p {
+  color: #434B57;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 1100px) {
+  .why4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .vs {
+    aspect-ratio: auto;
+    height: auto;
+    min-height: 480px;
+  }
+  .vs-svg {
+    height: 320px;
+  }
+  .vs-cap {
+    font-size: 0.84rem;
+    padding: 8px 16px 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .why4 {
+    grid-template-columns: 1fr;
+  }
+}

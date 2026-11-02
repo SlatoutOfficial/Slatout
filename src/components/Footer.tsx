@@ -1,125 +1,169 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
-import { Facebook, Twitter, Instagram, Linkedin, Globe, Phone, Mail } from "lucide-react";
 
+/* ─── SLATOUT wordmark with pointer-lift + orange glow ─── */
+function FooterWord() {
+  const footerRef = useRef<HTMLElement | null>(null);
+  const wordRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const word = wordRef.current;
+    if (!word) return;
+
+    // Walk up to the <footer> element
+    const foot = word.closest("footer") as HTMLElement | null;
+    if (!foot) return;
+    footerRef.current = foot;
+
+    const letters = Array.from(word.querySelectorAll("span")) as HTMLElement[];
+    let px = -9999;
+    let cur = letters.map(() => 0);
+    let running = false;
+
+    function clamp(v: number, lo: number, hi: number) {
+      return Math.max(lo, Math.min(hi, v));
+    }
+
+    function tick() {
+      let moving = false;
+      letters.forEach((l, i) => {
+        const r = l.getBoundingClientRect();
+        const c = r.left + r.width / 2;
+        const t = clamp(1 - Math.abs(px - c) / 260, 0, 1);
+        cur[i] += (t - cur[i]) * 0.14;
+        if (Math.abs(t - cur[i]) > 0.002) moving = true;
+        l.style.transform = `translateY(${(-cur[i] * 26).toFixed(2)}px)`;
+        l.style.setProperty("--lit", cur[i].toFixed(3));
+      });
+      if (moving) requestAnimationFrame(tick);
+      else running = false;
+    }
+
+    function onMove(e: PointerEvent) {
+      px = e.clientX;
+      if (!running) {
+        running = true;
+        requestAnimationFrame(tick);
+      }
+    }
+
+    function onLeave() {
+      px = -9999;
+      if (!running) {
+        running = true;
+        requestAnimationFrame(tick);
+      }
+    }
+
+    foot.addEventListener("pointermove", onMove);
+    foot.addEventListener("pointerleave", onLeave);
+
+    return () => {
+      foot.removeEventListener("pointermove", onMove);
+      foot.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
+
+  return (
+    <div className="ft-word" aria-hidden="true" ref={wordRef}>
+      <span data-c="S">S</span>
+      <span data-c="L">L</span>
+      <span data-c="A">A</span>
+      <span data-c="T">T</span>
+      <span data-c="O">O</span>
+      <span data-c="U">U</span>
+      <span data-c="T">T</span>
+    </div>
+  );
+}
+
+/* ─── Main Footer ─── */
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-[#09080E] text-zinc-400 pt-16 sm:pt-20 pb-8 sm:pb-10 select-none border-t border-zinc-900">
-      <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-        
-        {/* Sitemap and Links Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.8fr_1fr_1fr_1fr_1.2fr] gap-10 lg:gap-8">
-          
-          {/* Brand Left Column */}
-          <div className="flex flex-col items-start gap-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <img
-                src="/images/slatout-logo.jpeg"
-                alt="Slatout Logo"
-                className="h-8 w-auto object-contain rounded-md"
-              />
-              <span className="text-white font-bold text-xl tracking-tight">Slatout</span>
-            </Link>
-            <p className="text-zinc-400 text-[13px] sm:text-[14px] leading-relaxed max-w-[280px] font-light mb-2">
-              Premium venture builder and technology agency partnering with bold founders to design, build, and scale exceptional digital products.
-            </p>
-            <div className="flex items-center gap-4 text-zinc-500">
-              <a href="#" className="hover:text-white transition-colors"><Facebook size={16} /></a>
-              <a href="#" className="hover:text-white transition-colors"><Twitter size={16} /></a>
-              <a href="#" className="hover:text-white transition-colors"><Instagram size={16} /></a>
-              <a href="#" className="hover:text-white transition-colors"><Linkedin size={16} /></a>
-              <a href="#" className="hover:text-white transition-colors"><Globe size={16} /></a>
-            </div>
-          </div>
+    <footer className="site-footer">
+      <div className="ft-inner">
 
-          {/* Column Company */}
+        {/* CTA banner */}
+        <div className="ft-cta">
           <div>
-            <span className="text-[14px] font-semibold text-white block mb-5">Company</span>
-            <ul className="flex flex-col gap-3">
-              {["About Us", "Services", "Community", "Testimonial"].map((label) => (
-                <li key={label}>
-                  <Link
-                    href="#"
-                    className="text-[13px] sm:text-[14px] text-zinc-400 hover:text-white transition-colors duration-300"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <h2>Ready to build beyond business?</h2>
+            <p>Tell us where your business is today. We will reply with the right starting point.</p>
           </div>
-
-          {/* Column Support */}
-          <div>
-            <span className="text-[14px] font-semibold text-white block mb-5">Support</span>
-            <ul className="flex flex-col gap-3">
-              {["Help Center", "Tweet @ Us", "Webians", "Feedback"].map((label) => (
-                <li key={label}>
-                  <Link
-                    href="#"
-                    className="text-[13px] sm:text-[14px] text-zinc-400 hover:text-white transition-colors duration-300"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="ft-cta-b">
+            <Link className="btn btn-p" href="/contact/#enquire">Book a free consultation</Link>
+            <Link className="btn btn-ghost" href="/#plan">Get my plan</Link>
           </div>
-
-          {/* Column Links */}
-          <div>
-            <span className="text-[14px] font-semibold text-white block mb-5">Links</span>
-            <ul className="flex flex-col gap-3">
-              {["Courses", "Become Teacher", "Service", "All in One"].map((label) => (
-                <li key={label}>
-                  <Link
-                    href="#"
-                    className="text-[13px] sm:text-[14px] text-zinc-400 hover:text-white transition-colors duration-300"
-                  >
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column Contact Us */}
-          <div className="flex flex-col items-start">
-            <span className="text-[14px] font-semibold text-white block mb-5">Contact Us</span>
-            <div className="flex flex-col gap-4 w-full">
-              <a href="tel:+9198765432154" className="flex items-center gap-3 text-[13px] sm:text-[14px] text-zinc-400 hover:text-white transition-colors group">
-                <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:bg-zinc-800 transition-all shrink-0">
-                  <Phone size={14} />
-                </div>
-                <span className="font-medium">(91) 98765 4321 54</span>
-              </a>
-              <a href="mailto:support@mail.com" className="flex items-center gap-3 text-[13px] sm:text-[14px] text-zinc-400 hover:text-white transition-colors group">
-                <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-white group-hover:bg-zinc-800 transition-all shrink-0">
-                  <Mail size={14} />
-                </div>
-                <span className="font-medium">support@mail.com</span>
-              </a>
-            </div>
-          </div>
-
         </div>
 
-        {/* Divider Line */}
-        <div className="border-t border-zinc-800/80 my-8" />
+        {/* Links grid */}
+        <div className="ft-grid">
 
-        {/* Bottom Row */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[12px] text-zinc-500">
-          <span>© {year} Slatout. All rights reserved.</span>
-          <div className="flex gap-5">
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white transition-colors">Terms of Use</Link>
-            <Link href="#" className="hover:text-white transition-colors">Legal</Link>
-            <Link href="#" className="hover:text-white transition-colors">Site Map</Link>
+          {/* Brand */}
+          <div className="ft-brand">
+            <Link className="brand" href="/" aria-label="SLATOUT home">
+              <svg className="logo-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+                <path d="M20 25.5 35 31 20 36.5 5 31Z" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinejoin="round"/>
+                <path d="M5 20.5 20 26 35 20.5V23L20 28.5 5 23Z" fill="#C24E00"/>
+                <path d="M20 15 35 20.5 20 26 5 20.5Z" fill="#FF6A00"/>
+                <path d="M20 4 35 9.5 20 15 5 9.5Z" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinejoin="round"/>
+              </svg>
+              <span>SLATOUT</span>
+            </Link>
+            <p>Build beyond business. One partner for business setup, compliance, technology, branding, marketing and finance, for startups and growing businesses in India.</p>
           </div>
+
+          {/* Services */}
+          <nav aria-label="Services">
+            <h2>Services</h2>
+            <ul>
+              <li><Link href="/services/business-setup-registration/">Business Setup &amp; Registration</Link></li>
+              <li><Link href="/services/technology-ai-solutions/">Technology &amp; AI Solutions</Link></li>
+              <li><Link href="/services/offline-business-launch/">Offline Business Launch &amp; Market Setup</Link></li>
+              <li><Link href="/services/branding-marketing/">Branding &amp; Marketing</Link></li>
+              <li><Link href="/services/content-strategy/">Content Strategy</Link></li>
+              <li><Link href="/services/digital-marketing/">Digital Marketing &amp; Growth</Link></li>
+              <li><Link href="/services/ecommerce-marketplace-growth/">E-Commerce &amp; Marketplace Growth</Link></li>
+              <li><Link href="/services/programmatic-advertising/">Programmatic Advertising</Link></li>
+              <li><Link href="/services/business-development-outsourcing/">Business Development Outsourcing</Link></li>
+              <li><Link href="/services/finance-tax-compliance/">Finance, Tax &amp; Compliance</Link></li>
+            </ul>
+          </nav>
+
+          {/* Company */}
+          <nav aria-label="Company">
+            <h2>Company</h2>
+            <ul>
+              <li><Link href="/about/">About</Link></li>
+              <li><Link href="/services/">All services</Link></li>
+              <li><Link href="/studio/">Free tools</Link></li>
+              <li><Link href="/blogs/">Insights</Link></li>
+              <li><Link href="/contact/">Contact</Link></li>
+            </ul>
+          </nav>
+
+          {/* Contact */}
+          <div>
+            <h2>Contact</h2>
+            <ul>
+              <li><Link href="/contact/">Send an enquiry</Link></li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Big SLATOUT wordmark with hover glow */}
+        <FooterWord />
+
+        {/* Legal bar */}
+        <div className="ft-legal">
+          <span>&copy; {year} SLATOUT. All rights reserved.</span>
+          <span className="ft-l">
+            <Link href="/privacy-policy/">Privacy Policy</Link>
+            <Link href="/terms/">Terms and Conditions</Link>
+          </span>
         </div>
 
       </div>

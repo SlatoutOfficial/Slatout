@@ -3,6 +3,10 @@
 @import "../styles/hero-rope.css";
 @import "../styles/ten-worlds.css";
 @import "../styles/route-planner.css";
+@import "../styles/team-comparison.css";
+@import "../styles/process-track.css";
+@import "../styles/enquiry.css";
+@import "../styles/footer.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

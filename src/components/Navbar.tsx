@@ -49,63 +49,77 @@ export type NavItem = {
   };
 };
 
-// --- Actual Slatout Services Data ---
+// --- Actual Slatout Services Data (10 Worlds) ---
 const servicesChildren: MegaLink[] = [
   {
-    label: "Business Setup & Legal",
-    href: "/services/business-setup-legal",
-    description: "Incorporate LLPs, Private Limiteds, and draft partner agreements.",
+    label: "01. Business Setup & Registration",
+    href: "/services/business-setup-registration",
+    description: "Structure, registrations, licences, IP and legal documents.",
     icon: <Scale size={18} className="stroke-[2]" />,
-    gradientClass: "from-orange-500 to-amber-400"
+    gradientClass: "from-emerald-500 to-teal-400"
   },
   {
-    label: "Finance, Tax & Compliance",
-    href: "/services/finance-tax-compliance",
-    description: "Manage GST filings, tax returns, audits, and bookkeeping.",
-    icon: <CreditCard size={18} className="stroke-[2]" />,
-    gradientClass: "from-rose-500 to-orange-400"
-  },
-  {
-    label: "Business Consulting & Strategy",
-    href: "/services/business-consulting-strategy",
-    description: "Maximize valuation and optimize corporate operations.",
-    icon: <Landmark size={18} className="stroke-[2]" />,
-    gradientClass: "from-amber-500 to-yellow-400"
-  },
-  {
-    label: "Technology Solutions",
-    href: "/services/technology-solutions",
-    description: "Bespoke engineering including Next.js, cloud systems, and database scale.",
+    label: "02. Technology & AI Solutions",
+    href: "/services/technology-ai-solutions",
+    description: "Websites, software, automation and AI built around business problems.",
     icon: <Code size={18} className="stroke-[2]" />,
-    gradientClass: "from-red-500 to-rose-400"
+    gradientClass: "from-blue-500 to-indigo-400"
   },
   {
-    label: "E-commerce Solutions",
-    href: "/services/ecommerce-solutions",
-    description: "Setup Shopify systems, custom storefront integrations, and gateway setup.",
-    icon: <ShoppingBag size={18} className="stroke-[2]" />,
-    gradientClass: "from-orange-500 to-pink-500"
+    label: "03. Offline Business Launch",
+    href: "/services/offline-business-launch",
+    description: "Market research, location strategy and local launch planning.",
+    icon: <Landmark size={18} className="stroke-[2]" />,
+    gradientClass: "from-amber-500 to-orange-400"
   },
   {
-    label: "Branding & Creative",
-    href: "/services/branding-creative",
-    description: "Craft brand guidelines, custom SVG systems, and editorial UI packages.",
+    label: "04. Branding & Marketing",
+    href: "/services/branding-marketing",
+    description: "Brand strategy, visual identity and offline marketing.",
     icon: <Palette size={18} className="stroke-[2]" />,
+    gradientClass: "from-rose-500 to-pink-400"
+  },
+  {
+    label: "05. Content Strategy",
+    href: "/services/content-strategy",
+    description: "Pillars, voice, editorial calendar and content briefs.",
+    icon: <FileText size={18} className="stroke-[2]" />,
+    gradientClass: "from-yellow-500 to-amber-400"
+  },
+  {
+    label: "06. Digital Marketing & Growth",
+    href: "/services/digital-marketing",
+    description: "SEO, AI-search visibility, paid ads, social and analytics.",
+    icon: <Megaphone size={18} className="stroke-[2]" />,
+    gradientClass: "from-teal-500 to-cyan-400"
+  },
+  {
+    label: "07. E-Commerce & Marketplace Growth",
+    href: "/services/ecommerce-marketplace-growth",
+    description: "Seller onboarding, listings, marketplace SEO and advertising.",
+    icon: <ShoppingBag size={18} className="stroke-[2]" />,
     gradientClass: "from-purple-500 to-indigo-400"
   },
   {
-    label: "Marketing & Growth",
-    href: "/services/marketing-growth",
-    description: "Scale performance campaigns, semantic SEO layouts, and user acquisition loops.",
-    icon: <Megaphone size={18} className="stroke-[2]" />,
-    gradientClass: "from-indigo-500 to-cyan-400"
+    label: "08. Programmatic Advertising",
+    href: "/services/programmatic-advertising",
+    description: "Real-time buying across display, video, connected TV and audio.",
+    icon: <Sparkles size={18} className="stroke-[2]" />,
+    gradientClass: "from-cyan-500 to-blue-400"
   },
   {
-    label: "Legal & Regulatory Compliance",
-    href: "/services/legal-regulatory-compliance",
-    description: "Navigate compliance audits, legal checklists, and security standards.",
-    icon: <ShieldCheck size={18} className="stroke-[2]" />,
-    gradientClass: "from-emerald-500 to-teal-400"
+    label: "09. BD Outsourcing",
+    href: "/services/business-development-outsourcing",
+    description: "Market research, B2B lead generation, outreach and pipeline.",
+    icon: <Users size={18} className="stroke-[2]" />,
+    gradientClass: "from-orange-500 to-amber-400"
+  },
+  {
+    label: "10. Finance, Tax & Compliance",
+    href: "/services/finance-tax-compliance",
+    description: "Accounting, GST, income tax, audit, payroll and virtual CFO.",
+    icon: <CreditCard size={18} className="stroke-[2]" />,
+    gradientClass: "from-emerald-600 to-teal-500"
   }
 ];
 

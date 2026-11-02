@@ -1,12 +1,12 @@
 import React from "react";
-import CTA from "./CTA";
+import Enquiry from "./Enquiry";
 import Footer from "./Footer";
 
-/** Global end-of-page stack: Standalone CTA and Footer modules */
+/** Global end-of-page stack: Enquiry form + Footer */
 export default function SiteEnd() {
   return (
     <>
-      <CTA />
+      <Enquiry />
       <Footer />
     </>
   );

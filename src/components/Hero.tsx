@@ -8,8 +8,6 @@ export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const glCanvasRef = useRef<HTMLCanvasElement>(null);
   const inkCanvasRef = useRef<HTMLCanvasElement>(null);
-  const loaderRef = useRef<HTMLDivElement>(null);
-  const countRef = useRef<HTMLSpanElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const toastRef = useRef<HTMLDivElement>(null);
   const hintRef = useRef<HTMLParagraphElement>(null);
@@ -1652,36 +1650,6 @@ export default function Hero() {
       renderer.render(scene, camera);
     }
 
-    /* ─── Loader Counter ─── */
-    let countVal = 0,
-      loaderFinished = false;
-    let loaderAnimId: number;
-    function finishLoader() {
-      if (loaderFinished) return;
-      loaderFinished = true;
-      if (countRef.current) countRef.current.textContent = "100";
-      setTimeout(() => {
-        container?.classList.add("loaded");
-        t0 = performance.now();
-        container?.classList.add("ready");
-      }, 220);
-    }
-    function tickLoader() {
-      countVal += loaderFinished
-        ? 0
-        : countVal >= 99
-          ? 0
-          : (99 - countVal) * 0.08 + 0.5;
-      if (countRef.current)
-        countRef.current.textContent = String(
-          Math.min(99, Math.floor(countVal))
-        ).padStart(3, "0");
-      if (countVal < 99 && !loaderFinished) {
-        loaderAnimId = requestAnimationFrame(tickLoader);
-      }
-    }
-    tickLoader();
-
     /* ─── Boot Scene ─── */
     async function init() {
       try {
@@ -1694,7 +1662,8 @@ export default function Hero() {
       buildLetters();
       layout();
       window.addEventListener("resize", layout);
-      finishLoader();
+      container?.classList.add("loaded", "ready");
+      t0 = performance.now();
       last = performance.now();
       animId = requestAnimationFrame(frame);
     }
@@ -1702,7 +1671,6 @@ export default function Hero() {
 
     return () => {
       cancelAnimationFrame(animId);
-      cancelAnimationFrame(loaderAnimId);
       window.removeEventListener("resize", layout);
       canvas.removeEventListener("pointerdown", onPointerDown);
       container?.removeEventListener("pointermove", onPointerMove);
@@ -1721,35 +1689,13 @@ export default function Hero() {
     <section
       id="hero"
       ref={containerRef}
-      className="hero-rope-container relative w-full h-screen overflow-hidden select-none"
+      className="hero-rope-container loaded ready relative w-full h-screen overflow-hidden select-none"
       style={{
         ["--bg" as any]: currentColor,
         ["--ink" as any]: "#0b0b0b",
         ["--paper" as any]: "#ffffff",
       }}
     >
-      {/* ── Loader ── */}
-      <div ref={loaderRef} className="loader" aria-hidden="true">
-        <div className="row">
-          <span className="lg font-extrabold text-[22px] tracking-[-0.055em]">
-            slatout
-          </span>
-          <span className="mono text-xs font-mono tracking-wider uppercase">
-            Build beyond business
-          </span>
-        </div>
-        <div className="row">
-          <span className="mono text-xs font-mono tracking-wider uppercase">
-            Twisting the rope…
-          </span>
-          <span
-            ref={countRef}
-            className="count font-black text-[clamp(90px,19vw,280px)] leading-[0.78] tracking-[-0.07em] tabular-nums"
-          >
-            000
-          </span>
-        </div>
-      </div>
 
       {/* ── Background Glow & Canvases ── */}
       <div className="glow pointer-events-none" />
