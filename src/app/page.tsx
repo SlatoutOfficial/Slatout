@@ -1,6 +1,6 @@
 import React from "react";
 import Hero from "@/components/Hero";
-import Clients from "../components/Clients";
+import ClientReviews from "../components/ClientReviews";
 import Services from "../components/Services";
 import TenWorlds from "../components/TenWorlds";
 import RoutePlanner from "../components/RoutePlanner";
@@ -15,7 +15,7 @@ export default function Home() {
     <main className="min-h-screen bg-[#FAF8F5] relative">
       <SmoothScroll>
         <Hero />
-        <Clients />
+        <ClientReviews />
         <Services />
         <TenWorlds />
         <RoutePlanner />

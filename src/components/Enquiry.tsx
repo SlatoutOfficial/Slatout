@@ -1,27 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { ROUTE_NEEDS, ROUTE_STAGES } from "../data/route-options";
 
 const STAGES = [
-  { value: "start", label: "Start" },
-  { value: "build", label: "Build" },
-  { value: "grow", label: "Grow" },
-  { value: "run", label: "Run & Protect" },
+  ...ROUTE_STAGES,
   { value: "unsure", label: "Not sure" },
 ];
 
-const SERVICES = [
-  { value: "business-setup-registration", label: "Business Setup" },
-  { value: "technology-ai-solutions", label: "Technology & AI" },
-  { value: "offline-business-launch", label: "Offline Launch" },
-  { value: "branding-marketing", label: "Branding" },
-  { value: "content-strategy", label: "Content Strategy" },
-  { value: "digital-marketing", label: "Digital Marketing" },
-  { value: "ecommerce-marketplace-growth", label: "Marketplace Growth" },
-  { value: "programmatic-advertising", label: "Programmatic Ads" },
-  { value: "business-development-outsourcing", label: "BD Outsourcing" },
-  { value: "finance-tax-compliance", label: "Finance & Tax" },
-  { value: "not-sure", label: "Not sure yet" },
+const NEEDS = [
+  ...ROUTE_NEEDS,
+  { value: "not-sure", label: "Not sure yet", targets: [] },
 ];
 
 function CheckIcon() {
@@ -44,26 +33,47 @@ function CheckIcon() {
 
 export default function Enquiry() {
   const [stage, setStage] = useState<string>("");
-  const [services, setServices] = useState<string[]>([]);
+  const [needs, setNeeds] = useState<string[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const stageValue = params.get("stage");
+    if (STAGES.some((option) => option.value === stageValue)) setStage(stageValue!);
+
+    let selectedNeeds: string[];
+    if (params.has("need")) {
+      const requested = new Set((params.get("need") || "").split(",").filter(Boolean));
+      selectedNeeds = NEEDS.filter((option) => requested.has(option.value)).map((option) => option.value);
+    } else {
+      const requestedServices = new Set((params.get("service") || "").split(",").filter(Boolean));
+      selectedNeeds = ROUTE_NEEDS
+        .filter((option) => option.targets.some((target) => requestedServices.has(target)))
+        .map((option) => option.value);
+    }
+    if (selectedNeeds.length) setNeeds(selectedNeeds);
+
+    const draftMessage = params.get("msg");
+    if (draftMessage) setMessage(draftMessage);
+  }, []);
+
   const progress = (() => {
     let p = 0;
     if (stage) p += 20;
-    if (services.length) p += 20;
+    if (needs.length) p += 20;
     if (name.trim()) p += 20;
     if (email.trim() || phone.trim()) p += 20;
     if (message.trim()) p += 20;
     return p;
   })();
 
-  function toggleService(value: string) {
-    setServices((prev) =>
-      prev.includes(value) ? prev.filter((s) => s !== value) : [...prev, value]
+  function toggleNeed(value: string) {
+    setNeeds((prev) =>
+      prev.includes(value) ? prev.filter((need) => need !== value) : [...prev, value]
     );
   }
 
@@ -147,18 +157,18 @@ export default function Enquiry() {
               </fieldset>
 
               <fieldset className="enq-fs">
-                <legend>What are you interested in?</legend>
+                <legend>What do you need most? Pick as many as you like.</legend>
                 <div className="chip-row">
-                  {SERVICES.map((sv) => (
-                    <label key={sv.value} className={`chip-opt${services.includes(sv.value) ? " chip-on" : ""}`}>
+                  {NEEDS.map((need) => (
+                    <label key={need.value} className={`chip-opt${needs.includes(need.value) ? " chip-on" : ""}`}>
                       <input
                         type="checkbox"
-                        name="services"
-                        value={sv.value}
-                        checked={services.includes(sv.value)}
-                        onChange={() => toggleService(sv.value)}
+                        name="needs"
+                        value={need.value}
+                        checked={needs.includes(need.value)}
+                        onChange={() => toggleNeed(need.value)}
                       />
-                      <span>{sv.label}</span>
+                      <span>{need.label}</span>
                     </label>
                   ))}
                 </div>

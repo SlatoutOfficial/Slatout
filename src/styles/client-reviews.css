@@ -1,0 +1,105 @@
+.rv {
+  --rv-paper: #FAF8F5;
+  --rv-ink: #11141D;
+  --rv-muted: #4B5160;
+  --rv-soft: #868B97;
+  --rv-brand: #FF6A13;
+  --rv-brand-dark: #D9520A;
+  --rv-ease: cubic-bezier(.22,.8,.2,1);
+  overflow-x: clip;
+  padding: clamp(52px, 7vw, 96px) 0 clamp(48px, 6vw, 80px);
+  background: var(--rv-paper);
+  color: var(--rv-ink);
+  font: 400 17px/1.6 "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.rv, .rv *, .rv *::before, .rv *::after { box-sizing: border-box; }
+.rv p, .rv h2, .rv h3, .rv ul, .rv blockquote, .rv figure, .rv dl, .rv dd { margin: 0; }
+.rv ul { padding: 0; list-style: none; }
+.rv a { color: inherit; }
+.rv-wrap { width: min(1180px, 100% - 2 * clamp(16px, 4vw, 48px)); margin-inline: auto; }
+.rv-fade { opacity: 0; transform: translateY(16px); transition: opacity .9s var(--rv-ease), transform 1s var(--rv-ease); }
+.rv-fade.in { opacity: 1; transform: none; }
+
+.rv-heading { max-width: 46rem; margin-inline: auto; text-align: center; }
+.rv-kicker { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 16px !important; color: var(--rv-soft); font: 500 .72rem/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing: .14em; text-transform: uppercase; }
+.rv-kicker::before, .rv-kicker::after { width: 22px; height: 2px; border-radius: 2px; background: var(--rv-brand); content: ""; }
+.rv-heading h2 { font-size: clamp(2.4rem, 5.6vw, 4.4rem); font-weight: 800; line-height: 1; letter-spacing: -.05em; }
+.rv-heading > p:not(.rv-kicker) { margin-top: 14px; color: var(--rv-muted); font-size: clamp(1rem, 1.3vw, 1.15rem); text-wrap: balance; }
+.rv-sample { display: inline-block; margin-top: 14px; padding: 6px 12px; border: 1px dashed rgba(17,20,29,.3); border-radius: 999px; color: var(--rv-soft); font: 500 .62rem/1.3 "JetBrains Mono", monospace; letter-spacing: .1em; text-transform: uppercase; }
+
+.rv-tabs { display: flex; min-height: 72px; justify-content: center; align-items: center; gap: clamp(10px, 2vw, 22px); margin: clamp(24px, 3vw, 36px) 0 clamp(20px, 2.4vw, 30px); }
+.rv-tab { all: unset; border-radius: 50%; cursor: pointer; }
+.rv-av { display: grid; width: var(--w, 56px); aspect-ratio: 1; overflow: hidden; place-items: center; border-radius: 50%; background: var(--t); color: var(--d); }
+.rv-av svg { width: 52%; height: 52%; stroke-width: 1.7; }
+.rv-tab .rv-av { --w: 52px; opacity: .55; filter: saturate(.7); transition: width .5s var(--rv-ease), opacity .4s, filter .4s, box-shadow .4s; }
+.rv-tab:hover .rv-av { opacity: .9; }
+.rv-tab[aria-selected="true"] .rv-av { --w: 72px; opacity: 1; filter: none; box-shadow: 0 0 0 3px var(--rv-paper), 0 0 0 5.5px var(--rv-brand); }
+.rv-tab:focus-visible { outline: 2px solid var(--rv-ink); outline-offset: 6px; }
+
+.rv-viewport { position: relative; overflow: hidden; padding: 12px 0 24px; touch-action: pan-y; -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent); }
+.rv-track { display: flex; width: max-content; gap: 28px; will-change: transform; }
+.rv-track.go { transition: transform .8s var(--rv-ease); }
+.rv-slide { display: grid; width: min(900px, 86vw); flex: none; grid-template-columns: minmax(0, .36fr) minmax(0, .64fr); border-radius: 30px; background: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,106,19,.5), 0 30px 60px -34px rgba(255,106,19,.45); opacity: .34; transform: scale(.93); filter: blur(1.5px); cursor: pointer; transition: opacity .6s, transform .7s var(--rv-ease), filter .6s; }
+.rv-slide.on { opacity: 1; transform: none; filter: none; cursor: default; }
+
+.rv-project { display: flex; flex-direction: column; gap: 16px; margin: 10px !important; padding: clamp(16px, 2vw, 24px); border-radius: 20px; background: var(--rv-paper); }
+.rv-project dt { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: var(--rv-soft); font: 500 .64rem/1 "JetBrains Mono", monospace; letter-spacing: .14em; text-transform: uppercase; }
+.rv-project dt::before { width: 10px; height: 2px; border-radius: 2px; background: var(--rv-brand); content: ""; }
+.rv-project dd { font-size: .98rem; font-weight: 600; line-height: 1.35; letter-spacing: -.015em; }
+.rv-project .rv-result dd { font-size: 1.06rem; font-weight: 700; }
+.rv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.rv-chip { display: inline-flex; height: 30px; align-items: center; gap: 8px; padding: 0 12px 0 10px; border-radius: 8px; background: #fff; box-shadow: inset 0 0 0 1px rgba(17,20,29,.1); color: var(--rv-ink); font: 500 .66rem/1 "JetBrains Mono", monospace; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; transition: background .25s, box-shadow .25s; }
+.rv-chip i { width: 8px; height: 8px; border-radius: 2px; background: var(--d); }
+.rv-chip:hover, .rv-chip:focus-visible { background: var(--t); box-shadow: inset 0 0 0 1px var(--d); }
+.rv-chip:focus-visible { outline: 2px solid var(--rv-brand); outline-offset: 2px; }
+
+.rv-details { display: flex; min-width: 0; flex-direction: column; gap: clamp(16px, 1.8vw, 22px); padding: clamp(20px, 2.5vw, 32px) clamp(24px, 3vw, 44px) clamp(20px, 2.5vw, 30px) clamp(10px, 1.4vw, 22px); }
+.rv-person { display: flex; align-items: center; gap: 16px; }
+.rv-person > .rv-av { --w: 58px; flex: none; }
+.rv-name { min-width: 0; }
+.rv-name b { display: block; font-size: 1.15rem; font-weight: 700; line-height: 1.2; letter-spacing: -.025em; }
+.rv-name span { display: block; color: var(--rv-muted); font-size: .92rem; }
+.rv-permission { display: inline-flex; align-items: center; gap: 7px; margin-left: auto; padding: 7px 11px 7px 8px; border-radius: 999px; background: #F2F8F4; color: #1B6B45; font: 500 .6rem/1 "JetBrains Mono", monospace; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+.rv-permission svg { width: 13px; height: 13px; }
+.rv-rating { display: flex; align-items: center; gap: 12px; }
+.rv-stars { display: inline-flex; gap: 3px; color: var(--rv-brand); }
+.rv-stars svg { width: 18px; height: 18px; fill: currentColor; stroke: currentColor; }
+.rv-stars svg.off { color: #E3DFD8; }
+.rv-rating b { font: 700 .78rem "JetBrains Mono", monospace; letter-spacing: .06em; }
+.rv-quote { font-size: clamp(1.2rem, 1.9vw, 1.6rem); font-weight: 500; line-height: 1.38; letter-spacing: -.022em; text-wrap: pretty; }
+.rv-quote mark { padding: 0 .08em; background: linear-gradient(transparent 64%, rgba(255,106,19,.28) 64%); color: inherit; font-weight: 700; }
+
+.rv-controls { margin-top: 0; }
+.rv-control-row { display: flex; justify-content: center; align-items: center; gap: 20px; }
+.rv-arrow { all: unset; display: grid; width: 54px; height: 54px; place-items: center; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1.5px rgba(17,20,29,.14); cursor: pointer; transition: background .3s, color .3s, box-shadow .3s; }
+.rv-arrow svg { width: 20px; height: 20px; }
+.rv-arrow:hover { background: var(--rv-ink); color: #fff; box-shadow: none; }
+.rv-arrow:focus-visible { outline: 2px solid var(--rv-brand); outline-offset: 3px; }
+.rv-count { min-width: 120px; color: var(--rv-soft); font: 500 .72rem "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; letter-spacing: .12em; text-align: center; }
+.rv-count b { color: var(--rv-ink); font-weight: 700; }
+.rv-progress { width: 84px; height: 2px; overflow: hidden; margin: 10px auto 0; border-radius: 2px; background: rgba(17,20,29,.1); }
+.rv-progress i { display: block; width: 0; height: 100%; background: var(--rv-brand); }
+.rv-progress i.run { animation: rv-progress 9s linear forwards; }
+.rv-progress.paused i.run { animation-play-state: paused; }
+@keyframes rv-progress { to { width: 100%; } }
+
+@media (max-width: 760px) {
+  .rv-slide { width: 88vw; grid-template-columns: 1fr; }
+  .rv-details { order: -1; padding: 20px 22px 8px; }
+  .rv-project { margin: 8px 12px 12px !important; padding: 18px; }
+  .rv-person { flex-wrap: wrap; }
+  .rv-permission { margin-left: 0; }
+  .rv-tab .rv-av { --w: 40px; }
+  .rv-tab[aria-selected="true"] .rv-av { --w: 56px; }
+  .rv-tabs { min-height: 66px; gap: 8px; }
+  .rv-arrow { width: 48px; height: 48px; }
+  .rv-control-row { gap: 12px; }
+  .rv-count { min-width: 92px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv *, .rv *::before, .rv *::after { transition: none !important; animation: none !important; }
+  .rv .rv-fade { opacity: 1; transform: none; }
+}

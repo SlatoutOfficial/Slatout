@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
+import { ROUTE_NEEDS, ROUTE_STAGES } from "../data/route-options";
 
 interface WorldRouteNode {
   num: string;
@@ -117,73 +118,8 @@ const ROUTE_NODES: WorldRouteNode[] = [
   },
 ];
 
-interface StageOption {
-  label: string;
-  targets: string[];
-}
-
-const STAGES: StageOption[] = [
-  {
-    label: "Just an idea",
-    targets: ["business-setup-registration", "finance-tax-compliance"],
-  },
-  {
-    label: "Registered, not launched",
-    targets: ["technology-ai-solutions", "branding-marketing"],
-  },
-  {
-    label: "Running, ready to grow",
-    targets: ["digital-marketing", "content-strategy"],
-  },
-  {
-    label: "Established, ready to scale",
-    targets: ["programmatic-advertising", "business-development-outsourcing"],
-  },
-];
-
-interface NeedOption {
-  label: string;
-  targets: string[];
-}
-
-const NEEDS: NeedOption[] = [
-  {
-    label: "Get legally set up",
-    targets: ["business-setup-registration"],
-  },
-  {
-    label: "Stay compliant and manage money",
-    targets: ["finance-tax-compliance"],
-  },
-  {
-    label: "Build a website, app or AI",
-    targets: ["technology-ai-solutions"],
-  },
-  {
-    label: "Open a physical outlet",
-    targets: ["offline-business-launch"],
-  },
-  {
-    label: "Build my brand and content",
-    targets: ["branding-marketing", "content-strategy"],
-  },
-  {
-    label: "Get customers online",
-    targets: ["digital-marketing"],
-  },
-  {
-    label: "Sell on marketplaces",
-    targets: ["ecommerce-marketplace-growth"],
-  },
-  {
-    label: "Reach big audiences with ads",
-    targets: ["programmatic-advertising"],
-  },
-  {
-    label: "Build a B2B sales pipeline",
-    targets: ["business-development-outsourcing"],
-  },
-];
+const STAGES = ROUTE_STAGES;
+const NEEDS = ROUTE_NEEDS;
 
 export default function RoutePlanner() {
   const [selectedStage, setSelectedStage] = useState<number | null>(null);
@@ -252,9 +188,13 @@ export default function RoutePlanner() {
       needsLabels.length ? " and need to: " + needsLabels.join("; ").toLowerCase() : ""
     }. We would like to start with: ${chosen.map((n) => n.fullName).join(", ")}.`;
 
-    const href = `/contact/?service=${chosenSlugs.join(",")}&msg=${encodeURIComponent(
-      msg
-    )}#enquire`;
+    const params = new URLSearchParams({
+      service: chosenSlugs.join(","),
+      stage: selectedStage === null ? "" : STAGES[selectedStage].value,
+      need: selectedNeeds.map((idx) => NEEDS[idx].value).join(","),
+      msg,
+    });
+    const href = `/contact/?${params.toString()}#enquire`;
 
     return {
       activeSlugs: set,
