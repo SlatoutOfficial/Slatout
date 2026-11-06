@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Navbar from "../../components/Navbar";
 import { ArrowRight, CheckCircle2, ShieldCheck, Heart, Sparkles, Trophy } from "lucide-react";
 import { WordRevealHeading, FadeUp } from "../../components/Motion";
 import SiteEnd from "../../components/SiteEnd";
@@ -12,8 +11,6 @@ export default function AboutPage() {
 
   return (
     <main className="min-h-screen bg-[#FAF8F5]">
-      <Navbar />
-
       {/* Hero Section */}
       <section 
         className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 min-h-[450px] sm:min-h-[500px] flex items-center bg-[#111] border-b border-white/10 overflow-hidden"

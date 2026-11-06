@@ -18,6 +18,10 @@ export default function ServicePageClient({ service }: { service: ServiceData })
 
   const wrapperClass = classMatch ? classMatch[1] : "svc-page r-room";
   const dataScope = scopeMatch ? scopeMatch[1] : undefined;
+  const serviceHtml = service.html.replace(
+    /<header class="site-header"[\s\S]*?<\/header>/,
+    "",
+  );
 
   const styleObj: Record<string, string> = {};
   if (styleMatch) {
@@ -129,7 +133,7 @@ export default function ServicePageClient({ service }: { service: ServiceData })
       data-scope={dataScope}
       style={styleObj as React.CSSProperties}
       onClick={handleClick}
-      dangerouslySetInnerHTML={{ __html: service.html }}
+      dangerouslySetInnerHTML={{ __html: serviceHtml }}
     />
   );
 }

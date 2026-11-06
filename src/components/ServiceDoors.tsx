@@ -113,6 +113,30 @@ export const DOORS_DATA: DoorData[] = [
     glow: "#93C5C3",
     ink: "#24555A",
     svg: `<rect x="34" y="124" width="26" height="46" rx="4"/><rect x="70" y="98" width="26" height="72" rx="4"/><rect x="106" y="72" width="26" height="98" rx="4"/><rect x="142" y="46" width="26" height="124" rx="4"/><path class="a" d="M30 100l40-26 38-24 62-26"/>`
+  },
+  {
+    num: "09",
+    shortName: "Programmatic Ads",
+    title: "Programmatic Advertising",
+    desc: "Reaching the right audiences through real-time buying across display, video, connected TV and audio.",
+    href: "/services/programmatic-advertising",
+    slug: "programmatic-advertising",
+    bg: "#FFF3CC",
+    glow: "#F2D165",
+    ink: "#7A5900",
+    svg: `<rect x="28" y="42" width="144" height="92" rx="8"/><path d="M44 112l30-28 22 17 38-39 24 20"/><circle class="a" cx="74" cy="84" r="5"/><circle class="a" cx="96" cy="101" r="5"/><path d="M82 150h36M100 134v16"/>`
+  },
+  {
+    num: "10",
+    shortName: "Business Development",
+    title: "Business Development Outsourcing",
+    desc: "Building a dependable sales pipeline with market research, B2B lead generation and outreach.",
+    href: "/services/business-development-outsourcing",
+    slug: "business-development-outsourcing",
+    bg: "#FFE6D1",
+    glow: "#FFB683",
+    ink: "#A2470F",
+    svg: `<circle cx="58" cy="62" r="18"/><circle class="a" cx="142" cy="62" r="18"/><circle cx="100" cy="48" r="20"/><path d="M26 148c0-22 14-38 32-38 13 0 23 8 28 20M174 148c0-22-14-38-32-38-13 0-23 8-28 20"/><path class="a" d="M62 152c0-30 15-48 38-48s38 18 38 48z"/>`
   }
 ];
 
@@ -143,7 +167,7 @@ export default function ServiceDoors() {
             </span>
           </div>
           <h2 className="text-[clamp(1.9rem,3.8vw,3.2rem)] font-extrabold text-stone-900 tracking-tight leading-[1.08]">
-            One company. <em className="italic font-serif text-[#FF5500] font-normal">Eight worlds.</em>
+            One company. <em className="italic font-serif text-[#FF5500] font-normal">Ten worlds.</em>
           </h2>
         </div>
         <p className="text-stone-500 text-[13.5px] sm:text-[15px] max-w-[480px] leading-relaxed">
@@ -151,7 +175,7 @@ export default function ServiceDoors() {
         </p>
       </div>
 
-      {/* ── Desktop Horizontal Expanding Doors (8 Items with generous width) ── */}
+      {/* ── Desktop Horizontal Expanding Doors ── */}
       <div
         ref={containerRef}
         onMouseEnter={() => setIsHovered(true)}

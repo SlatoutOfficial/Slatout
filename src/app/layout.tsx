@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "Slatout | Development, Digital Marketing & Creative Agency",
@@ -12,8 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="antialiased bg-[#FAF8F5]">
+        <Script id="slatout-js-enhancement" strategy="beforeInteractive">
+          {`document.documentElement.classList.add("js");`}
+        </Script>
+        <Navbar />
         {children}
       </body>
     </html>

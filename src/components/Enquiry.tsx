@@ -104,8 +104,8 @@ export default function Enquiry() {
         </div>
 
         <div className="enq-form-card">
-          {status === "sent" ? (
-            <div className="enq-sent">
+          {status === "sent" && (
+            <div className="enq-sent" role="status" aria-live="polite">
               <div className="enq-sent-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
@@ -117,7 +117,7 @@ export default function Enquiry() {
                 Thank you{name.split(" ")[0] ? `, ${name.split(" ")[0]}` : ""}. We will get back to you with the right starting point.
               </p>
             </div>
-          ) : (
+          )}
             <form id="enq" className="enq-form" onSubmit={handleSubmit} noValidate>
               <div className="enq-prog" aria-hidden="true">
                 <span>
@@ -240,7 +240,6 @@ export default function Enquiry() {
                 </p>
               )}
             </form>
-          )}
         </div>
       </div>
     </section>

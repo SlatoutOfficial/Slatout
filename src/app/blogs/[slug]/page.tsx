@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Navbar from "../../../components/Navbar";
 import { ArrowLeft, BookOpen, Clock, HelpCircle, Send, Share2 } from "lucide-react";
 import { blogPosts } from "../../../data/blogs";
 import SiteEnd from "../../../components/SiteEnd";
@@ -17,7 +16,6 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
   if (!post) {
     return (
       <main className="min-h-screen bg-[#FAF8F5] flex flex-col justify-between">
-        <Navbar />
         <div className="flex-1 flex flex-col items-center justify-center p-8 select-none">
           <HelpCircle size={48} className="text-gray-400 mb-4" />
           <h1 className="text-2xl font-bold text-gray-900">Article Not Found</h1>
@@ -48,8 +46,6 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
 
   return (
     <main className="min-h-screen bg-[#FAF8F5]">
-      <Navbar />
-
       {/* Header Info Block */}
       <section className="relative pt-24 pb-10 bg-[#FAF8F5] border-b border-gray-200 overflow-hidden">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#F97432]/5 rounded-full blur-[100px] pointer-events-none" />

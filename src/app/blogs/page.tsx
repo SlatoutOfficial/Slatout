@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Navbar from "../../components/Navbar";
 import { ArrowRight, ArrowUpRight, BookOpen, Clock } from "lucide-react";
 import { blogPosts } from "../../data/blogs";
 import SiteEnd from "../../components/SiteEnd";
@@ -22,8 +21,6 @@ export default function BlogsPage() {
 
   return (
     <main className="min-h-screen bg-[#FAF8F5]">
-      <Navbar />
-
       {/* Hero Header */}
       <section className="relative pt-24 pb-12 bg-[#FAF8F5] border-b border-gray-200 overflow-hidden">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#F97432]/5 rounded-full blur-[100px] pointer-events-none" />

@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "../styles/hero-rope.css";
 @import "../styles/ten-worlds.css";
 @import "../styles/route-planner.css";
-@import "../styles/team-comparison.css";
+@import "../styles/team-comparison-scene.css";
 @import "../styles/process-track.css";
 @import "../styles/enquiry.css";
-@import "../styles/footer.css";
+@import "../styles/footer-reference.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
