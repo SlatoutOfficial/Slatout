@@ -374,16 +374,7 @@ export default function RoutePlanner() {
                     <span>Send this route to SLATOUT</span>
                   </Link>
 
-                  <button
-                    className="btn-plan btn-plan-o"
-                    type="button"
-                    id="pl-stack"
-                    onClick={handleAddToStack}
-                  >
-                    <span>
-                      {stackAdded ? "✓ Added to stack!" : "Add to my stack"}
-                    </span>
-                  </button>
+        
                 </div>
               )}
             </div>

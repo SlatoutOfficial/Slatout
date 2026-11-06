@@ -68,10 +68,10 @@ export default function Connect() {
                 <div className="flex flex-col gap-1.5 mt-4">
                   <span className="type-label text-[11px] text-gray-500">Email us</span>
                   <a
-                    href="mailto:hello@slatout.com"
+                    href="mailto:info@slatout.com"
                     className="text-2xl sm:text-3xl font-medium text-white hover:text-[#F97432] transition-colors duration-300 w-fit"
                   >
-                    hello@slatout.com
+                    info@slatout.com
                   </a>
                 </div>
 
@@ -96,13 +96,20 @@ export default function Connect() {
                 <div>
                   <span className="block font-semibold text-gray-400 mb-2">Socials</span>
                   <div className="flex gap-4">
-                    {["LinkedIn", "Twitter", "Instagram", "GitHub"].map((soc) => (
+                    {[
+                      { name: "LinkedIn", href: "https://www.linkedin.com/company/slatout/" },
+                      { name: "Instagram", href: "https://www.instagram.com/slatoutofficial/" },
+                      { name: "X", href: "https://x.com/slatoutofficial" },
+                      { name: "YouTube", href: "https://www.youtube.com/@Slatoutofficial" },
+                    ].map((soc) => (
                       <a
-                        key={soc}
-                        href="#"
+                        key={soc.name}
+                        href={soc.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="hover:text-white transition-colors duration-300"
                       >
-                        {soc}
+                        {soc.name}
                       </a>
                     ))}
                   </div>

@@ -21,10 +21,10 @@ export default function ContactPage() {
               Tell us what you&apos;re building, where you&apos;re stuck, or what you want to make possible. We&apos;ll work out the right next step together.
             </p>
             <a
-              href="mailto:hello@slatout.com"
+              href="mailto:info@slatout.com"
               className="mt-8 inline-flex items-center gap-3 border-b border-white/25 pb-2 text-sm font-medium text-white transition-colors hover:border-[#F26522] hover:text-[#F26522]"
             >
-              hello@slatout.com
+              info@slatout.com
               <ArrowRight size={15} />
             </a>
           </div>

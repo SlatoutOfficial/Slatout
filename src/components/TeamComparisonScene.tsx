@@ -96,16 +96,26 @@ export default function TeamComparisonScene() {
     const updateFrame = () => {
       const time = reduceMotion ? 0 : (performance.now() - startedAt) / 1000;
       const copyBottom = copy.getBoundingClientRect().bottom - panel.getBoundingClientRect().top;
+      const bottomReserve = isMobile ? 84 : 0;
+      const availableSceneHeight = isMobile
+        ? Math.max(80, height - copyBottom - bottomReserve)
+        : height - 68;
       const areaX = isMobile ? 14 : width * 0.43;
-      const areaY = isMobile ? copyBottom + 18 : 34;
+      const areaY = isMobile ? copyBottom + 8 : 34;
       const areaWidth = isMobile ? width - 28 : width * 0.55;
-      const areaHeight = isMobile ? height - copyBottom - 40 : height - 68;
+      const areaHeight = availableSceneHeight;
       const cardWidth = isMobile ? Math.min(190, width * 0.5) : 284;
       const cardHeight = isMobile ? 48 : 104;
-      const stackSize = isMobile ? Math.min(140, width * 0.36) : Math.min(210, height * 0.27);
-      const centerX = isMobile ? width * 0.32 : width * 0.64;
-      const centerY = isMobile ? copyBottom + (height - copyBottom) * 0.42 : height * 0.56;
-      const stackGap = isMobile ? 15 : Math.min(26, height * 0.032);
+      const stackSize = isMobile
+        ? Math.min(88, width * 0.24, availableSceneHeight * 0.52)
+        : Math.min(210, height * 0.27);
+      const centerX = isMobile ? width * 0.29 : width * 0.64;
+      const centerY = isMobile
+        ? copyBottom + availableSceneHeight * 0.5
+        : height * 0.56;
+      const stackGap = isMobile
+        ? Math.min(6, Math.max(3, (availableSceneHeight - stackSize) / 9))
+        : Math.min(26, height * 0.032);
 
       glow.style.setProperty("--g", smooth((progress - 0.35) / 0.5).toFixed(3));
       glow.style.setProperty("--gx", `${(centerX / width * 100).toFixed(1)}%`);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, Star, UserRound } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
 
@@ -87,19 +87,19 @@ function Avatar({ review, size }: { review: Review; size: number }) {
   );
 }
 
-function ReviewCard({ review, index, active, onSelect }: { review: Review; index: number; active: boolean; onSelect: (index: number, userAction: boolean) => void }) {
+function ReviewCard({ review, index, active, clone, onSelect }: { review: Review; index: number; active: boolean; clone: boolean; onSelect: (index: number, userAction: boolean) => void }) {
   const highlightedAt = review.quote.indexOf(review.highlight);
   return (
     <article
       className={`rv-slide${active ? " on" : ""}`}
-      id={`review-slide-${index}`}
+      id={`review-slide-${clone ? `clone-${index}` : index}`}
       role="tabpanel"
-      aria-labelledby={`review-tab-${index}`}
+      aria-labelledby={clone ? undefined : `review-tab-${index}`}
       aria-label={`Review ${index + 1} of ${reviews.length}`}
-      aria-hidden={!active}
+      aria-hidden={clone || !active}
       onClick={(event) => {
-        if (!active) {
-          event.preventDefault();
+        if (!active || clone) {
+          if ((event.target as HTMLElement).closest("a")) event.preventDefault();
           onSelect(index, true);
         }
       }}
@@ -109,7 +109,7 @@ function ReviewCard({ review, index, active, onSelect }: { review: Review; index
         <div><dt>Services used</dt><dd className="rv-chips">
           {review.services.map((key) => {
             const service = serviceInfo[key];
-            return <a className="rv-chip" key={key} href={`/services/${service.slug}/`} tabIndex={active ? 0 : -1} style={{ "--t": service.tint, "--d": service.deep } as React.CSSProperties}><i />{service.label}</a>;
+            return <a className="rv-chip" key={key} href={`/services/${service.slug}/`} tabIndex={active && !clone ? 0 : -1} style={{ "--t": service.tint, "--d": service.deep } as React.CSSProperties}><i />{service.label}</a>;
           })}
         </dd></div>
         <div><dt>Came with</dt><dd>{review.cameWith}</dd></div>
@@ -141,6 +141,7 @@ export default function ClientReviews() {
   const [progressKey, setProgressKey] = useState(0);
   const [trackOffset, setTrackOffset] = useState(0);
   const [trackAnimating, setTrackAnimating] = useState(false);
+  const [trackIndex, setTrackIndex] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -151,12 +152,26 @@ export default function ClientReviews() {
     const next = (index + reviews.length) % reviews.length;
     if (next === activeIndex) return;
     setActiveIndex(next);
-    setTrackAnimating(true);
+    setTrackIndex(next + 1);
+    setTrackAnimating(!reduceMotion);
     if (userAction) {
       setPlaying(false);
       setProgressKey((key) => key + 1);
     }
   };
+
+  const moveReview = useCallback((direction: -1 | 1, userAction = false) => {
+    const wrapsForward = direction > 0 && activeIndex === reviews.length - 1;
+    const wrapsBackward = direction < 0 && activeIndex === 0;
+    const next = (activeIndex + direction + reviews.length) % reviews.length;
+    setActiveIndex(next);
+    setTrackIndex(reduceMotion ? next + 1 : wrapsForward ? reviews.length + 1 : wrapsBackward ? 0 : next + 1);
+    setTrackAnimating(!reduceMotion);
+    if (userAction) {
+      setPlaying(false);
+      setProgressKey((key) => key + 1);
+    }
+  }, [activeIndex, reduceMotion]);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -180,7 +195,7 @@ export default function ClientReviews() {
     const measure = () => {
       const firstSlide = track.firstElementChild as HTMLElement | null;
       if (!firstSlide) return;
-      setTrackOffset((viewport.clientWidth - firstSlide.offsetWidth) / 2 - activeIndex * (firstSlide.offsetWidth + 28));
+      setTrackOffset((viewport.clientWidth - firstSlide.offsetWidth) / 2 - trackIndex * (firstSlide.offsetWidth + 28));
     };
     const resizeObserver = new ResizeObserver(measure);
     resizeObserver.observe(viewport);
@@ -191,15 +206,7 @@ export default function ClientReviews() {
       revealObserver.disconnect();
       resizeObserver.disconnect();
     };
-  }, [activeIndex]);
-
-  const handleAnimationEnd = () => {
-    if (playing && !paused && !reduceMotion) {
-      setProgressKey((key) => key + 1);
-      setTrackAnimating(true);
-      setActiveIndex((index) => (index + 1) % reviews.length);
-    }
-  };
+  }, [trackIndex]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     let next = -1;
@@ -220,12 +227,30 @@ export default function ClientReviews() {
     if (swipeStart.current === null) return;
     const distance = event.clientX - swipeStart.current;
     swipeStart.current = null;
-    if (Math.abs(distance) > 60) selectReview(activeIndex + (distance < 0 ? 1 : -1), true);
+    if (Math.abs(distance) > 60) moveReview(distance < 0 ? 1 : -1, true);
   };
 
   const activeNumber = (activeIndex + 1).toString().padStart(2, "0");
   const totalNumber = reviews.length.toString().padStart(2, "0");
   const autoplay = playing && started && !reduceMotion;
+
+  useEffect(() => {
+    if (!autoplay || paused) return;
+    const timer = window.setTimeout(() => {
+      setProgressKey((key) => key + 1);
+      moveReview(1);
+    }, 3000);
+    return () => window.clearTimeout(timer);
+  }, [autoplay, paused, activeIndex, moveReview]);
+
+  const pauseCarousel = () => {
+    setPaused(true);
+    setProgressKey((key) => key + 1);
+  };
+  const resumeCarousel = () => {
+    setPaused(false);
+    setProgressKey((key) => key + 1);
+  };
 
   return (
     <section className="rv" id="clients" aria-labelledby="rv-heading" ref={sectionRef}>
@@ -234,7 +259,7 @@ export default function ClientReviews() {
           <p className="rv-kicker">Client reviews</p>
           <h2 id="rv-heading">What our clients say</h2>
           <p>Founders and business owners on working with one team across setup, build, growth and finance, with one plan and one point of contact.</p>
-          <span className="rv-sample">Sample content · replace with real, permitted reviews</span>
+          {/* <span className="rv-sample">Sample content · replace with real, permitted reviews</span> */}
         </header>
 
         <div className="rv-tabs rv-fade" role="tablist" aria-label="Choose a review" onKeyDown={handleKeyDown}>
@@ -262,10 +287,10 @@ export default function ClientReviews() {
           role="region"
           aria-roledescription="carousel"
           aria-label="Client reviews"
-          onPointerEnter={() => setPaused(true)}
-          onPointerLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setPaused(false); }}
+          onPointerEnter={pauseCarousel}
+          onPointerLeave={resumeCarousel}
+          onFocusCapture={pauseCarousel}
+          onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) resumeCarousel(); }}
           onPointerDown={handlePointerDown}
           onPointerUp={handlePointerUp}
           onPointerCancel={() => { swipeStart.current = null; }}
@@ -274,20 +299,31 @@ export default function ClientReviews() {
             className={`rv-track${trackAnimating && !reduceMotion ? " go" : ""}`}
             ref={trackRef}
             style={{ transform: `translateX(${trackOffset}px)` }}
-            onTransitionEnd={(event) => { if (event.propertyName === "transform") setTrackAnimating(false); }}
+            onTransitionEnd={(event) => {
+              if (event.target !== event.currentTarget || event.propertyName !== "transform") return;
+              setTrackAnimating(false);
+              if (trackIndex === 0) setTrackIndex(reviews.length);
+              else if (trackIndex === reviews.length + 1) setTrackIndex(1);
+            }}
           >
-            {reviews.map((review, index) => <ReviewCard key={review.name} review={review} index={index} active={index === activeIndex} onSelect={selectReview} />)}
+            {[
+              { review: reviews[reviews.length - 1], index: reviews.length - 1, clone: true },
+              ...reviews.map((review, index) => ({ review, index, clone: false })),
+              { review: reviews[0], index: 0, clone: true },
+            ].map(({ review, index, clone }, physicalIndex) => (
+              <ReviewCard key={`review-${physicalIndex}`} review={review} index={index} active={physicalIndex === trackIndex} clone={clone} onSelect={selectReview} />
+            ))}
           </div>
         </div>
 
         <div className="rv-controls rv-fade">
           <div className="rv-control-row">
-            <button className="rv-arrow" type="button" aria-label="Previous review" onClick={() => selectReview(activeIndex - 1, true)}><ArrowLeft aria-hidden="true" /></button>
+            <button className="rv-arrow" type="button" aria-label="Previous review" onClick={() => moveReview(-1, true)}><ArrowLeft aria-hidden="true" /></button>
             <span className="rv-count" aria-hidden="true"><b>{activeNumber}</b> / {totalNumber}</span>
-            <button className="rv-arrow" type="button" aria-label="Next review" onClick={() => selectReview(activeIndex + 1, true)}><ArrowRight aria-hidden="true" /></button>
+            <button className="rv-arrow" type="button" aria-label="Next review" onClick={() => moveReview(1, true)}><ArrowRight aria-hidden="true" /></button>
           </div>
           <div className={`rv-progress${paused ? " paused" : ""}`} aria-hidden="true">
-            <i key={progressKey} className={autoplay ? "run" : ""} onAnimationEnd={handleAnimationEnd} />
+            <i key={progressKey} className={autoplay ? "run" : ""} />
           </div>
         </div>
       </div>

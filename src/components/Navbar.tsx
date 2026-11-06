@@ -177,7 +177,7 @@ const resourcesChildren: MegaLink[] = [
 const navItemsData: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Services", menuType: "services", children: servicesChildren },
-  { label: "Case Studies", menuType: "products", children: caseStudiesChildren },
+  // { label: "Case Studies", menuType: "products", children: caseStudiesChildren },
   {
     label: "Insights",
     menuType: "products",

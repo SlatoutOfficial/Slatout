@@ -37,7 +37,7 @@ export default function Hero() {
     const h1 = headlineRef.current;
     if (h1 && !h1.dataset.split) {
       h1.dataset.split = "true";
-      const words = h1.textContent?.trim().split(/\\s+/) || [];
+      const words = h1.textContent?.trim().split(/\s+/) || [];
       h1.innerHTML = words
         .map(
           (w, i) =>
@@ -1689,7 +1689,7 @@ export default function Hero() {
     <section
       id="hero"
       ref={containerRef}
-      className="hero-rope-container loaded ready relative w-full h-screen overflow-hidden select-none"
+      className="hero-rope-container loaded ready relative w-full overflow-hidden select-none"
       style={{
         ["--bg" as any]: currentColor,
         ["--ink" as any]: "#0b0b0b",
@@ -1714,8 +1714,8 @@ export default function Hero() {
       <div className="ui pointer-events-none">
         <div>
           {/* Headline */}
-          <h1 style={{ fontSize: '68px', }} id="headline" ref={headlineRef}>
-            Build beyond business
+          <h1 id="headline" ref={headlineRef}>
+            Build Beyond Business
           </h1>
         </div>
 

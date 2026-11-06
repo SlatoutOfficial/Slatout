@@ -18,10 +18,10 @@ export default function ServicePageClient({ service }: { service: ServiceData })
 
   const wrapperClass = classMatch ? classMatch[1] : "svc-page r-room";
   const dataScope = scopeMatch ? scopeMatch[1] : undefined;
-  const serviceHtml = service.html.replace(
-    /<header class="site-header"[\s\S]*?<\/header>/,
-    "",
-  );
+  const serviceHtml = service.html
+    .replace(/<header class="site-header"[\s\S]*?<\/header>/, "")
+    .replace(/<li><a href="#try">Try it<\/a><\/li>/g, "")
+    .replace(/<section class="ss toy" id="try"[\s\S]*?<\/section>/g, "");
 
   const styleObj: Record<string, string> = {};
   if (styleMatch) {

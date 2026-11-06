@@ -81,7 +81,7 @@
 .rv-count b { color: var(--rv-ink); font-weight: 700; }
 .rv-progress { width: 84px; height: 2px; overflow: hidden; margin: 10px auto 0; border-radius: 2px; background: rgba(17,20,29,.1); }
 .rv-progress i { display: block; width: 0; height: 100%; background: var(--rv-brand); }
-.rv-progress i.run { animation: rv-progress 9s linear forwards; }
+.rv-progress i.run { animation: rv-progress 3s linear forwards; }
 .rv-progress.paused i.run { animation-play-state: paused; }
 @keyframes rv-progress { to { width: 100%; } }
 

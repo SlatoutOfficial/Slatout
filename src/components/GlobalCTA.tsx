@@ -27,8 +27,8 @@ export default function GlobalCTA() {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-6 shrink-0">
             <PrimaryCta href="/contact">Book a strategy call</PrimaryCta>
-            <TextCta href="mailto:hello@slatout.com" tone="light">
-              hello@slatout.com
+            <TextCta href="mailto:info@slatout.com" tone="light">
+              info@slatout.com
             </TextCta>
           </div>
         </div>
