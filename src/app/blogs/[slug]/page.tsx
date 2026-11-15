@@ -1,18 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, BookOpen, Clock, HelpCircle, Send, Share2 } from "lucide-react";
-import { blogPosts } from "../../../data/blogs";
+import { blogPosts, type BlogPost } from "../../../data/blogs";
 import SiteEnd from "../../../components/SiteEnd";
 
 export default function SingleBlogPost({ params }: { params: { slug: string } }) {
-  const post = blogPosts[params.slug];
+  const [post, setPost] = useState<BlogPost | undefined>(() => blogPosts[params.slug]);
+  const [loadingPost, setLoadingPost] = useState(!blogPosts[params.slug]);
   const [copied, setCopied] = useState(false);
   const [email, setEmail] = useState("");
   const [success, setSuccess] = useState(false);
 
+  useEffect(() => {
+    fetch("/api/blogs", { cache: "no-store" }).then((response) => response.ok ? response.json() : []).then((posts: BlogPost[]) => {
+      const found = posts.find((item) => item.slug === params.slug);
+      if (found) setPost(found);
+    }).catch(() => undefined).finally(() => setLoadingPost(false));
+  }, [params.slug]);
+
   // If blog slug is invalid, redirect or show safe fallback
+  if (!post && loadingPost) {
+    return <main className="min-h-screen bg-[#FAF8F5] grid place-items-center"><p className="text-sm text-gray-500">Loading article…</p></main>;
+  }
+
   if (!post) {
     return (
       <main className="min-h-screen bg-[#FAF8F5] flex flex-col justify-between">
@@ -119,8 +131,7 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
                 <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
               </div>
 
-              {/* Loop body sections */}
-              <div className="flex flex-col gap-8">
+              {post.bodyHtml ? <div className="blog-rich-content" dangerouslySetInnerHTML={{ __html: post.bodyHtml }} /> : <div className="flex flex-col gap-8">
                 {post.content.map((sec, idx) => (
                   <div key={idx} className="flex flex-col gap-3">
                     <h2 className="text-lg sm:text-xl type-card-title text-gray-900">
@@ -131,7 +142,7 @@ export default function SingleBlogPost({ params }: { params: { slug: string } })
                     </p>
                   </div>
                 ))}
-              </div>
+              </div>}
 
               {/* Tags block */}
               <div className="mt-10 pt-8 border-t border-gray-100">

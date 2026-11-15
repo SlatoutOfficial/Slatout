@@ -1,254 +1,509 @@
 "use client";
 
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { SYSTEM_SERVICES } from "@/data/systemsData";
-import ServiceDoors from "./ServiceDoors";
 
-/* ─── Icons ─────────────────────────────────────────────────────────────── */
-const ICONS: Record<string, React.ReactNode> = {
-  "business-setup-legal": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <rect x="4" y="3" width="16" height="18" rx="2" /><line x1="8" y1="8" x2="16" y2="8" /><line x1="8" y1="12" x2="16" y2="12" /><line x1="8" y1="16" x2="12" y2="16" />
-    </svg>
-  ),
-  "technology-solutions": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /><path d="M9 10l2 2 4-4" />
-    </svg>
-  ),
-  "business-consulting-strategy": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" />
-    </svg>
-  ),
-  "branding-creative": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <circle cx="12" cy="12" r="10" /><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72" /><path d="M4.1 8.235c4.01 1.95 8.18 2.41 12.33 1.43" />
-    </svg>
-  ),
-  "marketing-growth": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
-    </svg>
-  ),
-  "ecommerce-solutions": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" />
-    </svg>
-  ),
-  "legal-regulatory-compliance": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    </svg>
-  ),
-  "finance-tax-compliance": (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-      <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" />
-    </svg>
-  ),
-};
-
-const DEFAULT_ICON = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
-    <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="16" /><line x1="8" y1="12" x2="16" y2="12" />
-  </svg>
-);
-
-const VISIBLE = 4;
-const GAP = 20;
-
-/* ─── Simple Card ────────────────────────────────────────────────────────── */
-function ServiceCard({ svc }: { svc: typeof SYSTEM_SERVICES[0] }) {
-  const icon = ICONS[svc.slug] ?? DEFAULT_ICON;
-
-  return (
-    <div className="group flex flex-col bg-white border border-stone-200/80 rounded-2xl overflow-hidden h-full transition-all duration-300 hover:shadow-[0_8px_32px_rgba(0,0,0,0.10)] hover:-translate-y-1 hover:border-stone-300">
-      {/* Top colour strip */}
-      <div className="h-1 w-full bg-gradient-to-r from-[#FF5500] to-[#ff8a50] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-      <div className="flex flex-col flex-1 items-center text-center px-6 pt-7 pb-7">
-        {/* Icon circle */}
-        <div className="w-14 h-14 rounded-2xl bg-stone-100 flex items-center justify-center mb-5 text-stone-400 group-hover:bg-[#FF5500] group-hover:text-white transition-all duration-300 shrink-0">
-          {icon}
-        </div>
-
-        {/* Name */}
-        <h3 className="text-[15px] font-bold text-[#111] leading-snug mb-2.5">
-          {svc.name}
-        </h3>
-
-        {/* Description */}
-        <p className="text-[12.5px] text-stone-500 leading-relaxed mb-6 flex-1">
-          {svc.oneLiner}
-        </p>
-
-        {/* MORE */}
-        <Link
-          href={`/services/${svc.slug}`}
-          onClick={(e) => e.stopPropagation()}
-          className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-stone-400 group-hover:text-[#FF5500] transition-colors duration-300"
-        >
-          MORE
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5">
-            <path d="M2 6h8M6 2l4 4-4 4" />
-          </svg>
-        </Link>
-      </div>
-    </div>
-  );
+interface ServiceItem {
+  id: string;
+  panelId: string;
+  num: string;
+  name: string;
+  shortTag: string;
+  stage: string;
+  stageLabel: string;
+  t: string;
+  m: string;
+  k: string;
+  desc: string;
+  tags: string[];
+  exploreHref: string;
+  exploreLabel: string;
+  visual: React.ReactNode;
 }
 
-/* ─── Main Section ─────────────────────────────────────────────────────── */
+const SERVICES: ServiceItem[] = [
+  {
+    id: "t0",
+    panelId: "p0",
+    num: "01",
+    name: "Business Setup & Registration",
+    shortTag: "Build Your Business on the Right Foundation",
+    stage: "Start",
+    stageLabel: "01 · Start stage",
+    t: "#E3EEDC",
+    m: "#A9CFA2",
+    k: "#2E5B34",
+    desc: "Structure, registrations, licences, IP and legal documents.",
+    tags: [
+      "Business Structure & Registration",
+      "Tax & Statutory Registrations",
+      "Industry-Specific Licences & Approvals",
+      "Startup & MSME Registrations",
+    ],
+    exploreHref: "/services/business-setup-registration/",
+    exploreLabel: "Explore Business Setup",
+    visual: (
+      <div className="mi mi-rg">
+        <b>Certificate</b>
+        <span />
+        <span />
+        <em>Filed</em>
+      </div>
+    ),
+  },
+  {
+    id: "t1",
+    panelId: "p1",
+    num: "02",
+    name: "Technology & AI Solutions",
+    shortTag: "Build Your Business. Connect Your Customers. Automate Your Operations.",
+    stage: "Build",
+    stageLabel: "02 · Build stage",
+    t: "#E2E6FF",
+    m: "#A3AEF4",
+    k: "#3140A3",
+    desc: "Websites, software, automation and AI built around a real business problem.",
+    tags: [
+      "Establish Your Digital Presence",
+      "Build Digital Customer Experiences",
+      "Digitise Your Business Operations",
+      "Automate Repetitive Work",
+    ],
+    exploreHref: "/services/technology-ai-solutions/",
+    exploreLabel: "Explore Technology & AI",
+    visual: (
+      <div className="mi mi-tm">
+        <span>$ slatout build</span>
+        <span className="ok">&#10003; website</span>
+        <span className="ok">&#10003; crm</span>
+        <span className="ok">&#10003; ai assistant</span>
+        <i />
+      </div>
+    ),
+  },
+  {
+    id: "t2",
+    panelId: "p2",
+    num: "03",
+    name: "Offline Business Launch & Market Setup",
+    shortTag: "Build Your Business Around the Market, Not Assumptions",
+    stage: "Start",
+    stageLabel: "03 · Start stage",
+    t: "#F4EAD8",
+    m: "#DCC08C",
+    k: "#6E5320",
+    desc: "Market research, location strategy and local launch planning.",
+    tags: [
+      "Market & Customer Intelligence",
+      "Location Strategy",
+      "Competition & Positioning",
+      "Physical Brand Presence",
+    ],
+    exploreHref: "/services/offline-business-launch/",
+    exploreLabel: "Explore Offline Launch",
+    visual: (
+      <div className="mi mi-mp">
+        <i className="r1" />
+        <i className="r2" />
+        <i className="r3" />
+        <b className="pin" />
+        <s />
+      </div>
+    ),
+  },
+  {
+    id: "t3",
+    panelId: "p3",
+    num: "04",
+    name: "Branding & Marketing",
+    shortTag: "Give Your Business an Identity Worth Remembering",
+    stage: "Build",
+    stageLabel: "04 · Build stage",
+    t: "#FBE1E6",
+    m: "#EFA2B3",
+    k: "#A1324C",
+    desc: "Brand strategy, visual identity and offline marketing.",
+    tags: [
+      "Brand Strategy",
+      "Visual Identity",
+      "Brand Guidelines",
+      "Marketing Collateral",
+    ],
+    exploreHref: "/services/branding-marketing/",
+    exploreLabel: "Explore Branding",
+    visual: (
+      <div className="mi mi-bb">
+        <b>Aa</b>
+        <span>
+          <i />
+          <i />
+          <i />
+          <i />
+        </span>
+      </div>
+    ),
+  },
+  {
+    id: "t4",
+    panelId: "p4",
+    num: "05",
+    name: "Content Strategy",
+    shortTag: "Know What to Say Before You Decide Where to Say It",
+    stage: "Build",
+    stageLabel: "05 · Build stage",
+    t: "#FFF3CC",
+    m: "#F2D165",
+    k: "#7A5900",
+    desc: "Pillars, voice, editorial calendar and content briefs.",
+    tags: [
+      "Content Audit",
+      "Content Pillars & Themes",
+      "Voice & Messaging Guidelines",
+      "Editorial Calendar",
+    ],
+    exploreHref: "/services/content-strategy/",
+    exploreLabel: "Explore Content Strategy",
+    visual: (
+      <div className="mi mi-ed">
+        <b>The Content Desk</b>
+        <span />
+        <span />
+        <span />
+        <em />
+      </div>
+    ),
+  },
+  {
+    id: "t5",
+    panelId: "p5",
+    num: "06",
+    name: "Digital Marketing & Growth",
+    shortTag: "Turn Visibility into Customers",
+    stage: "Grow",
+    stageLabel: "06 · Grow stage",
+    t: "#D8F2EA",
+    m: "#86D6C1",
+    k: "#126B5A",
+    desc: "SEO, AI-search visibility, paid ads, social and analytics as one system.",
+    tags: [
+      "Digital Marketing Strategy",
+      "SEO (Search Engine Optimisation)",
+      "AEO & GEO: Visibility in AI Search",
+      "Performance Marketing",
+    ],
+    exploreHref: "/services/digital-marketing/",
+    exploreLabel: "Explore Digital Marketing",
+    visual: (
+      <div className="mi mi-db">
+        <span className="q">near me</span>
+        <svg viewBox="0 0 100 40" aria-hidden="true">
+          <path d="M0 36 C20 32 30 26 45 24 S70 12 100 4" />
+        </svg>
+      </div>
+    ),
+  },
+  {
+    id: "t6",
+    panelId: "p6",
+    num: "07",
+    name: "E-Commerce & Marketplace Growth",
+    shortTag: "Sell Better. Rank Higher. Scale Across Marketplaces.",
+    stage: "Grow",
+    stageLabel: "07 · Grow stage",
+    t: "#EDE3FB",
+    m: "#BCA4EE",
+    k: "#5C3C9F",
+    desc: "Seller onboarding, listings, marketplace SEO and advertising.",
+    tags: [
+      "Marketplace Setup & Seller Onboarding",
+      "Product Listing & Catalogue Management",
+      "Marketplace SEO & Product Ranking",
+      "Marketplace Advertising & PPC Management",
+    ],
+    exploreHref: "/services/ecommerce-marketplace-growth/",
+    exploreLabel: "Explore Marketplace Growth",
+    visual: (
+      <div className="mi mi-mk">
+        <i className="im" />
+        <b>Your product</b>
+        <span>★★★★☆</span>
+        <em>Add to cart</em>
+      </div>
+    ),
+  },
+  {
+    id: "t7",
+    panelId: "p7",
+    num: "08",
+    name: "Programmatic Advertising",
+    shortTag: "Reach the Right Audience, Everywhere They Are — Automatically",
+    stage: "Grow",
+    stageLabel: "08 · Grow stage",
+    t: "#DDEFFB",
+    m: "#93C8EC",
+    k: "#175C88",
+    desc: "Real-time buying across display, video, connected TV and audio.",
+    tags: [
+      "Programmatic Strategy & Audit",
+      "Programmatic Tools & Platform Selection",
+      "Audience Targeting & Data",
+      "Creative & Ad Formats",
+    ],
+    exploreHref: "/services/programmatic-advertising/",
+    exploreLabel: "Explore Programmatic Ads",
+    visual: (
+      <div className="mi mi-ax">
+        <i />
+        <i />
+        <i />
+        <b />
+      </div>
+    ),
+  },
+  {
+    id: "t8",
+    panelId: "p8",
+    num: "09",
+    name: "Business Development Outsourcing",
+    shortTag: "Build Your Pipeline. Win More Customers. Grow Your Business.",
+    stage: "Grow",
+    stageLabel: "09 · Grow stage",
+    t: "#FFE6D1",
+    m: "#FFB683",
+    k: "#A2470F",
+    desc: "Market research, B2B lead generation, outreach and pipeline management.",
+    tags: [
+      "Business Development Strategy",
+      "Market Research & Opportunity Identification",
+      "B2B Lead Generation & Prospect Research",
+      "Outbound Sales & Customer Acquisition",
+    ],
+    exploreHref: "/services/business-development-outsourcing/",
+    exploreLabel: "Explore BD Outsourcing",
+    visual: (
+      <div className="mi mi-pp">
+        <span>
+          <i />
+          <i />
+        </span>
+        <span>
+          <i />
+        </span>
+        <span>
+          <i className="w" />
+        </span>
+      </div>
+    ),
+  },
+  {
+    id: "t9",
+    panelId: "p9",
+    num: "10",
+    name: "Finance, Tax & Compliance",
+    shortTag: "The Financial and Compliance Partner Your Business Needs to Keep Moving",
+    stage: "Run & Protect",
+    stageLabel: "10 · Run & Protect stage",
+    t: "#DDEDEC",
+    m: "#93C5C3",
+    k: "#24555A",
+    desc: "Accounting, GST, income tax, audit, payroll, FEMA and virtual CFO support.",
+    tags: [
+      "Accounting & Bookkeeping",
+      "GST & Indirect Tax",
+      "Income Tax & Direct Tax",
+      "Audit & Assurance",
+    ],
+    exploreHref: "/services/finance-tax-compliance/",
+    exploreLabel: "Explore Finance & Tax",
+    visual: (
+      <div className="mi mi-lg">
+        <span>
+          <b>GST</b>
+          <i>&#10003;</i>
+        </span>
+        <span>
+          <b>TDS</b>
+          <i>&#10003;</i>
+        </span>
+        <span>
+          <b>ROC</b>
+          <i>&#10003;</i>
+        </span>
+        <em>Balanced</em>
+      </div>
+    ),
+  },
+];
+
 export default function Services() {
-  const [current, setCurrent] = useState(0);
-  const [dragging, setDragging] = useState(false);
-  const [dragStart, setDragStart] = useState(0);
-  const pauseRef = useRef(false);
+  const [activeTab, setActiveTab] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const total = SYSTEM_SERVICES.length;
-  const maxIndex = Math.max(0, total - VISIBLE);
-
-  const prev = useCallback(() => { pauseRef.current = true; setCurrent((c) => Math.max(0, c - 1)); }, []);
-  const next = useCallback(() => { pauseRef.current = true; setCurrent((c) => Math.min(maxIndex, c + 1)); }, [maxIndex]);
-
-  const onPointerDown = (e: React.PointerEvent) => {
-    setDragging(true);
-    setDragStart(e.clientX);
-    pauseRef.current = true;
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-  };
-  const onPointerUp = (e: React.PointerEvent) => {
-    if (!dragging) return;
-    setDragging(false);
-    const delta = dragStart - e.clientX;
-    if (delta > 50) next();
-    else if (delta < -50) prev();
+  const selectTab = (index: number, shouldFocus: boolean = false) => {
+    setActiveTab(index);
+    if (shouldFocus && tabRefs.current[index]) {
+      tabRefs.current[index]?.focus();
+    }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      const next = (index + 1) % SERVICES.length;
+      selectTab(next, true);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      const prev = (index - 1 + SERVICES.length) % SERVICES.length;
+      selectTab(prev, true);
+    }
+  };
+
+  const handleMouseEnter = (index: number) => {
+    if (typeof window !== "undefined" && window.innerWidth > 1060) {
+      selectTab(index, false);
+    }
+  };
+
+  // Scroll reveal IntersectionObserver
   useEffect(() => {
-    const id = setInterval(() => {
-      if (!pauseRef.current) setCurrent((c) => (c >= maxIndex ? 0 : c + 1));
-      pauseRef.current = false;
-    }, 4000);
-    return () => clearInterval(id);
-  }, [maxIndex]);
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const rvElements = section.querySelectorAll(".rv");
+    if (typeof window !== "undefined" && "IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in");
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      rvElements.forEach((el) => io.observe(el));
+      return () => io.disconnect();
+    } else {
+      rvElements.forEach((el) => el.classList.add("in"));
+    }
+  }, []);
 
   return (
-    <section id="services" className="relative w-full bg-[#FAF8F5] overflow-hidden">
-
-      {/* ── Section Header ── */}
-      {/* <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12 pt-16 sm:pt-20 pb-8 sm:pb-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 text-left">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 mb-2.5">
-              <span className="w-5 h-[2px] bg-[#FF5500]" />
-              <span className="text-[11px] font-mono font-bold text-[#FF5500] uppercase tracking-[0.25em]">
-                OUR CAPABILITIES
-              </span>
-            </div>
-            <h2 className="text-[clamp(2rem,4.2vw,3.4rem)] font-extrabold text-stone-900 tracking-tight leading-[1.08]">
-              Everything Your Business Needs,{" "}
-              <span className="text-[#FF5500]">Out of the Box.</span>
+    <section
+      ref={sectionRef}
+      className="sec"
+      id="services"
+      aria-labelledby="sv-h"
+    >
+      <div className="wrap">
+        <div className="head rv">
+          <div>
+            <p className="eyebrow">What we do</p>
+            <h2 className="h2" id="sv-h">
+              One company. <em>Ten services.</em>
             </h2>
           </div>
-          <p className="text-stone-600 text-[14px] sm:text-base max-w-[460px] leading-relaxed pb-1">
-            Eight connected disciplines spanning corporate setup, custom technology, brand identity, performance marketing, and compliance.
+          <p className="lede">
+            Every service a growing business needs, from the first registration
+            to the last filing of the year. Pick one to see how it works.
           </p>
         </div>
-      </div> */}
 
-      {/* ── Hero image banner ── */}
-      {/* <div className="relative w-full" style={{ height: "clamp(180px, 22vw, 300px)" }}>
-        <Image
-          src="/services-hero.jpg"
-          alt="SLATOUT — professional team"
-          fill
-          className="object-cover object-[center_20%]"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/50" />
-      </div> */}
-
-      {/* ── Carousel ── */}
-      {/* <div className="relative -mt-16 sm:-mt-20 pb-14 sm:pb-20 px-4 sm:px-8 lg:px-14 select-none">
-
-        <div
-          className="overflow-hidden"
-          onPointerDown={onPointerDown}
-          onPointerUp={onPointerUp}
-          onPointerCancel={() => setDragging(false)}
-          style={{ cursor: dragging ? "grabbing" : "grab" }}
-        >
-          <div
-            className="flex items-stretch"
-            style={{
-              gap: `${GAP}px`,
-              transform: `translateX(calc(-${current} * ((100% + ${GAP}px) / ${VISIBLE})))`,
-              transition: dragging ? "none" : "transform 0.52s cubic-bezier(.22,.68,0,1.05)",
-            }}
+        <div className="sv-g" style={{ alignItems: "start" }}>
+          {/* LIST */}
+          <ol
+            className="sv-list rv"
+            role="tablist"
+            aria-label="Services"
+            aria-orientation="vertical"
+            style={{ alignSelf: "start", margin: 0 }}
           >
-            {SYSTEM_SERVICES.map((svc) => (
-              <div
-                key={svc.id}
-                className="flex-shrink-0"
-                style={{ width: `calc((100% - ${(VISIBLE - 1) * GAP}px) / ${VISIBLE})` }}
-              >
-                <ServiceCard svc={svc} />
-              </div>
-            ))}
+            {SERVICES.map((svc, i) => {
+              const isSelected = activeTab === i;
+              return (
+                <li
+                  key={svc.num}
+                  style={
+                    {
+                      "--t": svc.t,
+                      "--m": svc.m,
+                      "--k": svc.k,
+                    } as React.CSSProperties
+                  }
+                >
+                  <button
+                    ref={(el) => {
+                      tabRefs.current[i] = el;
+                    }}
+                    type="button"
+                    role="tab"
+                    id={svc.id}
+                    aria-controls={svc.panelId}
+                    aria-selected={isSelected}
+                    tabIndex={isSelected ? 0 : -1}
+                    onClick={() => selectTab(i, false)}
+                    onMouseEnter={() => handleMouseEnter(i)}
+                    onKeyDown={(e) => handleKeyDown(e, i)}
+                  >
+                    <span className="n">{svc.num}</span>
+                    <span>
+                      <b>{svc.name}</b>
+                      <small>{svc.shortTag}</small>
+                    </span>
+                    <span className="st">{svc.stage}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+
+          {/* PREVIEW PANELS */}
+          <div className="sv-stage rv" style={{ alignSelf: "start", margin: 0 }}>
+            {SERVICES.map((svc, i) => {
+              const isSelected = activeTab === i;
+              return (
+                <div
+                  key={svc.panelId}
+                  className={`sv-p ${isSelected ? "on" : ""}`}
+                  id={svc.panelId}
+                  role="tabpanel"
+                  aria-labelledby={svc.id}
+                  style={
+                    {
+                      "--t": svc.t,
+                      "--m": svc.m,
+                      "--k": svc.k,
+                    } as React.CSSProperties
+                  }
+                >
+                  <div className="sv-vis" aria-hidden="true">
+                    {svc.visual}
+                  </div>
+                  <p className="k">{svc.stageLabel}</p>
+                  <h3>{svc.name}</h3>
+                  <p>{svc.desc}</p>
+                  <ul className="tags">
+                    {svc.tags.map((tag) => (
+                      <li key={tag}>{tag}</li>
+                    ))}
+                  </ul>
+                  <div className="acts">
+                    <Link className="btn btn-k" href={svc.exploreHref}>
+                      {svc.exploreLabel} <i>&rarr;</i>
+                    </Link>
+                    <a className="btn btn-s" href="#enquire">
+                      Book a strategy call
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
-
-        <div className="flex items-center justify-between mt-7 px-1">
-          <div className="flex items-center gap-2">
-            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => { pauseRef.current = true; setCurrent(i); }}
-                aria-label={`Slide ${i + 1}`}
-                style={{
-                  width: i === current ? "28px" : "8px",
-                  height: "8px",
-                  borderRadius: "99px",
-                  background: i === current ? "#FF5500" : "#d1d5db",
-                  transition: "all 0.35s ease",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 0,
-                }}
-              />
-            ))}
-          </div>
-
-          <div className="flex gap-2">
-            <button
-              onClick={prev}
-              disabled={current === 0}
-              aria-label="Previous"
-              className="w-10 h-10 rounded-full border border-stone-200 flex items-center justify-center text-stone-400 transition-all duration-250 hover:bg-[#111] hover:text-white hover:border-[#111] disabled:opacity-30 disabled:pointer-events-none"
-            >
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="w-4 h-4">
-                <path d="M13 4l-6 6 6 6" />
-              </svg>
-            </button>
-            <button
-              onClick={next}
-              disabled={current === maxIndex}
-              aria-label="Next"
-              className="w-10 h-10 rounded-full bg-[#111] flex items-center justify-center text-white transition-all duration-250 hover:bg-[#FF5500] disabled:opacity-30 disabled:pointer-events-none"
-            >
-              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="w-4 h-4">
-                <path d="M7 4l6 6-6 6" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div> */}
-
-      {/* ── Ten Worlds / Doors Accordion Section ── */}
-      <ServiceDoors />
+      </div>
     </section>
   );
 }

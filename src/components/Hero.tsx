@@ -33,20 +33,6 @@ export default function Hero() {
     const ink = inkCanvasRef.current;
     if (!container || !canvas || !ink) return;
 
-    // Split headline words for word-by-word reveal
-    const h1 = headlineRef.current;
-    if (h1 && !h1.dataset.split) {
-      h1.dataset.split = "true";
-      const words = h1.textContent?.trim().split(/\s+/) || [];
-      h1.innerHTML = words
-        .map(
-          (w, i) =>
-            `<span class="w"><span style="transition-delay:${0.15 + i * 0.08
-            }s">${w}</span></span>`
-        )
-        .join(" ");
-    }
-
     const TAU = Math.PI * 2;
     const WORD = "slatout";
     const reduceMotion =
@@ -1715,7 +1701,10 @@ export default function Hero() {
         <div>
           {/* Headline */}
           <h1 id="headline" ref={headlineRef}>
-            Build Beyond Business
+            <span className="headline-line">
+              Build <em>Beyond</em>
+            </span>
+            <span className="headline-line">Business</span>
           </h1>
         </div>
 

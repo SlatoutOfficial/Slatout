@@ -2,7 +2,6 @@ import React from "react";
 import Hero from "@/components/Hero";
 import ClientReviews from "../components/ClientReviews";
 import Services from "../components/Services";
-import TenWorlds from "../components/TenWorlds";
 import RoutePlanner from "../components/RoutePlanner";
 import TeamComparison from "../components/TeamComparisonScene";
 import ProcessTrack from "../components/ProcessTrack";
@@ -17,7 +16,6 @@ export default function Home() {
         <Hero />
         <ClientReviews />
         <Services />
-        <TenWorlds />
         <RoutePlanner />
         <TeamComparison />
         <ProcessTrack />

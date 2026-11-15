@@ -194,6 +194,8 @@ export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [expandedAccordion, setExpandedAccordion] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
   const [themeAccent, setThemeAccent] = useState("#ff6a13");
 
   const closeTimeoutRef = useRef<number | null>(null);
@@ -210,9 +212,24 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 120);
+      const currentScrollY = window.scrollY;
+
+      // Always show when near the top
+      if (currentScrollY <= 60) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY - lastScrollY.current > 8) {
+        // Scrolling down -> hide navbar
+        setIsVisible(false);
+        setHoveredMenu(null);
+      } else if (currentScrollY < lastScrollY.current && lastScrollY.current - currentScrollY > 8) {
+        // Scrolling up -> show navbar
+        setIsVisible(true);
+      }
+
+      setIsScrolled(currentScrollY > 120);
+      lastScrollY.current = currentScrollY;
     };
-    handleScroll();
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -268,8 +285,14 @@ export default function Navbar() {
     setExpandedAccordion(expandedAccordion === label ? null : label);
   };
 
+  const shouldShowNavbar = isVisible || isMobileOpen;
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 lg:px-8">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 lg:px-8 transition-transform duration-300 ease-in-out ${
+        shouldShowNavbar ? "translate-y-0" : "-translate-y-full pointer-events-none"
+      }`}
+    >
       {/* Floating Light Frosted "Pill" Nav Bar */}
       <div className="mx-auto mt-4 max-w-[1280px] w-full bg-white/75 backdrop-blur-lg border border-gray-150/70 rounded-full px-6 py-2 sm:py-3 shadow-[0_8px_30px_rgba(0,0,0,0.03)] flex items-center justify-between relative overflow-visible select-none">
 

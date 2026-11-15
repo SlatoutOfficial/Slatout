@@ -1,16 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BookOpen, Clock } from "lucide-react";
 import { blogPosts } from "../../data/blogs";
 import SiteEnd from "../../components/SiteEnd";
 
-const categories = ["All", "Design", "Marketing", "Engineering"];
-const articles = Object.values(blogPosts);
-
 export default function BlogsPage() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [articles, setArticles] = useState(Object.values(blogPosts));
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/blogs", { cache: "no-store" }).then((response) => response.ok ? response.json() : null).then((posts) => {
+      if (Array.isArray(posts)) setArticles(posts);
+    }).catch(() => undefined).finally(() => setLoading(false));
+  }, []);
+
+  const categories = ["All", ...Array.from(new Set(articles.map(a => a.category)))];
 
   const filteredArticles = activeCategory === "All"
     ? articles
@@ -127,10 +134,10 @@ export default function BlogsPage() {
           {/* Dynamic Grid */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-6">
-              Latest Articles ({filteredArticles.length})
+              {loading ? "Loading journal…" : `Latest Articles (${filteredArticles.length})`}
             </h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {!loading && filteredArticles.length === 0 ? <div className="rounded-3xl border border-dashed border-gray-300 bg-[#FAF8F5] px-6 py-16 text-center"><p className="text-xl font-semibold text-gray-900">Fresh thinking is on its way.</p><p className="mt-2 text-sm text-gray-500">Check back soon for the latest from our team.</p></div> : <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredArticles.map((article, idx) => (
                 <Link
                   href={`/blogs/${article.slug}`}
@@ -179,7 +186,7 @@ export default function BlogsPage() {
                   </div>
                 </Link>
               ))}
-            </div>
+            </div>}
           </div>
 
         </div>

@@ -2,15 +2,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "../styles/client-reviews.css";
 @import "../styles/hero-rope.css";
-@import "../styles/ten-worlds.css";
+@import "../styles/services-section.css";
 @import "../styles/route-planner.css";
 @import "../styles/team-comparison-scene.css";
 @import "../styles/process-track.css";
 @import "../styles/enquiry.css";
 @import "../styles/footer-reference.css";
+@import "../styles/admin.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.blog-rich-content { color: #575852; font-size: 14px; line-height: 1.85; }
+.blog-rich-content h2 { margin: 34px 0 12px; color: #171814; font-size: clamp(20px, 3vw, 28px); line-height: 1.2; }
+.blog-rich-content h3 { margin: 28px 0 10px; color: #171814; font-size: 19px; }
+.blog-rich-content p { margin: 0 0 18px; }
+.blog-rich-content ul, .blog-rich-content ol { margin: 12px 0 20px; padding-left: 24px; list-style: initial; }
+.blog-rich-content blockquote { margin: 24px 0; border-left: 3px solid #ff6a13; padding: 4px 0 4px 18px; color: #73746d; }
+.blog-rich-content a { color: #e55f16; text-decoration: underline; }
+.blog-rich-content img { width: 100%; height: auto; margin: 20px 0; border-radius: 18px; }
+.blog-rich-content strong { color: #22231e; }
 
 @layer components {
 
