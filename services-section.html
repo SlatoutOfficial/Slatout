@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slatout | Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B0B0B;--ink-2:#45434A;--ink-3:#7B7884;--paper:#FAF8F5;--card:#FFFFFF;--line:rgba(11,11,11,.09);--line-2:rgba(11,11,11,.16);
+  --brand:#FF6A13;--brand-d:#D9520A;--brand-s:#FFE8DA;
+  --r-s:12px;--r-m:20px;--r-l:28px;
+  --sec:clamp(84px,10vw,136px);--wrap:1240px;--hd:84px;
+  --sans:"Inter Tight",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+h2,h3{margin:0;font-family:var(--sans);letter-spacing:-.035em;line-height:1.05;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:6px}
+.wrap{width:min(var(--wrap),100% - 2*clamp(16px,4vw,40px));margin-inline:auto}
+section[id]{scroll-margin-top:calc(var(--hd) + 16px)}
+.sec{padding:clamp(48px,6vw,80px) 0}
+
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:500 .74rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:18px}
+.eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--brand)}
+.h2{font-size:clamp(2.2rem,4.4vw,3.8rem);font-weight:800}
+.h2 em{font-style:normal;color:var(--brand)}
+.lede{margin-top:18px;max-width:36em;font-size:1.08rem;color:var(--ink-2)}
+.head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px 60px;align-items:start;margin-bottom:clamp(20px,2.5vw,32px)}
+.head .lede{justify-self:end;margin-top:0;padding-top:4px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 10px 0 24px;border-radius:999px;font:600 .98rem/1 var(--sans);text-decoration:none;border:0;cursor:pointer;white-space:nowrap;transition:background .3s,color .3s,box-shadow .3s,transform .3s var(--ease)}
+.btn i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;font-style:normal;transition:transform .35s var(--ease)}
+.btn:hover i{transform:translateX(3px)}
+.btn-s{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line-2);padding-right:24px}
+.btn-s:hover{box-shadow:inset 0 0 0 1.5px var(--ink)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* services */
+.sv-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,4vw,56px);align-items:start}
+.sv-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line-2);align-self:start}
+.sv-list button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;padding:18px 12px 18px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:padding .35s var(--ease),background .3s}
+.sv-list .n{font:500 .76rem var(--mono);color:var(--ink-3)}
+.sv-list b{display:block;font-weight:700;font-size:clamp(1.1rem,1.6vw,1.35rem);letter-spacing:-.02em;line-height:1.2}
+.sv-list small{display:block;color:var(--ink-3);font-size:.9rem;margin-top:2px}
+.sv-list .st{font:500 .68rem var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:999px;background:var(--t);color:var(--k)}
+.sv-list button[aria-selected=true]{padding-left:14px;background:linear-gradient(90deg,var(--t),transparent 85%);border-radius:0 14px 14px 0}
+.sv-list button[aria-selected=true] .n{color:var(--k)}
+.sv-list button:hover b{color:var(--k)}
+.sv-list button:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+.sv-stage{position:sticky;top:0;align-self:start;margin:0}
+.sv-p{display:none;border-radius:var(--r-l);background:var(--t);padding:clamp(22px,3vw,36px);min-height:520px;flex-direction:column;position:relative;overflow:hidden;margin:0}
+.sv-p.on{display:flex;animation:pin .5s var(--ease)}
+@keyframes pin{from{opacity:0;transform:translateY(12px)}}
+.sv-p::before{content:"";position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:radial-gradient(closest-side,var(--m),transparent);opacity:.55}
+.sv-vis{position:relative;display:grid;place-items:center;height:260px;border-radius:var(--r-m);background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1px rgba(255,255,255,.8);margin-bottom:26px}
+.sv-p .k{font:500 .72rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--k);position:relative}
+.sv-p h3{margin:10px 0 10px;font-size:clamp(1.6rem,2.4vw,2.2rem);font-weight:800;position:relative}
+.sv-p p{color:var(--ink-2);max-width:32em;position:relative}
+.sv-p .tags{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;padding:0;list-style:none;position:relative}
+.sv-p .tags li{display:inline-block;padding:9px 15px;border-radius:999px;background:#fff;font-size:.9rem}
+.sv-p .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:auto;padding-top:26px;position:relative}
+.sv-p .btn-k{background:var(--k);color:#fff}
+.sv-p .btn-k i{background:#fff;color:var(--k)}
+
+/* mini illustrations */
+.mi{position:relative;width:78%;max-width:300px;transition:transform .6s var(--ease)}
+.sv-p.on .mi{transform:scale(1.05) rotate(-1deg)}
+.sv-vis .mi{width:62%;max-width:300px}.sv-vis .mi-mk,.sv-vis .mi-ax{max-width:190px}
+.mi-rg{background:#FFFDF7;border:3px double #C9A227;padding:18px;display:grid;gap:8px;font-family:Georgia,serif;color:#1F2A44;transform:rotate(-2deg)}
+.mi-rg b{font-size:1rem;text-align:center;letter-spacing:.08em;text-transform:uppercase}
+.mi-rg span{height:6px;background:#E8E0CC;border-radius:3px}.mi-rg span+span{width:70%;margin:0 auto}
+.mi-rg em{position:absolute;right:-6px;bottom:-10px;font:700 .9rem Georgia,serif;font-style:normal;color:#B42318;border:3px solid #B42318;padding:2px 10px;border-radius:6px;transform:rotate(-14deg);letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+.sv-p.on .mi-rg em{animation:stamp .5s var(--ease)}
+.mi-tm{background:#0B0F14;border-radius:12px;padding:16px;display:grid;gap:5px;font:500 .8rem ui-monospace,Menlo,monospace;color:#E6EDF3;box-shadow:0 20px 40px -20px #000}
+.mi-tm .ok{color:#3FB950}.mi-tm i{width:8px;height:14px;background:#E6EDF3;animation:caret 1s steps(1) infinite}
+.mi-mp{aspect-ratio:4/3;background:#EFE7D6;border-radius:16px;overflow:hidden}
+.mi-mp i{position:absolute;background:#fff}.mi-mp .r1{left:0;right:0;top:45%;height:12px}.mi-mp .r2{top:0;bottom:0;left:35%;width:12px}.mi-mp .r3{top:0;bottom:0;left:72%;width:7px;background:#F9F5EC}
+.mi-mp s{position:absolute;left:20%;top:25%;width:90px;height:90px;border-radius:50%;background:rgba(255,106,0,.18)}
+.mi-mp .pin{position:absolute;left:30%;top:24%;width:26px;height:26px;background:#E4572E;border-radius:50% 50% 50% 0;transform:rotate(-45deg);animation:bob 2.4s ease-in-out infinite}
+.mi-bb{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center}
+.mi-bb b{font:400 5rem/1 Georgia,serif;color:#1E1B4B}
+.mi-bb span{display:grid;grid-template-columns:1fr 1fr;gap:6px}.mi-bb i{aspect-ratio:1;border-radius:6px}
+.mi-bb i:nth-child(1){background:#1E1B4B}.mi-bb i:nth-child(2){background:#F97316}.mi-bb i:nth-child(3){background:#FDE68A}.mi-bb i:nth-child(4){background:#FFF7ED;border:1px solid #eee}
+.sv-p.on .mi-bb i{animation:spin 1.2s var(--ease)}
+.mi-ed{background:#F7F4EC;padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-family:Georgia,serif;box-shadow:0 14px 30px -18px rgba(0,0,0,.4)}
+.mi-ed b{grid-column:1/-1;text-align:center;border-bottom:2px solid #111;padding-bottom:6px;font-size:1rem}
+.mi-ed span{height:46px;background:repeating-linear-gradient(#bbb 0 2px,transparent 2px 7px)}
+.mi-ed em{grid-column:1/-1;height:6px;background:#C1121F}
+.mi-db{background:#fff;border-radius:14px;padding:14px;box-shadow:0 14px 30px -18px rgba(0,0,0,.3);display:grid;gap:10px}
+.mi-db .q{border:1px solid #DCE3EE;border-radius:999px;padding:7px 12px;font-size:.8rem;color:#1B2430}
+.mi-db svg{width:100%;height:60px}
+.mi-db path{fill:none;stroke:#2563EB;stroke-width:3;stroke-dasharray:160;stroke-dashoffset:160;animation:drawl 2s var(--ease) forwards}
+.sv-p.on .mi-db path{animation:drawl 1.4s var(--ease) forwards}
+.mi-mk{background:#fff;border-radius:14px;padding:12px;display:grid;gap:6px;box-shadow:0 14px 30px -18px rgba(0,0,0,.3);max-width:200px}
+.mi-mk .im{display:block;aspect-ratio:1.4;border-radius:10px;background:linear-gradient(135deg,#FDE68A,#FDBA74)}
+.mi-mk b{font-size:.9rem}.mi-mk span{color:#F59E0B;font-size:.8rem}
+.mi-mk em{font-style:normal;text-align:center;background:#F59E0B;color:#111;border-radius:999px;padding:6px;font-size:.8rem;font-weight:600}
+.mi-ax{aspect-ratio:1;max-width:200px;border-radius:50%;background:radial-gradient(circle,#132046,#0A1022)}
+.mi-ax i{position:absolute;inset:0;border:1px solid rgba(94,234,212,.35);border-radius:50%;animation:ring 3s linear infinite}
+.mi-ax i:nth-child(2){animation-delay:-1s}.mi-ax i:nth-child(3){animation-delay:-2s}
+.mi-ax b{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:#5EEAD4;box-shadow:0 0 20px #5EEAD4}
+.mi-pp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mi-pp span{background:rgba(255,255,255,.6);border-radius:10px;padding:8px;display:grid;gap:6px;align-content:start;min-height:110px}
+.mi-pp i{height:26px;border-radius:7px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.08)}.mi-pp i.w{background:#10B981}
+.sv-p.on .mi-pp span:first-child i:last-child{animation:slide 1s var(--ease) forwards}
+.mi-lg{background:#FBFDF8;border-left:3px solid #C0392B;padding:12px 16px;display:grid;gap:6px;font-family:Georgia,serif;background-image:repeating-linear-gradient(transparent 0 25px,#CFE3D4 25px 26px)}
+.mi-lg span{display:flex;justify-content:space-between;color:#1E3A2B}.mi-lg i{color:#2F6B4F;font-style:normal}
+.mi-lg em{font-style:normal;text-align:right;border-top:3px double #1E3A2B;padding-top:4px;color:#2F6B4F;font-weight:700}
+@keyframes drawl{from{stroke-dashoffset:160}to{stroke-dashoffset:0}}
+@keyframes slide{to{transform:translateX(200%)}}
+@keyframes ring{from{transform:scale(.2);opacity:1}to{transform:scale(1);opacity:0}}
+@keyframes spin{50%{transform:rotate(90deg) scale(.9)}}
+@keyframes stamp{0%{opacity:0;transform:rotate(-14deg) scale(2.2)}60%{opacity:.95;transform:rotate(-14deg) scale(.92)}100%{opacity:.88;transform:rotate(-14deg) scale(1)}}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@keyframes caret{50%{opacity:0}}
+
+/* responsive */
+@media(max-width:1060px){
+  .head,.sv-g{grid-template-columns:1fr}.head .lede{justify-self:start}
+  .sv-stage{position:static}.sv-p{min-height:0}
+}
+@media(max-width:640px){.sv-list .st{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<section class="sec" id="services" aria-labelledby="sv-h"><div class="wrap">
+  <div class="head rv">
+    <div>
+      <p class="eyebrow">What we do</p>
+      <h2 class="h2" id="sv-h">One company. <em>Ten services.</em></h2>
+    </div>
+    <p class="lede">Every service a growing business needs, from the first registration to the last filing of the year. Pick one to see how it works.</p>
+  </div>
+
+  <div class="sv-g">
+    <!-- LIST -->
+    <ol class="sv-list rv" role="tablist" aria-label="Services" aria-orientation="vertical" style="align-self:start;margin-top:0">
+      <li style="--t:#E3EEDC;--m:#A9CFA2;--k:#2E5B34"><button type="button" role="tab" id="t0" aria-controls="p0" aria-selected="true" tabindex="0"><span class="n">01</span><span><b>Business Setup &amp; Registration</b><small>Build Your Business on the Right Foundation</small></span><span class="st">Start</span></button></li>
+      <li style="--t:#E2E6FF;--m:#A3AEF4;--k:#3140A3"><button type="button" role="tab" id="t1" aria-controls="p1" aria-selected="false" tabindex="-1"><span class="n">02</span><span><b>Technology &amp; AI Solutions</b><small>Build Your Business. Connect Your Customers. Automate Your Operations.</small></span><span class="st">Build</span></button></li>
+      <li style="--t:#F4EAD8;--m:#DCC08C;--k:#6E5320"><button type="button" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1"><span class="n">03</span><span><b>Offline Business Launch &amp; Market Setup</b><small>Build Your Business Around the Market, Not Assumptions</small></span><span class="st">Start</span></button></li>
+      <li style="--t:#FBE1E6;--m:#EFA2B3;--k:#A1324C"><button type="button" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1"><span class="n">04</span><span><b>Branding &amp; Marketing</b><small>Give Your Business an Identity Worth Remembering</small></span><span class="st">Build</span></button></li>
+      <li style="--t:#FFF3CC;--m:#F2D165;--k:#7A5900"><button type="button" role="tab" id="t4" aria-controls="p4" aria-selected="false" tabindex="-1"><span class="n">05</span><span><b>Content Strategy</b><small>Know What to Say Before You Decide Where to Say It</small></span><span class="st">Build</span></button></li>
+      <li style="--t:#D8F2EA;--m:#86D6C1;--k:#126B5A"><button type="button" role="tab" id="t5" aria-controls="p5" aria-selected="false" tabindex="-1"><span class="n">06</span><span><b>Digital Marketing &amp; Growth</b><small>Turn Visibility into Customers</small></span><span class="st">Grow</span></button></li>
+      <li style="--t:#EDE3FB;--m:#BCA4EE;--k:#5C3C9F"><button type="button" role="tab" id="t6" aria-controls="p6" aria-selected="false" tabindex="-1"><span class="n">07</span><span><b>E-Commerce &amp; Marketplace Growth</b><small>Sell Better. Rank Higher. Scale Across Marketplaces.</small></span><span class="st">Grow</span></button></li>
+      <li style="--t:#DDEFFB;--m:#93C8EC;--k:#175C88"><button type="button" role="tab" id="t7" aria-controls="p7" aria-selected="false" tabindex="-1"><span class="n">08</span><span><b>Programmatic Advertising</b><small>Reach the Right Audience, Everywhere They Are — Automatically</small></span><span class="st">Grow</span></button></li>
+      <li style="--t:#FFE6D1;--m:#FFB683;--k:#A2470F"><button type="button" role="tab" id="t8" aria-controls="p8" aria-selected="false" tabindex="-1"><span class="n">09</span><span><b>Business Development Outsourcing</b><small>Build Your Pipeline. Win More Customers. Grow Your Business.</small></span><span class="st">Grow</span></button></li>
+      <li style="--t:#DDEDEC;--m:#93C5C3;--k:#24555A"><button type="button" role="tab" id="t9" aria-controls="p9" aria-selected="false" tabindex="-1"><span class="n">10</span><span><b>Finance, Tax &amp; Compliance</b><small>The Financial and Compliance Partner Your Business Needs to Keep Moving</small></span><span class="st">Run &amp; Protect</span></button></li>
+    </ol>
+
+    <!-- PREVIEW PANELS -->
+    <div class="sv-stage rv" style="align-self:start;margin-top:0">
+
+      <div class="sv-p on" id="p0" role="tabpanel" aria-labelledby="t0" style="--t:#E3EEDC;--m:#A9CFA2;--k:#2E5B34">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-rg"><b>Certificate</b><span></span><span></span><em>Filed</em></div></div>
+        <p class="k">01 &middot; Start stage</p>
+        <h3>Business Setup &amp; Registration</h3>
+        <p>Structure, registrations, licences, IP and legal documents.</p>
+        <ul class="tags"><li>Business Structure &amp; Registration</li><li>Tax &amp; Statutory Registrations</li><li>Industry-Specific Licences &amp; Approvals</li><li>Startup &amp; MSME Registrations</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/business-setup-registration/">Explore Business Setup <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+      <div class="sv-p" id="p1" role="tabpanel" aria-labelledby="t1" style="--t:#E2E6FF;--m:#A3AEF4;--k:#3140A3">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-tm"><span>$ slatout build</span><span class="ok">&#10003; website</span><span class="ok">&#10003; crm</span><span class="ok">&#10003; ai assistant</span><i></i></div></div>
+        <p class="k">02 &middot; Build stage</p>
+        <h3>Technology &amp; AI Solutions</h3>
+        <p>Websites, software, automation and AI built around a real business problem.</p>
+        <ul class="tags"><li>Establish Your Digital Presence</li><li>Build Digital Customer Experiences</li><li>Digitise Your Business Operations</li><li>Automate Repetitive Work</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/technology-ai-solutions/">Explore Technology &amp; AI <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+      <div class="sv-p" id="p2" role="tabpanel" aria-labelledby="t2" style="--t:#F4EAD8;--m:#DCC08C;--k:#6E5320">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-mp"><i class="r1"></i><i class="r2"></i><i class="r3"></i><b class="pin"></b><s></s></div></div>
+        <p class="k">03 &middot; Start stage</p>
+        <h3>Offline Business Launch &amp; Market Setup</h3>
+        <p>Market research, location strategy and local launch planning.</p>
+        <ul class="tags"><li>Market &amp; Customer Intelligence</li><li>Location Strategy</li><li>Competition &amp; Positioning</li><li>Physical Brand Presence</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/offline-business-launch/">Explore Offline Launch <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+      <div class="sv-p" id="p3" role="tabpanel" aria-labelledby="t3" style="--t:#FBE1E6;--m:#EFA2B3;--k:#A1324C">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-bb"><b>Aa</b><span><i></i><i></i><i></i><i></i></span></div></div>
+        <p class="k">04 &middot; Build stage</p>
+        <h3>Branding &amp; Marketing</h3>
+        <p>Brand strategy, visual identity and offline marketing.</p>
+        <ul class="tags"><li>Brand Strategy</li><li>Visual Identity</li><li>Brand Guidelines</li><li>Marketing Collateral</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/branding-marketing/">Explore Branding <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+      <div class="sv-p" id="p4" role="tabpanel" aria-labelledby="t4" style="--t:#FFF3CC;--m:#F2D165;--k:#7A5900">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-ed"><b>The Content Desk</b><span></span><span></span><span></span><em></em></div></div>
+        <p class="k">05 &middot; Build stage</p>
+        <h3>Content Strategy</h3>
+        <p>Pillars, voice, editorial calendar and content briefs.</p>
+        <ul class="tags"><li>Content Audit</li><li>Content Pillars &amp; Themes</li><li>Voice &amp; Messaging Guidelines</li><li>Editorial Calendar</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/content-strategy/">Explore Content Strategy <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+      <div class="sv-p" id="p5" role="tabpanel" aria-labelledby="t5" style="--t:#D8F2EA;--m:#86D6C1;--k:#126B5A">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-db"><span class="q">near me</span><svg viewBox="0 0 100 40" aria-hidden="true"><path d="M0 36 C20 32 30 26 45 24 S70 12 100 4"/></svg></div></div>
+        <p class="k">06 &middot; Grow stage</p>
+        <h3>Digital Marketing &amp; Growth</h3>
+        <p>SEO, AI-search visibility, paid ads, social and analytics as one system.</p>
+        <ul class="tags"><li>Digital Marketing Strategy</li><li>SEO (Search Engine Optimisation)</li><li>AEO &amp; GEO: Visibility in AI Search</li><li>Performance Marketing</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/digital-marketing/">Explore Digital Marketing <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+      <div class="sv-p" id="p6" role="tabpanel" aria-labelledby="t6" style="--t:#EDE3FB;--m:#BCA4EE;--k:#5C3C9F">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-mk"><i class="im"></i><b>Your product</b><span>&#9733;&#9733;&#9733;&#9733;&#9734;</span><em>Add to cart</em></div></div>
+        <p class="k">07 &middot; Grow stage</p>
+        <h3>E-Commerce &amp; Marketplace Growth</h3>
+        <p>Seller onboarding, listings, marketplace SEO and advertising.</p>
+        <ul class="tags"><li>Marketplace Setup &amp; Seller Onboarding</li><li>Product Listing &amp; Catalogue Management</li><li>Marketplace SEO &amp; Product Ranking</li><li>Marketplace Advertising &amp; PPC Management</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/ecommerce-marketplace-growth/">Explore Marketplace Growth <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+      <div class="sv-p" id="p7" role="tabpanel" aria-labelledby="t7" style="--t:#DDEFFB;--m:#93C8EC;--k:#175C88">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-ax"><i></i><i></i><i></i><b></b></div></div>
+        <p class="k">08 &middot; Grow stage</p>
+        <h3>Programmatic Advertising</h3>
+        <p>Real-time buying across display, video, connected TV and audio.</p>
+        <ul class="tags"><li>Programmatic Strategy &amp; Audit</li><li>Programmatic Tools &amp; Platform Selection</li><li>Audience Targeting &amp; Data</li><li>Creative &amp; Ad Formats</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/programmatic-advertising/">Explore Programmatic Ads <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+      <div class="sv-p" id="p8" role="tabpanel" aria-labelledby="t8" style="--t:#FFE6D1;--m:#FFB683;--k:#A2470F">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-pp"><span><i></i><i></i></span><span><i></i></span><span><i class="w"></i></span></div></div>
+        <p class="k">09 &middot; Grow stage</p>
+        <h3>Business Development Outsourcing</h3>
+        <p>Market research, B2B lead generation, outreach and pipeline management.</p>
+        <ul class="tags"><li>Business Development Strategy</li><li>Market Research &amp; Opportunity Identification</li><li>B2B Lead Generation &amp; Prospect Research</li><li>Outbound Sales &amp; Customer Acquisition</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/business-development-outsourcing/">Explore BD Outsourcing <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+      <div class="sv-p" id="p9" role="tabpanel" aria-labelledby="t9" style="--t:#DDEDEC;--m:#93C5C3;--k:#24555A">
+        <div class="sv-vis" aria-hidden="true"><div class="mi mi-lg"><span><b>GST</b><i>&#10003;</i></span><span><b>TDS</b><i>&#10003;</i></span><span><b>ROC</b><i>&#10003;</i></span><em>Balanced</em></div></div>
+        <p class="k">10 &middot; Run &amp; Protect stage</p>
+        <h3>Finance, Tax &amp; Compliance</h3>
+        <p>Accounting, GST, income tax, audit, payroll, FEMA and virtual CFO support.</p>
+        <ul class="tags"><li>Accounting &amp; Bookkeeping</li><li>GST &amp; Indirect Tax</li><li>Income Tax &amp; Direct Tax</li><li>Audit &amp; Assurance</li></ul>
+        <div class="acts"><a class="btn btn-k" href="/services/finance-tax-compliance/">Explore Finance &amp; Tax <i>&rarr;</i></a><a class="btn btn-s" href="#enquire">Book a strategy call</a></div>
+      </div>
+
+    </div>
+  </div>
+</div></section>
+
+<script>
+(function(){
+  var d=document,$$=function(s){return[].slice.call(d.querySelectorAll(s))};
+  var tabs=$$('.sv-list [role=tab]');
+  function pick(b,focus){
+    tabs.forEach(function(x){
+      var on=x===b;
+      x.setAttribute('aria-selected',on);
+      x.tabIndex=on?0:-1;
+      d.getElementById(x.getAttribute('aria-controls')).classList.toggle('on',on);
+    });
+    if(focus)b.focus();
+  }
+  tabs.forEach(function(b,i){
+    b.addEventListener('click',function(){pick(b)});
+    b.addEventListener('mouseenter',function(){if(innerWidth>1060)pick(b)});
+    b.addEventListener('keydown',function(e){
+      var n=e.key==='ArrowDown'?tabs[(i+1)%tabs.length]:e.key==='ArrowUp'?tabs[(i-1+tabs.length)%tabs.length]:null;
+      if(n){e.preventDefault();pick(n,true)}
+    });
+  });
+  /* scroll reveal */
+  var rv=$$('.rv');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:0,rootMargin:'0px 0px -20px 0px'});
+    rv.forEach(function(e){io.observe(e)});
+  }else rv.forEach(function(e){e.classList.add('in')});
+})();
+</script>
+</body>
+</html>
