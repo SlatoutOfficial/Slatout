@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Bold, ImagePlus, Italic, Link2, List, ListOrdered, LoaderCircle, Quote, Save, Underline } from "lucide-react";
+import { ArrowLeft, Bold, ImagePlus, Italic, Link2, List, ListOrdered, Loader2, Quote, Save, Underline } from "lucide-react";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminFrame, AdminGate } from "@/components/admin/AdminLayout";
@@ -71,7 +71,7 @@ export default function BlogEditor({ slug }: { slug?: string }) {
 
   if (!loaded) return <AdminGate><div className="admin-loading">Loading editor…</div></AdminGate>;
   return <AdminGate><AdminFrame title={editing ? "Edit your story" : "Write a new story"} description="Shape the story, add imagery, and preview the finished article as you work." action={<Link className="admin-secondary" href="/admin"><ArrowLeft size={15}/> Back to dashboard</Link>}>
-    <div className="admin-editor-actions" style={{marginTop:-14,marginBottom:16}}><label className="admin-publish-toggle"><input type="checkbox" checked={draft.published} onChange={(e) => set("published", e.target.checked)}/> Publish this post</label><div className="admin-toolbar"><button className="admin-secondary" onClick={() => save(false)} disabled={saving}><Save size={14}/> Save draft</button><button className="admin-primary" onClick={() => save(true)} disabled={saving}>{saving ? <LoaderCircle size={14} className="animate-spin"/> : <Save size={14}/>} {draft.published ? "Save changes" : "Publish story"}</button></div></div>
+    <div className="admin-editor-actions" style={{marginTop:-14,marginBottom:16}}><label className="admin-publish-toggle"><input type="checkbox" checked={draft.published} onChange={(e) => set("published", e.target.checked)}/> Publish this post</label><div className="admin-toolbar"><button className="admin-secondary" onClick={() => save(false)} disabled={saving}><Save size={14}/> Save draft</button><button className="admin-primary" onClick={() => save(true)} disabled={saving}>{saving ? <Loader2 size={14} className="animate-spin"/> : <Save size={14}/>} {draft.published ? "Save changes" : "Publish story"}</button></div></div>
     {error && <div className="admin-error" style={{marginBottom:12}}>{error}</div>}{notice && <div className="admin-notice" style={{marginBottom:12}}>{notice}</div>}
     <div className="admin-form-layout"><div className="admin-card admin-editor-card">
       <div className="admin-field"><label>Story title<input value={draft.title} onChange={(e) => { set("title", e.target.value); if (!editing || !draft.slug) set("slug", makeSlug(e.target.value)); }} placeholder="Give your story a clear title" maxLength={180}/></label></div>
