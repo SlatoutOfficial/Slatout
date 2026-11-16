@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowUpRight, BookOpen, LayoutDashboard, LogOut, MessageSquareText, Plus, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, BookOpen, LayoutDashboard, LogOut, MessageSquareText, Plus, ShieldCheck, Star } from "lucide-react";
 import { FormEvent, ReactNode, useEffect, useState } from "react";
 
 const nav = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/blogs/new", label: "Blog editor", icon: BookOpen },
+  { href: "/admin/reviews", label: "Client reviews", icon: Star },
   { href: "/admin/leads", label: "Enquiries", icon: MessageSquareText },
 ];
 
@@ -37,7 +38,7 @@ export function AdminGate({ children }: { children: ReactNode }) {
 
   if (!ready) return <div className="admin-loading">Opening your workspace…</div>;
   if (!configured) return <main className="admin-login"><div className="admin-login-card"><ShieldCheck size={25} /><p className="admin-eyebrow">ADMIN SETUP</p><h1>Secure the dashboard</h1><p>Add <code>ADMIN_PASSWORD</code> and <code>ADMIN_SESSION_SECRET</code> to the server environment, then restart the app.</p><p className="admin-muted">Use the provided <code>.env.example</code> as a guide. The password is never stored in the browser.</p></div></main>;
-  if (!authenticated) return <main className="admin-login"><form className="admin-login-card" onSubmit={login}><div className="admin-mark"><ShieldCheck size={22} /></div><p className="admin-eyebrow">SLATOUT / ADMIN</p><h1>Sign in to your studio</h1><p>Manage journal stories and incoming enquiries.</p><label>Password<input autoFocus type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required /></label>{error && <div className="admin-error">{error}</div>}<button className="admin-primary" type="submit">Continue <ArrowUpRight size={16} /></button><Link className="admin-back-link" href="/">Back to site</Link></form></main>;
+  if (!authenticated) return <main className="admin-login"><form className="admin-login-card" onSubmit={login}><div className="admin-mark"><ShieldCheck size={22} /></div><p className="admin-eyebrow">SLATOUT / ADMIN</p><h1>Sign in to your studio</h1><p>Manage journal stories, client reviews, and incoming enquiries.</p><label>Password<input autoFocus type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required /></label>{error && <div className="admin-error">{error}</div>}<button className="admin-primary" type="submit">Continue <ArrowUpRight size={16} /></button><Link className="admin-back-link" href="/">Back to site</Link></form></main>;
   return <>{children}</>;
 }
 
@@ -52,6 +53,6 @@ export function AdminFrame({ children, title, description, action }: { children:
       <nav>{nav.map(({ href, label, icon: Icon }) => <Link key={href} href={href} className={`admin-nav-link ${pathname === href || (href !== "/admin" && pathname.startsWith(href)) ? "active" : ""}`}><Icon size={17} />{label}{label === "Blog editor" && <Plus size={14} className="admin-nav-plus" />}</Link>)}</nav>
       <div className="admin-sidebar-bottom"><div className="admin-secure"><span className="admin-secure-dot"/><div><b>Private workspace</b><small>Only you can access this area</small></div></div><button className="admin-logout" onClick={logout}><LogOut size={16}/> Sign out</button><Link className="admin-site-link" href="/">View website <ArrowUpRight size={14}/></Link></div>
     </aside>
-    <main className="admin-main"><header className="admin-topbar"><span><span className="admin-live-dot"/> Content workspace</span><span>Slatout <b>/</b> Admin</span></header><section className="admin-content"><div className="admin-page-heading"><div><p className="admin-eyebrow">STUDIO / {pathname.includes("leads") ? "ENQUIRIES" : pathname.includes("blogs") ? "JOURNAL" : "OVERVIEW"}</p><h1>{title}</h1>{description && <p className="admin-description">{description}</p>}</div>{action}</div>{children}</section></main>
+    <main className="admin-main"><header className="admin-topbar"><span><span className="admin-live-dot"/> Content workspace</span><span>Slatout <b>/</b> Admin</span></header><section className="admin-content"><div className="admin-page-heading"><div><p className="admin-eyebrow">STUDIO / {pathname.includes("leads") ? "ENQUIRIES" : pathname.includes("reviews") ? "CLIENT REVIEWS" : pathname.includes("blogs") ? "JOURNAL" : "OVERVIEW"}</p><h1>{title}</h1>{description && <p className="admin-description">{description}</p>}</div>{action}</div>{children}</section></main>
   </div>;
 }

@@ -421,7 +421,7 @@ export default function Footer() {
 
   return (
     <footer className="ft site-footer" id="ft" ref={footerRef}>
-      <style>{CSS}</style>
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
       <div className="cord ft-cord" id="cord">
         <svg aria-hidden="true"><line x1="22" y1="0" x2="22" y2="96" id="cl" /></svg>
         <button className="kb" id="kb" type="button" aria-label="Back to top">&uarr;</button>

@@ -13,7 +13,7 @@
   --r-m: 20px;
   --r-l: 28px;
   --sec: clamp(84px, 10vw, 136px);
-  --wrap: 1240px;
+  --wrap: 1440px;
   --hd: 84px;
   --sans: "Inter Tight", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
@@ -65,8 +65,18 @@
 }
 
 #services .wrap {
-  width: min(var(--wrap), 100% - 2 * clamp(16px, 4vw, 40px));
+  width: 100%;
+  max-width: var(--wrap);
   margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@media (min-width: 640px) {
+  #services .wrap { padding-inline: 32px; }
+}
+
+@media (min-width: 1024px) {
+  #services .wrap { padding-inline: 48px; }
 }
 
 #services .eyebrow {

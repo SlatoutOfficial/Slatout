@@ -358,7 +358,7 @@ export default function ContactSection({ action = '/api/enquiries' }: { action?:
 
   return (
     <section className="cx-ct cx-js" id="enquire" aria-labelledby="ct-h" ref={rootRef}>
-      <style>{CSS}</style>
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
       <div className="cx-wrap">
         <div className="cx-shell" id="shell">
 

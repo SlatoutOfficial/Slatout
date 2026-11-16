@@ -13,6 +13,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.home-section-frame {
+  width: min(calc(100% - 2 * clamp(20px, 4vw, 64px)), 1680px);
+  margin-inline: auto;
+}
+
 .blog-rich-content { color: #575852; font-size: 14px; line-height: 1.85; }
 .blog-rich-content h2 { margin: 34px 0 12px; color: #171814; font-size: clamp(20px, 3vw, 28px); line-height: 1.2; }
 .blog-rich-content h3 { margin: 28px 0 10px; color: #171814; font-size: 19px; }

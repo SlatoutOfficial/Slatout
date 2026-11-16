@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookOpen, MessageSquareText, Plus, Radio, Send } from "lucide-react";
+import { ArrowRight, BookOpen, MessageSquareText, Plus, Radio, Send, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AdminFrame, AdminGate } from "@/components/admin/AdminLayout";
 
@@ -20,7 +20,7 @@ export default function AdminDashboard() {
       }).catch((e) => setError(e.message));
   }, []);
   const recentLeads = leads.slice(0, 5);
-  return <AdminGate><AdminFrame title="Your studio, at a glance" description="Keep your journal moving and stay close to the people reaching out." action={<Link className="admin-primary" href="/admin/blogs/new"><Plus size={16}/> Write a story</Link>}>
+  return <AdminGate><AdminFrame title="Your studio, at a glance" description="Keep your journal moving and stay close to the people reaching out." action={<div className="admin-quick-actions"><Link className="admin-secondary" href="/admin/reviews"><Star size={14}/> Manage reviews</Link><Link className="admin-primary" href="/admin/blogs/new"><Plus size={16}/> Write a story</Link></div>}>
     {error && <div className="admin-error">{error}</div>}
     <div className="admin-stats">
       <div className="admin-card admin-stat"><div className="admin-stat-top">Journal stories <span className="admin-stat-icon"><BookOpen size={15}/></span></div><div className="admin-stat-value">{blogs.length}</div><div className="admin-stat-foot">Existing and new journal articles</div></div>

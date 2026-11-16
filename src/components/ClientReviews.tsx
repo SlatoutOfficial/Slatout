@@ -3,80 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Check, Star, UserRound } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
+import { REVIEW_SERVICE_OPTIONS, type ClientReview, type ReviewServiceKey } from "@/data/client-reviews";
 
-type ServiceKey = "setup" | "tech" | "offline" | "brand" | "content" | "digital" | "market" | "prog" | "bd" | "fin";
-
-type Review = {
-  name: string;
-  role: string;
-  business: string;
-  industry: string;
-  services: ServiceKey[];
-  rating: number;
-  quote: string;
-  highlight: string;
-  cameWith: string;
-  leftWith: string;
-};
-
-const serviceInfo: Record<ServiceKey, { slug: string; label: string; tint: string; deep: string }> = {
-  setup: { slug: "business-setup-registration", label: "Business Setup", tint: "#E3EEDC", deep: "#2E5B34" },
-  tech: { slug: "technology-ai-solutions", label: "Technology & AI", tint: "#E2E6FF", deep: "#3140A3" },
-  offline: { slug: "offline-business-launch", label: "Offline Launch", tint: "#F4EAD8", deep: "#6E5320" },
-  brand: { slug: "branding-marketing", label: "Branding", tint: "#FBE1E6", deep: "#A1324C" },
-  content: { slug: "content-strategy", label: "Content Strategy", tint: "#FFF3CC", deep: "#7A5900" },
-  digital: { slug: "digital-marketing", label: "Digital Marketing", tint: "#D8F2EA", deep: "#126B5A" },
-  market: { slug: "ecommerce-marketplace-growth", label: "Marketplaces", tint: "#EDE3FB", deep: "#5C3C9F" },
-  prog: { slug: "programmatic-advertising", label: "Programmatic Ads", tint: "#DDEFFB", deep: "#175C88" },
-  bd: { slug: "business-development-outsourcing", label: "BD Outsourcing", tint: "#FFE6D1", deep: "#A2470F" },
-  fin: { slug: "finance-tax-compliance", label: "Finance & Tax", tint: "#DDEDEC", deep: "#24555A" },
-};
-
-// Placeholder stories only. Replace with real reviews approved for publication.
-const reviews: Review[] = [
-  {
-    name: "Meera Nambiar", role: "Founder", business: "Packaged-food startup", industry: "Food & beverage",
-    services: ["setup", "brand", "market"], rating: 5,
-    quote: "I used to chase five different vendors for one launch. Now there is one team, one plan, and I always know what happens next.",
-    highlight: "one team, one plan", cameWith: "A product ready to sell, but no company, brand or sales channel.",
-    leftWith: "A registered business, a brand identity and a live online store.",
-  },
-  {
-    name: "Arjun Deshpande", role: "Owner", business: "Multi-clinic healthcare practice", industry: "Healthcare",
-    services: ["offline", "digital"], rating: 5,
-    quote: "The opening felt organised instead of chaotic, and the enquiries started arriving before we had even cut the ribbon.",
-    highlight: "organised instead of chaotic", cameWith: "A new location opening in six weeks with nothing ready.",
-    leftWith: "A launch plan, local marketing and a steady stream of enquiries.",
-  },
-  {
-    name: "Kavya Reddy", role: "Director", business: "B2B manufacturing company", industry: "Manufacturing",
-    services: ["bd", "content"], rating: 5,
-    quote: "Our sales team now spends its time in conversations, not on research. The pipeline finally looks like something we can plan around.",
-    highlight: "conversations, not on research", cameWith: "Prospecting that happened in bursts, whenever the team had time.",
-    leftWith: "A target-account list, weekly outreach and a tracked pipeline.",
-  },
-  {
-    name: "Rohan Malhotra", role: "Co-founder", business: "SaaS startup", industry: "Software",
-    services: ["tech", "brand", "prog"], rating: 5,
-    quote: "They asked about the business problem before they mentioned a single tool. That one habit saved us months.",
-    highlight: "business problem before they mentioned a single tool", cameWith: "A product idea, a long feature list and no clear order of work.",
-    leftWith: "A scoped build, a matching brand and campaigns ready to go.",
-  },
-  {
-    name: "Farhan Qureshi", role: "Owner", business: "Retail brand, three stores", industry: "Retail",
-    services: ["offline", "brand", "fin"], rating: 5,
-    quote: "Accounts, branding and store openings used to sit in different inboxes. Having them in one place changed how calmly I run the business.",
-    highlight: "in one place", cameWith: "Three stores, three sets of paperwork and no common brand.",
-    leftWith: "A consistent brand, clean books and a compliance calendar.",
-  },
-  {
-    name: "Ananya Bhattacharya", role: "Founder", business: "Professional services firm", industry: "Professional services",
-    services: ["fin", "setup"], rating: 5,
-    quote: "Clear scope, clear timelines and no surprises. I did not have to learn the rules, I just had to answer their questions.",
-    highlight: "no surprises", cameWith: "A growing practice with an informal structure and untidy filings.",
-    leftWith: "The right entity, registrations in order and monthly finance routines.",
-  },
-];
+type Review = ClientReview;
+const serviceInfo = Object.fromEntries(REVIEW_SERVICE_OPTIONS.map((service) => [service.key, service])) as Record<ReviewServiceKey, (typeof REVIEW_SERVICE_OPTIONS)[number]>;
 
 function Avatar({ review, size }: { review: Review; size: number }) {
   const service = serviceInfo[review.services[0]];
@@ -87,15 +17,15 @@ function Avatar({ review, size }: { review: Review; size: number }) {
   );
 }
 
-function ReviewCard({ review, index, active, clone, onSelect }: { review: Review; index: number; active: boolean; clone: boolean; onSelect: (index: number, userAction: boolean) => void }) {
-  const highlightedAt = review.quote.indexOf(review.highlight);
+function ReviewCard({ review, index, total, active, clone, onSelect }: { review: Review; index: number; total: number; active: boolean; clone: boolean; onSelect: (index: number, userAction: boolean) => void }) {
+  const highlightedAt = review.highlight ? review.quote.indexOf(review.highlight) : -1;
   return (
     <article
       className={`rv-slide${active ? " on" : ""}`}
       id={`review-slide-${clone ? `clone-${index}` : index}`}
       role="tabpanel"
       aria-labelledby={clone ? undefined : `review-tab-${index}`}
-      aria-label={`Review ${index + 1} of ${reviews.length}`}
+      aria-label={`Review ${index + 1} of ${total}`}
       aria-hidden={clone || !active}
       onClick={(event) => {
         if (!active || clone) {
@@ -134,6 +64,8 @@ function ReviewCard({ review, index, active, clone, onSelect }: { review: Review
 }
 
 export default function ClientReviews() {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [started, setStarted] = useState(false);
@@ -148,7 +80,19 @@ export default function ClientReviews() {
   const swipeStart = useRef<number | null>(null);
   const reduceMotion = useReducedMotion();
 
+  useEffect(() => {
+    fetch("/api/client-reviews", { cache: "no-store" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Could not load client reviews.");
+        const data = await response.json();
+        setReviews(Array.isArray(data) ? data : []);
+      })
+      .catch(() => setReviews([]))
+      .finally(() => setLoading(false));
+  }, []);
+
   const selectReview = (index: number, userAction = false) => {
+    if (!reviews.length) return;
     const next = (index + reviews.length) % reviews.length;
     if (next === activeIndex) return;
     setActiveIndex(next);
@@ -161,6 +105,7 @@ export default function ClientReviews() {
   };
 
   const moveReview = useCallback((direction: -1 | 1, userAction = false) => {
+    if (reviews.length < 2) return;
     const wrapsForward = direction > 0 && activeIndex === reviews.length - 1;
     const wrapsBackward = direction < 0 && activeIndex === 0;
     const next = (activeIndex + direction + reviews.length) % reviews.length;
@@ -171,13 +116,13 @@ export default function ClientReviews() {
       setPlaying(false);
       setProgressKey((key) => key + 1);
     }
-  }, [activeIndex, reduceMotion]);
+  }, [activeIndex, reduceMotion, reviews.length]);
 
   useEffect(() => {
     const section = sectionRef.current;
     const viewport = viewportRef.current;
     const track = trackRef.current;
-    if (!section || !viewport || !track) return;
+    if (!section) return;
 
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry, order) => {
@@ -193,20 +138,21 @@ export default function ClientReviews() {
     });
 
     const measure = () => {
+      if (!viewport || !track) return;
       const firstSlide = track.firstElementChild as HTMLElement | null;
       if (!firstSlide) return;
       setTrackOffset((viewport.clientWidth - firstSlide.offsetWidth) / 2 - trackIndex * (firstSlide.offsetWidth + 28));
     };
     const resizeObserver = new ResizeObserver(measure);
-    resizeObserver.observe(viewport);
-    if (track.firstElementChild) resizeObserver.observe(track.firstElementChild);
+    if (viewport) resizeObserver.observe(viewport);
+    if (track?.firstElementChild) resizeObserver.observe(track.firstElementChild);
     measure();
 
     return () => {
       revealObserver.disconnect();
       resizeObserver.disconnect();
     };
-  }, [trackIndex]);
+  }, [trackIndex, reviews.length]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     let next = -1;
@@ -232,7 +178,7 @@ export default function ClientReviews() {
 
   const activeNumber = (activeIndex + 1).toString().padStart(2, "0");
   const totalNumber = reviews.length.toString().padStart(2, "0");
-  const autoplay = playing && started && !reduceMotion;
+  const autoplay = reviews.length > 1 && playing && started && !reduceMotion;
 
   useEffect(() => {
     if (!autoplay || paused) return;
@@ -252,6 +198,21 @@ export default function ClientReviews() {
     setProgressKey((key) => key + 1);
   };
 
+  if (!reviews.length) return (
+    <section className="rv" id="clients" aria-labelledby="rv-heading" ref={sectionRef}>
+      <div className="rv-wrap">
+        <header className="rv-heading rv-fade">
+          <p className="rv-kicker">Client reviews</p>
+          <h2 id="rv-heading">What our clients say</h2>
+          <p>Founders and business owners on working with one team across setup, build, growth and finance, with one plan and one point of contact.</p>
+        </header>
+        <div className="rv-empty rv-fade" role="status">
+          {loading ? <span>Loading client reviews…</span> : <><strong>No client reviews yet.</strong><span>Check back soon for stories from our clients.</span></>}
+        </div>
+      </div>
+    </section>
+  );
+
   return (
     <section className="rv" id="clients" aria-labelledby="rv-heading" ref={sectionRef}>
       <div className="rv-wrap">
@@ -267,7 +228,7 @@ export default function ClientReviews() {
             <button
               className="rv-tab"
               id={`review-tab-${index}`}
-              key={review.name}
+              key={review.id}
               type="button"
               role="tab"
               aria-selected={index === activeIndex}
@@ -311,7 +272,7 @@ export default function ClientReviews() {
               ...reviews.map((review, index) => ({ review, index, clone: false })),
               { review: reviews[0], index: 0, clone: true },
             ].map(({ review, index, clone }, physicalIndex) => (
-              <ReviewCard key={`review-${physicalIndex}`} review={review} index={index} active={physicalIndex === trackIndex} clone={clone} onSelect={selectReview} />
+              <ReviewCard key={`review-${physicalIndex}`} review={review} index={index} total={reviews.length} active={physicalIndex === trackIndex} clone={clone} onSelect={selectReview} />
             ))}
           </div>
         </div>

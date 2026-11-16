@@ -6,7 +6,7 @@ import Footer from "./Footer";
 export default function SiteEnd() {
   return (
     <>
-      <Enquiry />
+      <div className="home-section-frame"><Enquiry /></div>
       <Footer />
     </>
   );

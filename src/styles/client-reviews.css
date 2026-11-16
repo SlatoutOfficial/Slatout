@@ -84,6 +84,8 @@
 .rv-progress i.run { animation: rv-progress 3s linear forwards; }
 .rv-progress.paused i.run { animation-play-state: paused; }
 @keyframes rv-progress { to { width: 100%; } }
+.rv-empty { display: grid; max-width: 900px; min-height: 150px; align-content: center; gap: 8px; margin: 28px auto 0; padding: 42px 24px; border: 1px solid rgba(17,20,29,.08); border-radius: 24px; background: #fff; color: var(--rv-muted); font-size: 13px; text-align: center; }
+.rv-empty strong { color: var(--rv-ink); font-size: 16px; font-weight: 650; }
 
 @media (max-width: 760px) {
   .rv-slide { width: 88vw; grid-template-columns: 1fr; }

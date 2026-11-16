@@ -33,6 +33,19 @@ export default function Hero() {
     const ink = inkCanvasRef.current;
     if (!container || !canvas || !ink) return;
 
+    // Split headline words for word-by-word reveal
+    const h1 = headlineRef.current;
+    if (h1 && !h1.dataset.split) {
+      h1.dataset.split = "true";
+      const words = h1.textContent?.trim().split(/\s+/) || [];
+      h1.innerHTML = words
+        .map(
+          (w, i) =>
+            `<span class="w"><span style="transition-delay:${0.15 + i * 0.08}s">${w}</span></span>`
+        )
+        .join(" ");
+    }
+
     const TAU = Math.PI * 2;
     const WORD = "slatout";
     const reduceMotion =
@@ -1142,11 +1155,11 @@ export default function Hero() {
       toastTimer = setTimeout(() => toastEl.classList.remove("show"), 1800);
     }
 
-    const HINTS: Record<string, string> = {
-      play: "Drag rope<i>/</i>Click to pluck<i>/</i>Click letters<i>/</i>Scroll",
-      cut: "Slash across the rope to cut it",
-      draw: "Draw a path<i>/</i>The rope will follow it",
-    };
+    // const HINTS: Record<string, string> = {
+    //   play: "Drag rope<i>/</i>Click to pluck<i>/</i>Click letters<i>/</i>Scroll",
+    //   cut: "Slash across the rope to cut it",
+    //   draw: "Draw a path<i>/</i>The rope will follow it",
+    // };
     function setMode(m: string) {
       if (m === mode) return;
       mode = m;
@@ -1160,7 +1173,7 @@ export default function Hero() {
             String((b as HTMLElement).dataset.mode === m)
           )
         );
-      if (hintRef.current) hintRef.current.innerHTML = HINTS[m];
+      // if (hintRef.current) hintRef.current.innerHTML = HINTS[m];
       if (hModeRef.current) hModeRef.current.textContent = m;
     }
 
@@ -1701,18 +1714,15 @@ export default function Hero() {
         <div>
           {/* Headline */}
           <h1 id="headline" ref={headlineRef}>
-            <span className="headline-line">
-              Build <em>Beyond</em>
-            </span>
-            <span className="headline-line">Business</span>
+            Build Beyond Business
           </h1>
         </div>
 
         {/* Footer */}
         <footer>
-          <p className="hint" id="hint" ref={hintRef}>
+          {/* <p className="hint" id="hint" ref={hintRef}>
             Drag rope<i>/</i>Click to pluck<i>/</i>Click letters<i>/</i>Scroll
-          </p>
+          </p> */}
 
           <button className="pill big" id="bigger" data-magnetic>
             <span id="biggerLabel" ref={biggerLabelRef}>
