@@ -211,23 +211,27 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    lastScrollY.current = window.scrollY;
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
       // Always show when near the top
       if (currentScrollY <= 60) {
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY.current && currentScrollY - lastScrollY.current > 8) {
+        lastScrollY.current = currentScrollY;
+      } else if (currentScrollY - lastScrollY.current > 10) {
         // Scrolling down -> hide navbar
         setIsVisible(false);
         setHoveredMenu(null);
-      } else if (currentScrollY < lastScrollY.current && lastScrollY.current - currentScrollY > 8) {
+        lastScrollY.current = currentScrollY;
+      } else if (lastScrollY.current - currentScrollY > 10) {
         // Scrolling up -> show navbar
         setIsVisible(true);
+        lastScrollY.current = currentScrollY;
       }
 
       setIsScrolled(currentScrollY > 120);
-      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

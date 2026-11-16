@@ -21,8 +21,7 @@ export default function Journal() {
   return (
     <section id="insights" className="relative bg-[#FAF8F5] py-20 sm:py-28 overflow-hidden">
       <div className="w-full max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="flex items-center gap-2.5 mb-3.5">
-          <span className="w-5 h-[2px] rounded-full bg-[#FF6A13]" />
+        <div className="flex items-center mb-3.5">
           <span className="font-mono text-[11px] font-semibold tracking-[0.14em] uppercase text-[#7E786F]">INSIGHTS</span>
         </div>
 

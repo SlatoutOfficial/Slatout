@@ -558,8 +558,7 @@ const CSS = `
 .cx-spot{position:absolute;z-index:-1;inset:0;pointer-events:none;background:radial-gradient(380px circle at var(--mx,70%) var(--my,20%),rgba(255,255,255,.07),transparent 60%);opacity:0;transition:opacity .4s}
 .cx-side:hover .cx-spot{opacity:1}
 @keyframes cx-drift{to{transform:translate(-50px,40px) scale(1.12)}}
-.cx-eyebrow{display:inline-flex;align-items:center;gap:10px;font:500 .74rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:20px}
-.cx-eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--brand)}
+.cx-eyebrow{display:inline-flex;align-items:center;font:500 .74rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:20px}
 .cx-side h2{font-size:clamp(2.2rem,3.9vw,3.7rem);font-weight:800;letter-spacing:-.045em;line-height:.98}
 .cx-side h2 em{font:italic 400 1.1em/.9 var(--serif);letter-spacing:-.01em;color:var(--brand)}
 .cx-w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}

@@ -23,12 +23,12 @@ const DEFAULT_IMAGES = [
 const WORLDS = [
   ['/services/business-setup-registration/', 'Build Your Business on the Right Foundation', 'Business Setup'],
   ['/services/technology-ai-solutions/', 'Build Your Business. Connect Your Customers. Automate Your Operations.', 'Technology & AI'],
-  ['/services/offline-business-launch/', 'Build Your Business Around the Market — Not Assumptions', 'Offline Launch'],
+  ['/services/offline-business-launch/', 'Build Your Business Around the Market Not Assumptions', 'Offline Launch'],
   ['/services/branding-marketing/', 'Give Your Business an Identity Worth Remembering', 'Branding'],
   ['/services/content-strategy/', 'Know What to Say Before You Decide Where to Say It', 'Content Strategy'],
   ['/services/digital-marketing/', 'Turn Visibility into Customers', 'Digital Marketing'],
   ['/services/ecommerce-marketplace-growth/', 'Sell Better. Rank Higher. Scale Across Marketplaces.', 'Marketplace Growth'],
-  ['/services/programmatic-advertising/', 'Reach the Right Audience, Everywhere They Are — Automatically', 'Programmatic Ads'],
+  ['/services/programmatic-advertising/', 'Reach the Right Audience, Everywhere They Are Automatically', 'Programmatic Ads'],
   ['/services/business-development-outsourcing/', 'Build Your Pipeline. Win More Customers. Grow Your Business.', 'Business Development'],
   ['/services/finance-tax-compliance/', 'The Financial and Compliance Partner Your Business Needs to Keep Moving', 'Finance & Tax'],
 ];
@@ -596,7 +596,7 @@ export default function SlatoutHero({ images = DEFAULT_IMAGES }) {
       }
 
       /* ---------- sound ---------- */
-      const audio = { ctx: null, on: false, master: null, cache: new Map(), voice: 0 };
+      const audio = { ctx: null, on: true, master: null, cache: new Map(), voice: 0 };
       const VOICES = ['Pluck', 'Harp', 'Bell', 'Marimba', 'Synth'];
       const SCALE = [0, 3, 5, 7, 10];
       function ensureAudio() {
@@ -850,9 +850,10 @@ export default function SlatoutHero({ images = DEFAULT_IMAGES }) {
 
       on(canvas, 'pointerdown', e => {
         if (!info) return;
+        if (audio.on) ensureAudio();
         setPtr(e); ptr.inside = true; ptr.down = true; ptr.px = ptr.x; ptr.py = ptr.y;
         worldAt(0, mW);
-        try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
+        try { canvas.setPointerCapture(e.pointerId); } catch (_) { }
         if (mode === 'play') {
           projectAll();
           const n = nearestRope();
@@ -1220,7 +1221,7 @@ export default function SlatoutHero({ images = DEFAULT_IMAGES }) {
         letters.forEach(l => { l.mesh.material.map.dispose(); l.mesh.material.dispose(); });
         if (letterGeo) letterGeo.dispose();
         envTex.dispose(); pmrem.dispose(); renderer.dispose();
-        if (audio.ctx) audio.ctx.close().catch(() => {});
+        if (audio.ctx) audio.ctx.close().catch(() => { });
       });
 
       /* ---------- boot ---------- */
@@ -1255,7 +1256,7 @@ export default function SlatoutHero({ images = DEFAULT_IMAGES }) {
       disposed = true;
       cancelAnimationFrame(rafMain);
       timers.forEach(clearTimeout); timers.clear();
-      cleanups.forEach(f => { try { f(); } catch (_) {} });
+      cleanups.forEach(f => { try { f(); } catch (_) { } });
       host.innerHTML = '';
       root.classList.remove('loaded', 'ready', 'no-gl', 'out');
       root.dataset.cur = '';
@@ -1377,7 +1378,7 @@ export default function SlatoutHero({ images = DEFAULT_IMAGES }) {
           </div></div>
 
           <div className="grp xg" role="group" aria-label="Sound"><span className="cap">Sound</span><div className="row">
-            <button className="dk" id="soundBtn" aria-pressed="false" aria-label="Toggle sound">
+            <button className="dk" id="soundBtn" aria-pressed="true" aria-label="Toggle sound">
               <svg className="off-ico" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z" /><path d="m22 9-6 6m0-6 6 6" /></svg>
               <svg className="on-ico" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z" /><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" /></svg>
               <span className="tip">Sound · S</span>
