@@ -10,7 +10,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { Scale, Code, Landmark, Palette, FileText, Megaphone, ShoppingBag, Sparkles, Users, CreditCard } from 'lucide-react';
 
 const DEFAULT_IMAGES = [
   '/images/01-business-setup.jpg', '/images/02-technology-ai.jpg', '/images/03-offline-launch.jpg',
@@ -31,18 +30,6 @@ const WORLDS = [
   ['/services/programmatic-advertising/', 'Reach the Right Audience, Everywhere They Are Automatically', 'Programmatic Ads'],
   ['/services/business-development-outsourcing/', 'Build Your Pipeline. Win More Customers. Grow Your Business.', 'Business Development'],
   ['/services/finance-tax-compliance/', 'The Financial and Compliance Partner Your Business Needs to Keep Moving', 'Finance & Tax'],
-];
-const NAV_DD = [
-  ['business-setup-registration', 'Business Setup & Registration', 'Structure, registrations, licences, IP and legal documents.', '#10b981,#2dd4bf', Scale],
-  ['technology-ai-solutions', 'Technology & AI Solutions', 'Websites, software, automation and AI built around business problems.', '#3b82f6,#818cf8', Code],
-  ['offline-business-launch', 'Offline Business Launch', 'Market research, location strategy and local launch planning.', '#f59e0b,#fb923c', Landmark],
-  ['branding-marketing', 'Branding & Marketing', 'Brand strategy, visual identity and offline marketing.', '#f43f5e,#f472b6', Palette],
-  ['content-strategy', 'Content Strategy', 'Pillars, voice, editorial calendar and content briefs.', '#eab308,#fbbf24', FileText],
-  ['digital-marketing', 'Digital Marketing & Growth', 'SEO, AI-search visibility, paid ads, social and analytics.', '#14b8a6,#22d3ee', Megaphone],
-  ['ecommerce-marketplace-growth', 'E-Commerce & Marketplace Growth', 'Seller onboarding, listings, marketplace SEO and advertising.', '#8b5cf6,#6366f1', ShoppingBag],
-  ['programmatic-advertising', 'Programmatic Advertising', 'Real-time buying across display, video, connected TV and audio.', '#06b6d4,#60a5fa', Sparkles],
-  ['business-development-outsourcing', 'Business Development', 'Market research, B2B lead generation, outreach and pipeline.', '#f97316,#fbbf24', Users],
-  ['finance-tax-compliance', 'Finance, Tax & Compliance', 'Accounting, GST, income tax, audit, payroll and virtual CFO.', '#059669,#14b8a6', CreditCard],
 ];
 // colour, svg tone, tone alpha, label
 const SWATCHES = [
@@ -1285,45 +1272,6 @@ export default function SlatoutHero({ images = DEFAULT_IMAGES }) {
       <div className="fallback" aria-hidden="true">slatout</div>
       <div className="grain" />
 
-      {/* top navigation */}
-      <div className="tn" role="banner">
-        <a className="tn-logo" href="/">
-          <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
-            <rect width="40" height="40" rx="9" fill="#0B0B0B" />
-            <g transform="translate(6 6) scale(.7)">
-              <path d="M20 25.5 35 31 20 36.5 5 31Z" fill="none" stroke="#fff" strokeWidth="2.8" strokeLinejoin="round" />
-              <path d="M5 20.5 20 26 35 20.5V23L20 28.5 5 23Z" fill="#C24E00" />
-              <path d="M20 15 35 20.5 20 26 5 20.5Z" fill="#FF6A00" />
-              <path d="M20 4 35 9.5 20 15 5 9.5Z" fill="none" stroke="#fff" strokeWidth="2.8" strokeLinejoin="round" />
-            </g>
-          </svg>
-          <span>Slatout</span>
-        </a>
-        <ul className="tn-links">
-          <li><a className="cur" href="/" aria-current="page">Home</a></li>
-          <li className="has-dd">
-            <a href="/services/">Services<svg className="cv" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></a>
-            <div className="tn-dd"><div className="tn-dd-in">
-              {NAV_DD.map(([slug, label, description, gradient, Icon], i) => (
-                <a key={slug} href={`/services/${slug}/`} className="tn-dd-card">
-                  <span className="tn-dd-icon" style={{ background: `linear-gradient(135deg, ${gradient})` }}><Icon size={18} strokeWidth={2} aria-hidden="true" /></span>
-                  <span className="tn-dd-copy">
-                    <span className="tn-dd-title"><b>{String(i + 1).padStart(2, '0')}.</b>{label}</span>
-                    <span className="tn-dd-desc">{description}</span>
-                  </span>
-                </a>
-              ))}
-            </div></div>
-          </li>
-          <li><a href="/blogs/">Insights</a></li>
-          <li><a href="/contact/">Contact</a></li>
-        </ul>
-        <a className="tn-cta" href="/contact/">
-          <span className="full">Book a strategy call</span><span className="short">Book a call</span>
-          <i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></i>
-        </a>
-      </div>
-
       <div className="ui">
         <div>
           <h1 id="headline">
@@ -1429,7 +1377,6 @@ export default function SlatoutHero({ images = DEFAULT_IMAGES }) {
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-body:has(.slh)>header{display:none!important}
 .slh{
   --bg:#ff6a13;--ink:#0b0b0b;--paper:#ffffff;
   --ease:cubic-bezier(.7,0,.2,1);--ease-out:cubic-bezier(.2,.8,.1,1);

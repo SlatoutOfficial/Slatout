@@ -20,6 +20,8 @@ export default function ServicePageClient({ service }: { service: ServiceData })
   const dataScope = scopeMatch ? scopeMatch[1] : undefined;
   const serviceHtml = service.html
     .replace(/<header class="site-header"[\s\S]*?<\/header>/, "")
+    .replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, "")
+    .replace(/<nav class="subnav" aria-label="On this page">[\s\S]*?<\/nav>/, "")
     .replace(/<li><a href="#try">Try it<\/a><\/li>/g, "")
     .replace(/<section class="ss toy" id="try"[\s\S]*?<\/section>/g, "");
 

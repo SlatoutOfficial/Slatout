@@ -464,7 +464,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="wm" id="wm" aria-label="Slatout"><svg id="wsv" viewBox="0 0 1000 196" role="img" aria-label="Slatout wordmark made of ten service colours"></svg><span className="tip" id="tip"><b></b><span></span></span></div>
+      <div className="wm" id="wm" aria-label="Slatout"><svg id="wsv" viewBox="0 14 1000 176" role="img" aria-label="Slatout wordmark made of ten service colours"></svg><span className="tip" id="tip"><b></b><span></span></span></div>
 
       <div className="wrap">
         <div className="bar">
@@ -492,7 +492,7 @@ const CSS = `
 .ft *,.ft *::before,.ft *::after{box-sizing:border-box}
 .ft p,.ft h2,.ft h3,.ft ul{margin:0}
 .ft a{color:inherit}
-.ft .wrap{position:relative;width:calc(100% - 2 * var(--s-curve, calc(clamp(8px, 1.6vw, 24px) + 0.50 * (100% - 2 * clamp(8px, 1.6vw, 24px)))));margin-inline:auto}
+.ft .wrap{position:relative;width:calc(100% - 2 * var(--s-curve, calc(clamp(8px, 1.6vw, 24px) + 0.50 * (100% - 2 * clamp(8px, 1.6vw, 24px)))));max-width:none;padding-inline:0;margin-inline:auto}
 .ft .fade{opacity:0;transform:translateY(16px);transition:opacity 1s var(--ease),transform 1.1s var(--ease)}
 .ft .fade.in{opacity:1;transform:none}
 
@@ -553,7 +553,7 @@ const CSS = `
 .ft .dots button:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
 
 /* 3. link columns */
-.ft .cols{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:36px clamp(24px,3vw,48px);padding:clamp(56px,7vw,88px) 0 clamp(40px,5vw,64px)}
+.ft .cols{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:36px clamp(24px,3vw,48px);padding:clamp(56px,7vw,88px) 0 0}
 .ft .cols>div{min-width:0}
 .ft .cols h3{margin-bottom:18px;font:500 .68rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--txt-3)}
 .ft .cols ul{list-style:none;padding:0;display:grid;gap:2px}
@@ -578,8 +578,8 @@ const CSS = `
 .ft .soc svg{width:17px;height:17px}
 
 /* 4. the wordmark: ten slats, one per service */
-.ft .wm{position:relative;padding:0 clamp(8px,1.6vw,24px);margin-top:4px}
-.ft .wm svg{display:block;width:100%;height:auto;overflow:visible}
+.ft .wm{position:relative;padding:0 clamp(8px,1.6vw,24px);margin-top:0}
+.ft .wm svg{display:block;width:min(100%,1530px);height:auto;margin-inline:auto;overflow:visible}
 .ft .wm .sl{opacity:0;transition:opacity .6s var(--ease)}
 .ft .wm.lit .sl{opacity:.92}
 .ft .wm.focus .sl{opacity:.12}

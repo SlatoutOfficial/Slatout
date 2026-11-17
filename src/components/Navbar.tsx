@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence, useScroll } from "framer-motion";
+import { motion, AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 import {
   ChevronDown,
   ArrowUpRight,
@@ -188,14 +188,14 @@ const navItemsData: NavItem[] = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { scrollYProgress } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
   const [activeRoute, setActiveRoute] = useState("Home");
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [expandedAccordion, setExpandedAccordion] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const lastScrollY = useRef(0);
+  const scrollDirectionDelta = useRef(0);
   const [themeAccent, setThemeAccent] = useState("#ff6a13");
 
   const closeTimeoutRef = useRef<number | null>(null);
@@ -210,33 +210,33 @@ export default function Navbar() {
     return () => window.removeEventListener("slatout-theme-change", handleThemeChange);
   }, []);
 
-  useEffect(() => {
-    lastScrollY.current = window.scrollY;
+  useMotionValueEvent(scrollY, "change", (currentScrollY) => {
+    const previousScrollY = scrollY.getPrevious() ?? currentScrollY;
+    const delta = currentScrollY - previousScrollY;
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      // Always show when near the top
-      if (currentScrollY <= 60) {
-        setIsVisible(true);
-        lastScrollY.current = currentScrollY;
-      } else if (currentScrollY - lastScrollY.current > 10) {
-        // Scrolling down -> hide navbar
-        setIsVisible(false);
-        setHoveredMenu(null);
-        lastScrollY.current = currentScrollY;
-      } else if (lastScrollY.current - currentScrollY > 10) {
-        // Scrolling up -> show navbar
-        setIsVisible(true);
-        lastScrollY.current = currentScrollY;
+    if (currentScrollY <= 60) {
+      setIsVisible(true);
+      scrollDirectionDelta.current = 0;
+    } else if (delta !== 0) {
+      // Accumulate small touchpad/trackpad movements until direction is clear.
+      if (Math.sign(delta) !== Math.sign(scrollDirectionDelta.current)) {
+        scrollDirectionDelta.current = delta;
+      } else {
+        scrollDirectionDelta.current += delta;
       }
 
-      setIsScrolled(currentScrollY > 120);
-    };
+      if (scrollDirectionDelta.current > 10) {
+        setIsVisible(false);
+        setHoveredMenu(null);
+        scrollDirectionDelta.current = 0;
+      } else if (scrollDirectionDelta.current < -10) {
+        setIsVisible(true);
+        scrollDirectionDelta.current = 0;
+      }
+    }
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    setIsScrolled(currentScrollY > 120);
+  });
 
   // Set active route depending on path changes
   useEffect(() => {
@@ -293,12 +293,12 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 lg:px-8 transition-transform duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full font-sans px-[clamp(18px,3vw,44px)] pt-[clamp(18px,2.4vw,34px)] transition-transform duration-300 ease-in-out ${
         shouldShowNavbar ? "translate-y-0" : "-translate-y-full pointer-events-none"
       }`}
     >
       {/* Floating Light Frosted "Pill" Nav Bar */}
-      <div className="mx-auto mt-4 max-w-[1280px] w-full bg-white/75 backdrop-blur-lg border border-gray-150/70 rounded-full px-6 py-2 sm:py-3 shadow-[0_8px_30px_rgba(0,0,0,0.03)] flex items-center justify-between relative overflow-visible select-none">
+      <div className="mx-auto h-[60px] w-full bg-[#FFF1E7] backdrop-blur-lg border border-black/5 rounded-full px-6 shadow-[0_8px_30px_rgba(0,0,0,0.03)] flex items-center justify-between relative overflow-visible select-none" style={{ width: "100%", boxSizing: "border-box" }}>
 
         {/* Left Side: Logo */}
         <a href="/" className="flex items-center gap-2.5 shrink-0" onClick={() => setActiveRoute("Home")}>
