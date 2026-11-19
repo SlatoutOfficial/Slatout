@@ -3,7 +3,7 @@
 (function () {
   'use strict';
   var IDX = window.SLATOUT_SEARCH; if (!IDX) return;
-  var d = document, KEY = 'slatout.recent';
+  var d = document, KEY = 'slatout.recent', mount = d.querySelector('.service-page-shell') || d.body;
   var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var norm = function (s) { return String(s || '').toLowerCase(); };
   IDX.forEach(function (r) { r._t = norm(r.t); r._s = norm(r.s); r._k = norm(r.k); });
@@ -21,7 +21,7 @@
     '<button type="button" class="cmd-x" data-close aria-label="Close search">Esc</button></div>' +
     '<div class="cmd-body"><ul id="cmd-list" role="listbox" aria-label="Results"></ul></div>' +
     '<div class="cmd-foot"><span><kbd>&uarr;</kbd><kbd>&darr;</kbd> to move</span><span><kbd>Enter</kbd> to open</span><span class="cmd-count" role="status" aria-live="polite"></span></div></div>';
-  d.body.appendChild(root);
+  mount.appendChild(root);
   var q = root.querySelector('#cmd-q'), list = root.querySelector('#cmd-list'), count = root.querySelector('.cmd-count');
   var items = [], active = -1, lastFocus = null;
 

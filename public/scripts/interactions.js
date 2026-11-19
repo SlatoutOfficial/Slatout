@@ -4,11 +4,11 @@
 (function () {
   'use strict';
   var d = document, $ = function (s, r) { return (r || d).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(pointer: fine)').matches;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(pointer: fine)').matches, mount = d.querySelector('.service-page-shell') || d.body;
   var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
 
   /* 1. Scroll progress line */
-  var bar = d.createElement('div'); bar.className = 'sprog'; bar.setAttribute('aria-hidden', 'true'); d.body.appendChild(bar);
+  var bar = d.createElement('div'); bar.className = 'sprog'; bar.setAttribute('aria-hidden', 'true'); mount.appendChild(bar);
   var onScroll = function () { var h = d.documentElement.scrollHeight - innerHeight; bar.style.transform = 'scaleX(' + (h > 0 ? clamp(scrollY / h, 0, 1) : 0) + ')'; };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
@@ -16,7 +16,7 @@
   if (fine && !reduce) {
     var light = d.createElement('div'), ring = d.createElement('div');
     light.className = 'cur-light'; ring.className = 'cur-ring'; light.setAttribute('aria-hidden', 'true'); ring.setAttribute('aria-hidden', 'true');
-    d.body.appendChild(light); d.body.appendChild(ring);
+    mount.appendChild(light); mount.appendChild(ring);
     var mx = -999, my = -999, lx = mx, ly = my, rx = mx, ry = my;
     addEventListener('pointermove', function (e) { mx = e.clientX; my = e.clientY; var t = e.target.closest && e.target.closest('a,button,summary,[role=slider],input,textarea,select,label,canvas'); ring.classList.toggle('hot', !!t); ring.classList.toggle('grab', !!(t && t.tagName === 'CANVAS')); }, { passive: true });
     d.addEventListener('pointerleave', function () { mx = my = -999; });

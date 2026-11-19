@@ -2,6 +2,29 @@ import React from "react";
 import { notFound, redirect } from "next/navigation";
 import ServicePageClient from "@/components/ServicePageClient";
 import servicePagesData from "@/data/servicePagesData.json";
+import BusinessSetupRegistration from "@/components/service-pages/business-setup-registration";
+import TechnologyAiSolutions from "@/components/service-pages/technology-ai-solutions";
+import OfflineBusinessLaunch from "@/components/service-pages/offline-business-launch";
+import BrandingMarketing from "@/components/service-pages/branding-marketing";
+import ContentStrategy from "@/components/service-pages/content-strategy";
+import DigitalMarketing from "@/components/service-pages/digital-marketing";
+import EcommerceMarketplaceGrowth from "@/components/service-pages/ecommerce-marketplace-growth";
+import ProgrammaticAdvertising from "@/components/service-pages/programmatic-advertising";
+import BusinessDevelopmentOutsourcing from "@/components/service-pages/business-development-outsourcing";
+import FinanceTaxCompliance from "@/components/service-pages/finance-tax-compliance";
+
+const servicePageComponents: Record<string, React.ComponentType> = {
+  "business-setup-registration": BusinessSetupRegistration,
+  "technology-ai-solutions": TechnologyAiSolutions,
+  "offline-business-launch": OfflineBusinessLaunch,
+  "branding-marketing": BrandingMarketing,
+  "content-strategy": ContentStrategy,
+  "digital-marketing": DigitalMarketing,
+  "ecommerce-marketplace-growth": EcommerceMarketplaceGrowth,
+  "programmatic-advertising": ProgrammaticAdvertising,
+  "business-development-outsourcing": BusinessDevelopmentOutsourcing,
+  "finance-tax-compliance": FinanceTaxCompliance,
+};
 
 // Map old slugs to the 10 official service slugs
 const legacySlugMap: Record<string, string> = {
@@ -76,10 +99,15 @@ export default async function ServicePage({
 
   const pagesMap = servicePagesData as Record<string, any>;
   const service = pagesMap[slug];
+  const ServiceContent = servicePageComponents[slug];
 
-  if (!service) {
+  if (!service || !ServiceContent) {
     notFound();
   }
 
-  return <ServicePageClient service={service} />;
+  return (
+    <ServicePageClient service={service}>
+      <ServiceContent />
+    </ServicePageClient>
+  );
 }

@@ -7,10 +7,16 @@ interface ServiceData {
   title: string;
   attr: string;
   scripts: string[];
-  html: string;
+  html?: string;
 }
 
-export default function ServicePageClient({ service }: { service: ServiceData }) {
+export default function ServicePageClient({
+  service,
+  children,
+}: {
+  service: ServiceData;
+  children?: React.ReactNode;
+}) {
   // Extract classes, styles, and data-scope from service.attr
   const classMatch = service.attr.match(/class="([^"]+)"/);
   const scopeMatch = service.attr.match(/data-scope="([^"]+)"/);
@@ -18,13 +24,12 @@ export default function ServicePageClient({ service }: { service: ServiceData })
 
   const wrapperClass = classMatch ? classMatch[1] : "svc-page r-room";
   const dataScope = scopeMatch ? scopeMatch[1] : undefined;
-  const serviceHtml = service.html
+  const legacyHtml = (service.html || "")
     .replace(/<header class="site-header"[\s\S]*?<\/header>/, "")
     .replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, "")
     .replace(/<nav class="subnav" aria-label="On this page">[\s\S]*?<\/nav>/, "")
     .replace(/<li><a href="#try">Try it<\/a><\/li>/g, "")
     .replace(/<section class="ss toy" id="try"[\s\S]*?<\/section>/g, "");
-
   const styleObj: Record<string, string> = {};
   if (styleMatch) {
     styleMatch[1].split(";").forEach((pair) => {
@@ -135,7 +140,11 @@ export default function ServicePageClient({ service }: { service: ServiceData })
       data-scope={dataScope}
       style={styleObj as React.CSSProperties}
       onClick={handleClick}
-      dangerouslySetInnerHTML={{ __html: serviceHtml }}
-    />
+      dangerouslySetInnerHTML={
+        children === undefined ? { __html: legacyHtml } : undefined
+      }
+    >
+      {children}
+    </div>
   );
 }

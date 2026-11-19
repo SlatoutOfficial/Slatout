@@ -6,7 +6,7 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(pointer: fine)').matches;
   var cl = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
   var two = function (n) { return ('0' + n).slice(-2); };
-  var body = d.body, isHome = body.classList.contains('r-home');
+  var body = d.body, isHome = body.classList.contains('r-home'), mount = d.querySelector('.service-page-shell') || body;
 
   /* ---------- 1. the page colour flows with the section you are in ---------- */
   var bgs = $$('[data-bg]'), lastBg = '';
@@ -160,7 +160,7 @@
   var roomOf = function (path) { var a = $('.lf-i a[href="' + path + '"]'); return a ? a.parentNode : null; };
   var wash = d.createElement('div'); wash.className = 'wash'; wash.setAttribute('aria-hidden', 'true');
   var wt = d.createElement('div'); wt.className = 'wash-t'; wt.setAttribute('aria-hidden', 'true'); wt.innerHTML = '<div><small></small><b></b></div>';
-  body.appendChild(wash); body.appendChild(wt);
+  mount.appendChild(wash); mount.appendChild(wt);
   var LABEL = { '/': 'Home', '/services/': 'All ten rooms', '/contact/': 'Contact', '/about/': 'About SLATOUT', '/blog/': 'Insights', '/studio/': 'Free tools' };
   if (!reduce && !window.__nav) {
     var arrived = null; try { arrived = sessionStorage.getItem('slatout.wash'); sessionStorage.removeItem('slatout.wash'); } catch (x) { }

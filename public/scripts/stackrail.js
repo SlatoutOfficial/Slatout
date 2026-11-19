@@ -3,7 +3,7 @@
 (function () {
   'use strict';
   var d = document, $ = function (s, r) { return (r || d).querySelector(s); }, $$ = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
-  var rail = $('#srail'); if (!rail) return;
+  var rail = $('#srail'); if (!rail) return; var mount = d.querySelector('.service-page-shell') || d.body;
   var KEY = 'slatout.v1', reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, mem = {};
   var load = function () { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return mem; } };
   var save = function (s) { mem = s; try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { } };
@@ -41,7 +41,7 @@
     if (reduce || !from || !from.getBoundingClientRect) return;
     var target = getComputedStyle(fab).display !== 'none' ? fab : mbtn, a = from.getBoundingClientRect(), b = target.getBoundingClientRect();
     if (!a.width || !b.width) return;
-    var el = d.createElement('i'); el.className = 'sr-flyer'; el.setAttribute('aria-hidden', 'true'); d.body.appendChild(el);
+    var el = d.createElement('i'); el.className = 'sr-flyer'; el.setAttribute('aria-hidden', 'true'); mount.appendChild(el);
     var x0 = a.left + a.width / 2, y0 = a.top + a.height / 2, x1 = b.left + b.width / 2, y1 = b.top + b.height / 2, mx = (x0 + x1) / 2, my = Math.min(y0, y1) - 120;
     var frames = []; for (var i = 0; i <= 12; i++) { var t = i / 12, x = (1 - t) * (1 - t) * x0 + 2 * (1 - t) * t * mx + t * t * x1, y = (1 - t) * (1 - t) * y0 + 2 * (1 - t) * t * my + t * t * y1;
       frames.push({ transform: 'translate(' + x + 'px,' + y + 'px) rotate(' + (t * 300) + 'deg) scale(' + (1 - t * .5) + ')', opacity: t > .92 ? 0 : 1 }); }
@@ -85,7 +85,7 @@
     if (head) { var h = d.createElement('p'); h.className = 'scp-hint'; h.innerHTML = '<span aria-hidden="true">✓</span> Tick the deliverables you need. We will turn them into your scope.'; head.appendChild(h); }
     tray = d.createElement('div'); tray.className = 'scp-tray'; tray.setAttribute('role', 'status'); tray.setAttribute('aria-live', 'polite');
     tray.innerHTML = '<span class="scp-c"><b>0</b> <span>items in your scope</span></span><button type="button" class="scp-rv">Review</button><a class="btn btn-p scp-go" href="/contact/#enquire">Request this scope</a>';
-    d.body.appendChild(tray);
+    mount.appendChild(tray);
     $('.scp-rv', tray).addEventListener('click', function (e) { e.stopPropagation(); openPanel(true); if (getComputedStyle(fab).display !== 'none') setSheet(true); });
   }
   function scopeToggle(b) {
