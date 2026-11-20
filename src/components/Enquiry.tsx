@@ -393,14 +393,14 @@ export default function ContactSection({ action = '/api/enquiries' }: { action?:
               <small id="rec-k">Suggested first move</small>
               <div id="rec-b"><b>Tell us where you are</b><p>Choose your stage and we will sketch your route here, live.</p></div>
             </div>
-            <p className="cx-promise cx-rv" style={{ '--d': 0.6 } as any}><b>&bull;</b> No sales pitch &nbsp;<b>&bull;</b> No commitment &nbsp;<b>&bull;</b> Made in India</p>
+            <p className="cx-promise cx-rv mt-2" style={{ '--d': 0.6 } as any}><b>&bull;</b> No sales pitch &nbsp;<b>&bull;</b> No commitment &nbsp;<b>&bull;</b> Made in India</p>
           </aside>
 
           {/* RIGHT: guided form */}
           <div className="cx-formside cx-rv" style={{ '--d': 0.15 } as any} id="formside">
             <div className="cx-formwrap" id="formwrap" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
               <div className="cx-hd">
-                <div className="cx-stp"><strong id="sn">1</strong><span>of 4</span><b id="stt">Where you are</b></div>
+                <div className="cx-stp"><strong id="sn">1</strong><span>of 4</span><b id="stt">About you</b></div>
                 <div className="cx-seg" id="seg">
                   <button type="button" aria-label="Step 1" /><button type="button" aria-label="Step 2" />
                   <button type="button" aria-label="Step 3" /><button type="button" aria-label="Step 4" />
@@ -420,12 +420,12 @@ export default function ContactSection({ action = '/api/enquiries' }: { action?:
                   <div className="cx-row">
                     <label className="cx-f" id="f-name">
                       <span className="cx-t">Your name <em>*</em></span>
-                      <input name="name" id="name" autoComplete="name" placeholder="e.g. Madhav" aria-describedby="e-name" />
+                      <input name="name" id="name" autoComplete="name" placeholder="e.g. Ananya Rao" aria-describedby="e-name" />
                       <span className="cx-msg" id="e-name">Please tell us your name.</span>
                     </label>
                     <label className="cx-f" id="f-ph">
                       <span className="cx-t">Phone / WhatsApp <em>*</em></span>
-                      <span className="cx-pfx"><b aria-hidden="true">+91</b><input name="phone" id="ph" type="tel" inputMode="numeric" autoComplete="tel-national" maxLength={11} placeholder="9908987426" aria-describedby="e-ph" /></span>
+                      <span className="cx-pfx"><b aria-hidden="true">+91</b><input name="phone" id="ph" type="tel" inputMode="numeric" autoComplete="tel-national" maxLength={11} placeholder="98765 43210" aria-describedby="e-ph" /></span>
                       <span className="cx-msg" id="e-ph">Enter a valid 10-digit mobile number.</span>
                     </label>
                   </div>
@@ -452,7 +452,7 @@ export default function ContactSection({ action = '/api/enquiries' }: { action?:
 
                   <p className="cx-gl"><span>Your business</span></p>
                   <div className="cx-row">
-                    <label className="cx-f" id="f-biz"><span className="cx-t">Business name <small>(if any)</small></span><input name="business" id="biz" autoComplete="organization" placeholder="e.g. PVT / LLP" /></label>
+                    <label className="cx-f" id="f-biz"><span className="cx-t">Business name <small>(if any)</small></span><input name="business" id="biz" autoComplete="organization" placeholder="e.g. Rao & Sons" /></label>
                     <label className="cx-f" id="f-city"><span className="cx-t">City <small>(optional)</small></span><input name="city" id="city" autoComplete="address-level2" placeholder="e.g. Hyderabad" /></label>
                   </div>
                   <label className="cx-f cx-wide1" id="f-what"><span className="cx-t">What does your business do? <small>(optional)</small></span><input name="what" id="what" placeholder="e.g. Organic food brand, textile exports, a SaaS product" /></label>
@@ -463,7 +463,7 @@ export default function ContactSection({ action = '/api/enquiries' }: { action?:
 
                 <fieldset className="cx-pane" data-i="1">
                   <legend tabIndex={-1}>Where are you right now?</legend>
-                  <p className="cx-hint">Pick the one that feels closest. There is no wrong answer, and you can change it later.</p>
+                  <p className="cx-hint" style={{ marginBottom: "10px" }}>Pick the one that feels closest. There is no wrong answer, and you can change it later.</p>
                   <div className="cx-cards" id="stage" />
                   <p className="cx-perr" role="alert" />
                 </fieldset>
@@ -626,6 +626,7 @@ const CSS = `
 .cx-pane legend{padding:0;font-size:clamp(1.5rem,2.3vw,2.1rem);font-weight:800;letter-spacing:-.04em;line-height:1.08;outline:0;float:left;width:100%}
 .cx-pane legend+*{clear:both}
 .cx-hint{margin:12px 0 clamp(24px,2.2vw,32px);color:var(--ink-2);font-size:1.02rem;line-height:1.45;max-width:34em}
+.cx-pane[data-i="1"] .cx-hint,.cx-pane[data-i="2"] .cx-hint{max-width:none}
 
 /* stage cards */
 .cx-cards{display:grid;gap:10px}
@@ -739,10 +740,10 @@ const CSS = `
 .cx-ct.cx-js .cx-route.cx-in .cx-st{opacity:1;transform:none}
 
 /* slide 1: grouped fields */
-.cx-gl{display:flex;align-items:center;gap:12px;margin:4px 0 16px;font:500 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.cx-gl{display:flex;align-items:center;gap:12px;margin:8px 0 26px;font:500 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
 .cx-gl::after{content:"";flex:1;height:1px;background:var(--line)}
 .cx-gl span{color:var(--brand-d)}
-.cx-pane .cx-row+.cx-gl,.cx-pane .cx-wide1+.cx-sub{margin-top:8px}
+.cx-pane .cx-row+.cx-gl,.cx-pane .cx-wide1+.cx-sub{margin-top:12px}
 .cx-wide1{margin-bottom:6px}
 .cx-sel{position:relative;display:block}
 .cx-sel::after{content:"";position:absolute;right:14px;top:50%;width:7px;height:7px;border-right:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:translateY(-70%) rotate(45deg);pointer-events:none}
@@ -899,7 +900,7 @@ const CSS = `
     font-size: .92rem;
   }
   .cx-gl {
-    margin: 4px 0 14px;
+    margin: 6px 0 24px;
     font-size: .66rem;
   }
   .cx-row {
@@ -1294,4 +1295,6 @@ const CSS = `
   .cx-ct.cx-js .cx-rv,.cx-ct.cx-js .cx-w>span,.cx-ct.cx-js .cx-route .cx-st{opacity:1!important;transform:none!important}
   .cx-tick circle,.cx-tick path{stroke-dashoffset:0!important}
 }
+.cx-ct .cx-pane .cx-gl{margin:6px 0;padding:5px 0}
+.cx-ct .cx-pane>.cx-row+.cx-gl{margin-top:8px}
 `;

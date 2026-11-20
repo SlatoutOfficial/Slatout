@@ -578,7 +578,7 @@ const CSS = `
 .ft .soc svg{width:17px;height:17px}
 
 /* 4. the wordmark: ten slats, one per service */
-.ft .wm{position:relative;padding:0 clamp(8px,1.6vw,24px);margin-top:0}
+.ft .wm{position:relative;padding:0 clamp(8px,1.6vw,24px);margin-top:clamp(48px,8vw,96px);}
 .ft .wm svg{display:block;width:min(100%,1530px);height:auto;margin-inline:auto;overflow:visible}
 .ft .wm .sl{opacity:0;transition:opacity .6s var(--ease)}
 .ft .wm.lit .sl{opacity:.92}
