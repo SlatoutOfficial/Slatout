@@ -204,3 +204,13 @@ body.svc-page {
   width: min(1600px, calc(100% - 2 * clamp(16px, 4vw, 48px)));
   max-width: 1600px;
 }
+
+/* The shared navbar hides while scrolling down, so let the service tabs
+   reach the viewport top until the navbar becomes visible again. */
+.service-page-shell .subnav {
+  top: 0;
+}
+
+body:has(> header[data-navbar-visible="true"]) .service-page-shell .subnav {
+  top: calc(60px + clamp(18px, 2.4vw, 34px));
+}

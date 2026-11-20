@@ -293,6 +293,7 @@ export default function Navbar() {
 
   return (
     <header
+      data-navbar-visible={shouldShowNavbar ? "true" : "false"}
       className={`fixed top-0 left-0 right-0 z-50 w-full font-sans px-[clamp(18px,3vw,44px)] pt-[clamp(18px,2.4vw,34px)] transition-transform duration-300 ease-in-out ${
         shouldShowNavbar ? "translate-y-0" : "-translate-y-full pointer-events-none"
       }`}

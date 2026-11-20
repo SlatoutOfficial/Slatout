@@ -6,6 +6,11 @@ import Navbar from "@/components/Navbar";
 export const metadata: Metadata = {
   title: "Slatout | Development, Digital Marketing & Creative Agency",
   description: "Slatout crafts strategy-led development, conversion-focused digital marketing engines, and category-dominating design experiences.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

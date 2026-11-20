@@ -607,8 +607,8 @@ const CSS = `
 .cx-promise b{color:var(--brand);font-weight:500}
 
 /* ================= right: guided form ================= */
-.cx-formside{position:relative;padding:clamp(26px,3.4vw,52px);display:flex;flex-direction:column;min-height:640px}
-.cx-hd{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:clamp(20px,2.4vw,30px)}
+.cx-formside{position:relative;padding:clamp(30px,3.6vw,56px);display:flex;flex-direction:column;min-height:640px}
+.cx-hd{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:clamp(24px,2.6vw,34px)}
 .cx-stp{display:flex;align-items:baseline;gap:8px;font:500 .74rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
 .cx-stp strong{font-weight:500;color:var(--ink);font-size:.9rem}
 .cx-stp b{font-weight:500;color:var(--brand-d)}
@@ -625,7 +625,7 @@ const CSS = `
 @keyframes cx-paneBack{from{opacity:0;transform:translateX(-28px)}}
 .cx-pane legend{padding:0;font-size:clamp(1.5rem,2.3vw,2.1rem);font-weight:800;letter-spacing:-.04em;line-height:1.08;outline:0;float:left;width:100%}
 .cx-pane legend+*{clear:both}
-.cx-hint{margin:10px 0 clamp(18px,2vw,26px);color:var(--ink-2);font-size:1.02rem;max-width:34em}
+.cx-hint{margin:12px 0 clamp(24px,2.2vw,32px);color:var(--ink-2);font-size:1.02rem;line-height:1.45;max-width:34em}
 
 /* stage cards */
 .cx-cards{display:grid;gap:10px}
@@ -656,10 +656,10 @@ const CSS = `
 
 /* fields */
 .cx-f{position:relative;display:block}
-.cx-f>.cx-t{display:block;font:600 .8rem/1 var(--sans);color:var(--ink-2);margin-bottom:6px}
+.cx-f>.cx-t{display:block;font:600 .8rem/1.25 var(--sans);color:var(--ink-2);margin-bottom:8px}
 .cx-f>.cx-t em{font-style:normal;color:var(--brand-d)}
 .cx-f>.cx-t small{font-weight:400;color:var(--ink-3);font-size:.8rem}
-.cx-f input,.cx-f textarea{width:100%;font:400 .92rem/1.3 var(--sans);color:var(--ink);background:#fff;border:1.5px solid var(--line-2);border-radius:11px;padding:0 14px;height:44px;transition:border-color .2s,box-shadow .2s,background .2s;-webkit-appearance:none;appearance:none}
+.cx-f input,.cx-f textarea{width:100%;font:400 .92rem/1.3 var(--sans);color:var(--ink);background:#fff;border:1.5px solid var(--line-2);border-radius:11px;padding:0 14px;height:48px;transition:border-color .2s,box-shadow .2s,background .2s;-webkit-appearance:none;appearance:none}
 .cx-f textarea{height:auto;min-height:96px;padding:10px 14px;resize:vertical;line-height:1.45}
 .cx-f input::placeholder,.cx-f textarea::placeholder{color:#A19DA9}
 .cx-f input:hover,.cx-f textarea:hover{border-color:rgba(11,11,11,.42)}
@@ -687,7 +687,7 @@ const CSS = `
 /* step 4 */
 .cx-recap{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
 .cx-recap span{padding:7px 12px;border-radius:999px;background:var(--brand-s);color:var(--brand-d);font:600 .82rem/1 var(--sans)}
-.cx-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.cx-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:16px;align-items:start}
 .cx-note{margin-top:18px;padding:14px 16px;border-radius:14px;background:var(--paper);border:1px dashed var(--line-2);color:var(--ink-2);font-size:.92rem;line-height:1.5}
 .cx-legal{margin-top:22px;font-size:.86rem;line-height:1.5;color:var(--ink-3)}
 .cx-legal a{color:var(--ink-2)}
@@ -739,14 +739,14 @@ const CSS = `
 .cx-ct.cx-js .cx-route.cx-in .cx-st{opacity:1;transform:none}
 
 /* slide 1: grouped fields */
-.cx-gl{display:flex;align-items:center;gap:12px;margin:2px 0 14px;font:500 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.cx-gl{display:flex;align-items:center;gap:12px;margin:4px 0 16px;font:500 .72rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
 .cx-gl::after{content:"";flex:1;height:1px;background:var(--line)}
 .cx-gl span{color:var(--brand-d)}
 .cx-pane .cx-row+.cx-gl,.cx-pane .cx-wide1+.cx-sub{margin-top:8px}
 .cx-wide1{margin-bottom:6px}
 .cx-sel{position:relative;display:block}
 .cx-sel::after{content:"";position:absolute;right:14px;top:50%;width:7px;height:7px;border-right:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:translateY(-70%) rotate(45deg);pointer-events:none}
-.cx-f select{width:100%;height:44px;padding:0 38px 0 14px;font:400 .92rem/1.3 var(--sans);color:var(--ink);background:#fff;border:1.5px solid var(--line-2);border-radius:11px;-webkit-appearance:none;appearance:none;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.cx-f select{width:100%;height:48px;padding:0 38px 0 14px;font:400 .92rem/1.3 var(--sans);color:var(--ink);background:#fff;border:1.5px solid var(--line-2);border-radius:11px;-webkit-appearance:none;appearance:none;cursor:pointer;transition:border-color .2s,box-shadow .2s}
 .cx-f select:hover{border-color:rgba(11,11,11,.42)}
 .cx-f select:focus{outline:0;border-color:var(--brand);box-shadow:0 0 0 4px rgba(255,106,19,.16)}
 .cx-pane .cx-sub{margin:16px 0 10px}
@@ -876,11 +876,11 @@ const CSS = `
   }
 
   .cx-formside {
-    padding: clamp(24px, 2.6vw, 40px);
+    padding: clamp(28px, 2.8vw, 44px);
     min-height: 520px;
   }
   .cx-hd {
-    margin-bottom: 18px;
+    margin-bottom: 22px;
   }
   .cx-stp {
     font-size: .68rem;
@@ -895,30 +895,30 @@ const CSS = `
     font-size: clamp(1.3rem, 1.8vw, 1.65rem);
   }
   .cx-hint {
-    margin: 8px 0 16px;
+    margin: 10px 0 22px;
     font-size: .92rem;
   }
   .cx-gl {
-    margin: 2px 0 12px;
+    margin: 4px 0 14px;
     font-size: .66rem;
   }
   .cx-row {
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 14px;
+    margin-bottom: 14px;
   }
   .cx-f>.cx-t {
     font-size: .8rem;
-    margin-bottom: 6px;
+    margin-bottom: 7px;
   }
   .cx-f input, .cx-f textarea, .cx-f select {
-    height: 42px;
+    height: 46px;
     font-size: .88rem;
     border-radius: 10px;
     padding: 0 12px;
   }
   .cx-f textarea {
     height: auto;
-    min-height: 84px;
+    min-height: 88px;
     padding: 8px 12px;
   }
   .cx-pfx b {
